@@ -1,0 +1,297 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+
+  /* BSC Palette — sapphire blue reflecting the iconic tent-shaped roof, warm gold accents */
+  --color-bsc-cream: #f8f5ef;
+  --color-bsc-parchment: #efe8d8;
+  --color-bsc-parchment-dark: #e3d8c2;
+  --color-bsc-stone: #d4c9ae;
+  --color-bsc-ink: #1e2330;
+  --color-bsc-charcoal: #3a3f4d;
+  --color-bsc-sapphire-50: #eef2fb;
+  --color-bsc-sapphire-100: #d6e0f5;
+  --color-bsc-sapphire-200: #b0c4eb;
+  --color-bsc-sapphire-300: #7a9bdb;
+  --color-bsc-sapphire-400: #4a72c4;
+  --color-bsc-sapphire-500: #3458a8;
+  --color-bsc-sapphire-600: #28458a;
+  --color-bsc-sapphire-700: #1f366e;
+  --color-bsc-sapphire-800: #1a2b55;
+  --color-bsc-sapphire-900: #0f1a33;
+  --color-bsc-sapphire-950: #0a1122;
+  --color-bsc-gold-100: #f5eacc;
+  --color-bsc-gold-200: #ebd599;
+  --color-bsc-gold-300: #dfc06a;
+  --color-bsc-gold-400: #d4ad42;
+  --color-bsc-gold-500: #c49a2c;
+  --color-bsc-gold-600: #a67f22;
+  --color-bsc-gold-700: #85641c;
+  --color-bsc-terracotta-400: #c07a5a;
+  --color-bsc-terracotta-500: #a86545;
+  --color-bsc-terracotta-600: #8f5038;
+  --color-bsc-pine-500: #2d5a40;
+  --color-bsc-pine-600: #1f422e;
+
+  --shadow-bsc: 0 20px 60px -20px rgba(15, 26, 51, 0.45);
+  --shadow-bsc-lg: 0 40px 90px -30px rgba(15, 26, 51, 0.55);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-bsc-sapphire-700) var(--color-bsc-parchment);
+  }
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-bsc-cream);
+    color: var(--color-bsc-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+  ::selection {
+    background-color: var(--color-bsc-sapphire-200);
+    color: var(--color-bsc-sapphire-950);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .bg-grain {
+    position: relative;
+  }
+  .bg-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+  .bg-adobe-texture {
+    background-color: var(--color-bsc-parchment);
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4c9ae' fill-opacity='0.25'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .divider-weave {
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-bsc-stone) 0px,
+      var(--color-bsc-stone) 8px,
+      transparent 8px,
+      transparent 12px
+    );
+  }
+  .divider-weave-thin {
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-bsc-stone) 0px,
+      var(--color-bsc-stone) 6px,
+      transparent 6px,
+      transparent 10px
+    );
+  }
+  .gold-rule {
+    position: relative;
+  }
+  .gold-rule::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-bsc-gold-400), var(--color-bsc-gold-600));
+    margin-top: 0.75rem;
+  }
+  .gold-rule-left::after {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  .hero-ken-burns {
+    animation: hero-ken-burns 20s ease-in-out infinite alternate;
+  }
+  @keyframes hero-ken-burns {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.08) translate(-1%, -1%); }
+  }
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .rise-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: rise-in 0.8s ease-out forwards;
+  }
+  .rise-in-d1 { animation-delay: 0.1s; }
+  .rise-in-d2 { animation-delay: 0.2s; }
+  .rise-in-d3 { animation-delay: 0.35s; }
+  .rise-in-d4 { animation-delay: 0.5s; }
+  @keyframes rise-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .menu-in {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    animation: menu-in 0.25s ease-out forwards;
+  }
+  @keyframes menu-in {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .drawer-in {
+    opacity: 0;
+    transform: translateX(100%);
+    animation: drawer-in 0.35s ease-out forwards;
+  }
+  @keyframes drawer-in {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .drawer-item-in {
+    opacity: 0;
+    transform: translateX(16px);
+    animation: drawer-item-in 0.3s ease-out forwards;
+  }
+  @keyframes drawer-item-in {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .page-in {
+    opacity: 0;
+    animation: page-in 0.4s ease-out forwards;
+  }
+  @keyframes page-in {
+    to { opacity: 1; }
+  }
+  .dot-pulse {
+    position: relative;
+  }
+  .dot-pulse::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid var(--color-bsc-gold-400);
+    animation: halo-pulse 2s ease-out infinite;
+  }
+  @keyframes halo-pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  .card-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-bsc);
+    border-color: var(--color-bsc-gold-400);
+  }
+  .card-tint {
+    border-color: var(--color-bsc-stone);
+    background-color: var(--color-bsc-cream);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .card-tint:hover {
+    background-color: var(--color-bsc-parchment);
+    border-color: var(--color-bsc-gold-300);
+  }
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--color-bsc-gold-400), var(--color-bsc-gold-600));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .link-underline:hover::after,
+  .link-underline[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-bsc-sapphire-900);
+    color: var(--color-bsc-cream);
+    padding: 8px 16px;
+    z-index: 100;
+    transition: top 0.2s;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
+  .img-zoom {
+    transition: transform 0.5s ease;
+  }
+  .group:hover .img-zoom {
+    transform: scale(1.05);
+  }
+  .bg-gold-bloom {
+    background: radial-gradient(ellipse at 30% 20%, rgba(212, 173, 66, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(196, 154, 44, 0.08) 0%, transparent 50%);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-ken-burns,
+    .reveal,
+    .rise-in,
+    .rise-in-d1,
+    .rise-in-d2,
+    .rise-in-d3,
+    .rise-in-d4,
+    .menu-in,
+    .drawer-in,
+    .drawer-item-in,
+    .page-in,
+    .dot-pulse::after {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media print {
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
