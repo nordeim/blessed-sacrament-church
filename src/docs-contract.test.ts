@@ -75,7 +75,7 @@ describe("code invariants — package", () => {
       version: string;
       dependencies: Record<string, string>;
     };
-    expect(pkg.version).toBe("1.4.4");
+    expect(pkg.version).toBe("1.5.0");
     expect(pkg.dependencies["lucide-react"]).toBe("1.38.0");
   });
 });
