@@ -69,6 +69,10 @@ export function Header() {
   useEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
       const target = e.target as Node;
+      // Ignore the toggle itself (round-18 audit F2): pointerdown would close
+      // the drawer and the button's click would toggle it straight back open,
+      // leaving the menu stuck open.
+      if (hamburgerRef.current?.contains(target)) return;
       if (mobileOpen && drawerRef.current && !drawerRef.current.contains(target)) {
         setMobileOpen(false);
       }
@@ -103,14 +107,15 @@ export function Header() {
   };
 
   return (
-    <header
-      className={cn(
-        "fixed left-0 right-0 top-0 z-50 transition-colors duration-300",
-        solid
-          ? "bg-bsc-sapphire-950/92 backdrop-blur-md"
-          : "bg-transparent"
-      )}
-    >
+    <>
+      <header
+        className={cn(
+          "fixed left-0 right-0 top-0 z-50 transition-colors duration-300",
+          solid
+            ? "bg-bsc-sapphire-950/92 backdrop-blur-md"
+            : "bg-transparent"
+        )}
+      >
       {/* Top bar */}
       <div
         className={cn(
@@ -229,9 +234,14 @@ export function Header() {
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
+    </header>
 
-      {/* Mobile drawer */}
-      {mobileOpen && (
+    {/* Mobile drawer — rendered OUTSIDE <header> (round-18 audit F1):
+        a `backdrop-filter` on the fixed header makes it the containing
+        block for fixed descendants, so a `fixed inset-y-0` drawer nested
+        here collapses to the header's height. As a sibling it resolves
+        against the viewport. */}
+    {mobileOpen && (
         <div
           ref={drawerRef}
           role="dialog"
@@ -240,7 +250,11 @@ export function Header() {
           tabIndex={-1}
           onKeyDown={handleDrawerKeyDown}
           className="drawer-in fixed inset-y-0 right-0 z-50 w-80 max-w-[85vw] overflow-y-auto bg-bsc-sapphire-950 p-6 shadow-bsc-lg lg:hidden"
-          onClickCapture={() => setMobileOpen(false)}
+          onClickCapture={(event) => {
+            // Close only when a link was tapped (round-18 audit F3) —
+            // parent category labels and the heading are not actions.
+            if ((event.target as HTMLElement).closest("a")) setMobileOpen(false);
+          }}
         >
           <div className="mb-6 flex items-center justify-between">
             <span className="font-display text-lg font-semibold text-bsc-cream">
@@ -306,9 +320,23 @@ export function Header() {
                 </Link>
               );
             })}
+            {/* Give CTA in the drawer (round-18 audit F5) — the desktop top
+                bar link is `hidden lg:block`, so mobile otherwise loses the
+                stewardship call-to-action from the primary path. */}
+            <div
+              className="drawer-item-in mt-6 border-t border-bsc-cream/10 pt-4"
+              style={{ animationDelay: `${primaryNav.length * 40}ms` }}
+            >
+              <Link
+                to="/give"
+                className="block rounded-md px-3 py-2 text-sm font-semibold text-bsc-gold-300 transition-colors hover:bg-bsc-sapphire-800 hover:text-bsc-gold-200"
+              >
+                Give
+              </Link>
+            </div>
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }
