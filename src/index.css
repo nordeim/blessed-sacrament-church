@@ -32,8 +32,12 @@
   --color-bsc-terracotta-400: #c07a5a;
   --color-bsc-terracotta-500: #a86545;
   --color-bsc-terracotta-600: #8f5038;
+  --color-bsc-terracotta-300: #d19a83;
+  --color-bsc-terracotta-50: #f7ece7;
   --color-bsc-pine-500: #2d5a40;
   --color-bsc-pine-600: #1f422e;
+  --color-bsc-pine-300: #7fa88f;
+  --color-bsc-pine-50: #eef4f0;
 
   --shadow-bsc: 0 20px 60px -20px rgba(15, 26, 51, 0.45);
   --shadow-bsc-lg: 0 40px 90px -30px rgba(15, 26, 51, 0.55);
