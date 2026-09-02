@@ -34,13 +34,13 @@ type ButtonProps = ButtonAsLink | ButtonAsAnchor | ButtonAsButton;
 
 const variantClasses: Record<string, string> = {
   primary:
-    "bg-bsc-gold-500 text-bsc-sapphire-950 hover:bg-bsc-gold-600 focus:ring-bsc-gold-400",
+    "bg-bsc-gold-500 text-bsc-sapphire-950 hover:bg-bsc-gold-600 hover:-translate-y-0.5 hover:shadow-bsc focus:ring-bsc-gold-400",
   secondary:
-    "bg-bsc-sapphire-700 text-bsc-cream hover:bg-bsc-sapphire-800 focus:ring-bsc-sapphire-500",
+    "bg-bsc-sapphire-700 text-bsc-cream hover:bg-bsc-sapphire-800 hover:-translate-y-0.5 hover:shadow-bsc focus:ring-bsc-sapphire-500",
   ghost:
     "bg-transparent text-bsc-sapphire-700 hover:bg-bsc-sapphire-50 focus:ring-bsc-sapphire-300",
   "outline-light":
-    "bg-transparent border border-bsc-cream/40 text-bsc-cream hover:bg-bsc-cream/10 focus:ring-bsc-cream/30",
+    "bg-transparent border border-bsc-cream/40 text-bsc-cream hover:bg-bsc-cream/10 hover:border-bsc-cream/70 focus:ring-bsc-cream/30",
 };
 
 export function Button({
@@ -51,7 +51,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bsc-cream active:translate-y-0 active:scale-[0.98]",
+    "inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bsc-cream active:translate-y-0 active:scale-[0.98]",
     variantClasses[variant],
     className
   );

@@ -5,7 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { site } from "@/data/site";
 import { devotions } from "@/data/content";
 import { massDayKey } from "@/utils/massDay";
-import { Clock, MapPin, Phone, Mail, Bus, Train } from "lucide-react";
+import { Clock, MapPin, Phone, Mail, Bus, Train, HeartHandshake, Church } from "lucide-react";
 
 function MassCard({
   title,
@@ -134,17 +134,33 @@ export function Worship() {
               />
               <div className="mt-6 space-y-4">
                 <div className="rounded-xl border border-bsc-stone bg-bsc-cream p-5">
-                  <h3 className="font-display text-lg font-semibold text-bsc-sapphire-900">
-                    Confession
-                  </h3>
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-display text-lg font-semibold text-bsc-sapphire-900">
+                      Confession
+                    </h3>
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-bsc-gold-300/60 bg-bsc-gold-100 text-bsc-gold-700"
+                    >
+                      <HeartHandshake className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                  </div>
                   <p className="mt-2 text-sm leading-relaxed text-bsc-charcoal">
                     {site.mass.confession}
                   </p>
                 </div>
                 <div className="rounded-xl border border-bsc-stone bg-bsc-cream p-5">
-                  <h3 className="font-display text-lg font-semibold text-bsc-sapphire-900">
-                    Eucharistic Adoration
-                  </h3>
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-display text-lg font-semibold text-bsc-sapphire-900">
+                      Eucharistic Adoration
+                    </h3>
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-bsc-gold-300/60 bg-bsc-gold-100 text-bsc-gold-700"
+                    >
+                      <Church className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                  </div>
                   <p className="mt-2 text-sm leading-relaxed text-bsc-charcoal">
                     {site.mass.adoration}
                   </p>

@@ -29,10 +29,10 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "font-display text-3xl font-semibold sm:text-4xl",
+          "gold-rule rule-draw font-display text-3xl font-semibold sm:text-4xl",
           light ? "text-bsc-cream" : "text-bsc-sapphire-900",
-          align === "center" && "gold-rule mx-auto",
-          align === "left" && "gold-rule gold-rule-left"
+          align === "center" && "mx-auto",
+          align === "left" && "gold-rule-left"
         )}
       >
         {title}

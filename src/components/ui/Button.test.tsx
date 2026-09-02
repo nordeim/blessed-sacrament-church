@@ -74,4 +74,36 @@ describe("Button", () => {
     expect(link.className).toMatch(/active:translate-y-0/);
     expect(link.className).toMatch(/active:scale/);
   });
+
+  // Round-17 ("Light on the Tent") — solid variants gain a hover lift with
+  // the BSC shadow so buttons speak the same elevation language as card-lift.
+  it("lifts solid variants on hover (translate + bsc shadow + eased transition)", () => {
+    renderWithRouter(<Button to="/">Lift</Button>);
+    const link = screen.getByRole("link", { name: "Lift" });
+    expect(link.className).toMatch(/hover:-translate-y-0\.5/);
+    expect(link.className).toMatch(/hover:shadow-bsc/);
+    expect(link.className).toMatch(/transition-all/);
+    expect(link.className).toMatch(/duration-200/);
+  });
+
+  it("secondary variant lifts identically", () => {
+    renderWithRouter(<Button to="/" variant="secondary">LiftSec</Button>);
+    const link = screen.getByRole("link", { name: "LiftSec" });
+    expect(link.className).toMatch(/hover:-translate-y-0\.5/);
+    expect(link.className).toMatch(/hover:shadow-bsc/);
+  });
+
+  it("ghost variant stays color-only (restraint) but eases transitions", () => {
+    renderWithRouter(<Button to="/" variant="ghost">CalmGhost</Button>);
+    const link = screen.getByRole("link", { name: "CalmGhost" });
+    expect(link.className).not.toMatch(/hover:-translate-y-0\.5/);
+    expect(link.className).toMatch(/transition-all/);
+  });
+
+  it("outline-light brightens its border on hover instead of lifting", () => {
+    renderWithRouter(<Button to="/" variant="outline-light">CalmOutline</Button>);
+    const link = screen.getByRole("link", { name: "CalmOutline" });
+    expect(link.className).not.toMatch(/hover:-translate-y-0\.5/);
+    expect(link.className).toMatch(/hover:border-bsc-cream\/70/);
+  });
 });
