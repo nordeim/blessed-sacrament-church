@@ -4,7 +4,7 @@ test.describe("Ministries — 6 sections", () => {
   test("6 sections render with imageAlt, summary, and details", async ({ page }) => {
     await page.goto("/#/ministries");
 
-    const ids = ["liturgical", "faith-formation", "pastoral-care", "family-life", "youth", "mandarin"];
+    const ids = ["liturgical", "faith-formation", "pastoral-care", "family-life", "youth", "community"];
     for (const id of ids) {
       await expect(page.locator(`#${id}`)).toBeVisible();
     }
@@ -16,9 +16,9 @@ test.describe("Ministries — 6 sections", () => {
     }
   });
 
-  test("image onError fallback to local hero", async ({ page }) => {
+  test("ministry images resolve to local assets", async ({ page }) => {
     await page.goto("/#/ministries");
-    const images = page.locator("#liturgical img, #faith-formation img, #pastoral-care img, #family-life img, #youth img, #mandarin img, #language-communities img");
+    const images = page.locator("#liturgical img, #faith-formation img, #pastoral-care img, #family-life img, #youth img, #community img");
     await expect(images.first()).toBeVisible();
     const srcs = await images.evaluateAll((els: HTMLImageElement[]) => els.map((e) => e.src));
     expect(srcs.length).toBeGreaterThanOrEqual(6);
@@ -54,9 +54,9 @@ test.describe("Ministries — 6 sections", () => {
 
     await page.goto("/#/");
 
-    const chapelCard = page.getByRole("link", { name: /Adoration Chapel/i }).first();
-    await expect(chapelCard).toBeVisible();
-    await chapelCard.click();
+    const hallCard = page.getByRole("link", { name: /Damien Hall/i }).first();
+    await expect(hallCard).toBeVisible();
+    await hallCard.click();
     await expect(page).toHaveURL(/#\/worship#visit/);
     await expect(page.locator("#visit")).toBeVisible();
   });

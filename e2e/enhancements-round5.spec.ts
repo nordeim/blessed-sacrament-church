@@ -2,14 +2,13 @@ import { expect, test, type Page } from "@playwright/test";
 import { gotoHash } from "./helpers";
 
 /**
- * Round-5 "Light of the Portiuncula" E2E audit — validates the remediated
- * codebase (docs/design-enhancement-round5-2026-08-30.md):
+ * Round-5 E2E audit — retargeted to the BSC contract (round 16):
  *   1. Worship highlights today's Mass card (matches the run date).
- *   2. Give closes with a dark band whose h2 is cream on maroon-950.
+ *   2. Give closes with the scripture band + office loop-back (phone).
  *   3. History story column is sticky at desktop widths.
  *   4. Grounds card photographs drift (scale) on card hover.
  *   5. Timeline rail is a drawn gradient.
- *   6. NotFound carries the ghosted tau emblem.
+ *   6. NotFound carries the ghosted emblem.
  */
 
 test.describe("Round-5 enhancement audit", () => {
@@ -19,21 +18,23 @@ test.describe("Round-5 enhancement audit", () => {
     await expect(cards).toHaveCount(3);
 
     const today = new Date().getDay();
-    const expected = today === 0 ? "sunday" : today === 6 ? "saturday" : "weekdays";
+    const expectedTitle =
+      today === 0 ? /Sunday/i : today === 6 ? /Saturday/i : /Monday – Friday/i;
 
     const todayCards = page.locator('[data-testid="mass-card"][data-today="true"]');
     await expect(todayCards).toHaveCount(1);
-    await expect(todayCards.first()).toHaveAttribute("data-card-day", expected);
-    await expect(page.getByTestId("mass-today-chip")).toHaveText("Today");
+    await expect(todayCards.first().getByRole("heading")).toHaveText(expectedTitle);
+    await expect(todayCards.first().getByText("Today", { exact: true })).toBeVisible();
   });
 
-  test("give closing band h2 is cream on maroon-950", async ({ page }) => {
+  test("give closes with the scripture band and office loop-back", async ({ page }) => {
     await gotoMain(page, "/give");
-    const band = page.locator('main section[class*="bg-shrine-maroon-950"]').last();
-    const h2 = band.getByRole("heading").first();
-    await expect(h2).toBeVisible();
-    await expect(h2).toHaveCSS("color", "rgb(250, 246, 236)");
-    await expect(band.getByText(/Parish Office|Mon.*Fri|6474 0582/i).first()).toBeVisible();
+    const band = page.locator('main section[class*="bg-bsc-sapphire-900"]').last();
+    await expect(band.getByText(/cheerful giver/i)).toBeVisible();
+    // Office loop-back: the contact band exposes the parish phone.
+    await expect(
+      page.getByRole("link", { name: /Call \+65 6474 0582/i }),
+    ).toBeVisible();
   });
 
   test("history story column is sticky at desktop width", async ({ page }) => {
@@ -61,7 +62,7 @@ test.describe("Round-5 enhancement audit", () => {
     expect(image).toContain("linear-gradient");
   });
 
-  test("notfound carries the ghosted tau emblem", async ({ page }) => {
+  test("notfound carries the ghosted emblem", async ({ page }) => {
     await gotoMain(page, "/this-does-not-exist-r5");
     await expect(page.getByText(/This path does not lead to the church/i)).toBeVisible();
     const svg = page.locator("main section svg");

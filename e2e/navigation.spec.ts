@@ -11,8 +11,8 @@ test.describe("navigation — desktop, keyboard, skip, footer", () => {
 
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
     await expect(page.getByRole("link", { name: "Mass Times" }).first()).toBeVisible();
-    await expect(page.getByText("Weekday, weekend, and language Masses.").first()).toBeVisible();
-    await expect(page.getByText("Reconciliation, the chapel, and Sacred Heart devotion.").first()).toBeVisible();
+    await expect(page.getByText("Mass times, sacraments, and how to find us").first()).toBeVisible();
+    await expect(page.getByRole("link", { name: "Confession & Adoration" }).first()).toBeVisible();
   });
 
   test("desktop Ministries dropdown on hover shows 3 children", async ({ page }) => {
@@ -25,8 +25,8 @@ test.describe("navigation — desktop, keyboard, skip, footer", () => {
 
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
     await expect(page.getByRole("link", { name: "Liturgical" }).first()).toBeVisible();
-    await expect(page.getByText("Servers, choirs, and hospitality at Mass.").first()).toBeVisible();
-    await expect(page.getByText("Catechesis, RCIA, and lifelong formation.").first()).toBeVisible();
+    await expect(page.getByText("Liturgical, pastoral, and community ministries").first()).toBeVisible();
+    await expect(page.getByRole("link", { name: "Pastoral Care" }).first()).toBeVisible();
   });
 
   test("keyboard nav covers primaryNav and SkipLink focuses main", async ({ page }) => {
@@ -53,25 +53,25 @@ test.describe("navigation — desktop, keyboard, skip, footer", () => {
 
     await page.getByRole("navigation", { name: "Explore" }).getByRole("link", { name: "History" }).click();
     await expect(page).toHaveURL(/#\/history/);
-    await expect(page.getByRole("heading", { name: /History|Tent|Household/i }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Our History/i }).first()).toBeVisible();
 
     await page.goto("/#/");
-    await page.getByRole("navigation", { name: "Get involved" }).getByRole("link", { name: "Liturgical" }).click();
-    await expect(page).toHaveURL(/#liturgical/);
-    await expect(page.locator("#liturgical")).toBeVisible();
+    await page.getByRole("navigation", { name: "Get involved" }).getByRole("link", { name: "FAQ" }).click();
+    await expect(page).toHaveURL(/#\/faq/);
+    await expect(page.getByRole("heading", { name: /Frequently Asked Questions/i }).first()).toBeVisible();
 
     await page.goto("/#/");
     await page.getByRole("navigation", { name: "Get involved" }).getByRole("link", { name: "Serve" }).click();
     await expect(page).toHaveURL(/#\/serve/);
-    await expect(page.getByRole("heading", { name: /Take a place|Serve/i }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^Serve$/i }).first()).toBeVisible();
   });
 
   test("NotFound Return Home works", async ({ page }) => {
     await page.goto("/#/this-does-not-exist");
     await expect(page.getByText(/This path does not lead to the church/i)).toBeVisible();
-    await page.getByRole("link", { name: /Return home/i }).click();
+    await page.getByRole("link", { name: /Return Home/i }).click();
     await expect(page).toHaveURL(/#\/$|\/#\/\?/);
-    await expect(page.getByRole("heading", { name: /A tent of meeting/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Church of the Blessed Sacrament/i })).toBeVisible();
   });
 
   test("header top bar Give link navigates to /give", async ({ page }) => {

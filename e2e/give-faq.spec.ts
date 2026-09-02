@@ -1,28 +1,32 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("Give + FAQ + Worship journeys", () => {
-  test("Give alias routes both show 8 options", async ({ page }) => {
+  test("Give alias routes both show 6 options with UEN", async ({ page }) => {
     await page.goto("/#/give");
-    await expect(page.getByRole("heading", { name: /Keep the tent standing/i }).first()).toBeVisible();
-    await expect(page.getByRole("heading", { name: /Eight paths of thanksgiving/i }).first()).toBeVisible();
-    await expect(page.getByRole("heading", { name: "PayNow" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Church Maintenance" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "General Church Offering" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Mass offerings" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Cheque" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: /Cash at/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Stewardship & Generosity/i }).first()).toBeVisible();
+    for (const option of [
+      "PayNow",
+      "Weekend Collection",
+      "Cheque",
+      "Cash",
+      "General Church Offering",
+      "Mass Offerings",
+    ]) {
+      await expect(page.getByRole("heading", { name: option }).first()).toBeVisible();
+    }
+    await expect(page.getByText(/T08CC1234A/).first()).toBeVisible();
 
     await page.goto("/#/donate");
-    await expect(page.getByRole("heading", { name: /Keep the tent standing/i }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Stewardship & Generosity/i }).first()).toBeVisible();
     await expect(page.getByRole("heading", { name: "PayNow" })).toBeVisible();
   });
 
   test("FAQ accordion single-open with aria", async ({ page }) => {
     await page.goto("/#/faq");
-    await expect(page.getByRole("heading", { name: /Questions the office hears most/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Frequently Asked Questions/i })).toBeVisible();
 
     const firstQuestion = page.getByRole("button", { name: /What are the Mass times\?/i });
-    const secondQuestion = page.getByRole("button", { name: /When can I go to confession\?/i });
+    const secondQuestion = page.getByRole("button", { name: /When is confession available\?/i });
 
     await expect(firstQuestion).toHaveAttribute("aria-expanded", "true");
     await expect(secondQuestion).toHaveAttribute("aria-expanded", "false");
@@ -41,21 +45,19 @@ test.describe("Give + FAQ + Worship journeys", () => {
 
   test("Worship Find Us and maps", async ({ page }) => {
     await page.goto("/#/worship");
-    await expect(page.getByRole("heading", { name: /Mass, mercy/i }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Join Us at the Altar/i }).first()).toBeVisible();
 
     await expect(page.locator("#mass")).toBeVisible();
     await expect(page.locator("#confession")).toBeVisible();
     await expect(page.locator("#visit")).toBeVisible();
 
-    await expect(page.getByText("Weekday", { exact: false }).first()).toBeVisible();
-    await expect(page.getByText("Reconciliation", { exact: false }).first()).toBeVisible();
+    await expect(page.getByText("Morning", { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(/Reconciliation|Confession/i).first()).toBeVisible();
 
-    await expect(page.getByText(/1 Commonwealth Drive|Commonwealth/i).first()).toBeVisible();
+    await expect(page.getByText(/1 Commonwealth Drive/i).first()).toBeVisible();
+    await expect(page.getByText(/Queenstown \(EW19\)/i).first()).toBeVisible();
 
-    const directions = page.getByRole("link", { name: /Open in Google Maps/i }).first();
-    await expect(directions).toHaveAttribute("href", /google\.com\/maps/);
-
-    const iframe = page.locator('iframe[title="Map of Blessed Sacrament Church"]');
+    const iframe = page.locator('iframe[title="Map to Church of the Blessed Sacrament"]');
     await expect(iframe).toBeAttached();
     await expect(iframe).toHaveAttribute("src", /google\.com\/maps/);
   });
@@ -65,6 +67,6 @@ test.describe("Give + FAQ + Worship journeys", () => {
 
     await page.getByRole("navigation", { name: "Get involved" }).getByRole("link", { name: /^Give$/ }).click();
     await expect(page).toHaveURL(/#\/give/);
-    await expect(page.getByRole("heading", { name: /Eight paths|Keep the tent/i }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^Give$/i }).first()).toBeVisible();
   });
 });

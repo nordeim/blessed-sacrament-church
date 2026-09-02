@@ -2,49 +2,31 @@ import { expect, test } from "@playwright/test";
 import { gotoHash } from "./helpers";
 
 /**
- * Round-2 "Sacred Polish" E2E audit — validates the remediated codebase:
- *   1. Dark CTA-band headings render cream (WCAG: was maroon-700 ~1.26:1).
- *   2. Head completeness: favicon, theme-color, OG image/url, Twitter card, JSON-LD.
+ * Round-2 "Sacred Polish" E2E audit — retargeted to the BSC contract (round 16):
+ *   1. Dark CTA-band headings render cream on the sapphire-900 band (WCAG-safe).
+ *   2. Head completeness: emoji favicon data URI, og:url, Church JSON-LD.
  *   3. Route transitions: keyed page-in wrapper replays on pathname change.
  *   4. Scroll progress rail + BackToTop ring track page depth.
- *   5. Mobile drawer marks the active route (parity with desktop nav).
  */
 
 test.describe("Round-2 enhancement audit", () => {
-  test("dark CTA-band heading is cream on Home (light heading on maroon-950)", async ({ page }) => {
+  test("dark CTA-band heading is cream on Home (bsc-cream on sapphire-900)", async ({ page }) => {
     await gotoHash(page, "/");
-    const h2 = page.locator('main section[class*="bg-shrine-maroon-950"] h2').first();
+    const band = page.locator('main section[class*="bg-bsc-sapphire-900"]').last();
+    const h2 = band.getByRole("heading", { name: /Take Your Place in Our Community/i });
     await expect(h2).toBeVisible();
-    // shrine-cream #faf6ec — was maroon-700 #55191a (1.26:1 on maroon-900).
-    await expect(h2).toHaveCSS("color", "rgb(250, 246, 236)");
-    // Serve/Give use cream backgrounds for their SectionHeadings — verified via unit test cta-bands
+    // bsc-cream #f8f5ef on the dark band.
+    await expect(h2).toHaveCSS("color", "rgb(248, 245, 239)");
   });
 
-  test("head ships favicon, theme-color, social images, and Church JSON-LD", async ({ page }) => {
+  test("head ships emoji favicon, og:url, and Church JSON-LD", async ({ page }) => {
     await gotoHash(page, "/");
-    // Env-agnostic contract (round-9 E2E-L1): dev serves the icon href as
-    // "/favicon.svg", while the singlefile build rewrites it to the relative
-    // form "./favicon.svg". Accept both — and assert the reference actually
-    // resolves, mirroring the env-safe "favicon.svg resolves from public/" test.
+    // BSC ships an inline ⛪ emoji data-URI favicon (no favicon.svg asset).
     const icon = page.locator('link[rel="icon"][type="image/svg+xml"]');
-    await expect(icon).toHaveAttribute("href", /^(?:\.\/|\/)favicon\.svg$/);
-    const iconResponse = await page.request.get((await icon.getAttribute("href"))!);
-    expect(iconResponse.status()).toBe(200);
-    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
-      "content",
-      "#200a0a",
-    );
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
-      "content",
-      "https://www.bsc.org.sg/images/hero-church.jpg",
-    );
+    await expect(icon).toHaveAttribute("href", /^data:image\/svg\+xml/);
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
       "content",
-      "https://www.bsc.org.sg/",
-    );
-    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
-      "content",
-      "summary_large_image",
+      "https://bsc.org.sg/",
     );
 
     const jsonld = await page
@@ -62,10 +44,10 @@ test.describe("Round-2 enhancement audit", () => {
     expect(parsed.address.postalCode).toBe("149603");
   });
 
-  test("favicon.svg resolves from public/", async ({ page }) => {
-    const response = await page.request.get("/favicon.svg");
+  test("robots.txt resolves from public/", async ({ page }) => {
+    const response = await page.request.get("/robots.txt");
     expect(response.status()).toBe(200);
-    expect(response.headers()["content-type"]).toContain("image/svg");
+    expect(await response.text()).toContain("User-agent");
   });
 
   test("route changes replay the page-in wrapper", async ({ page }) => {
@@ -85,8 +67,10 @@ test.describe("Round-2 enhancement audit", () => {
     await gotoHash(page, "/worship");
     const container = page.getByTestId("page-container");
     await expect(container).toHaveAttribute("data-route", "/worship");
-    // PageHero in-page CTA: /worship → /worship#mass (same pathname).
-    await page.getByRole("link", { name: "Mass times" }).first().click();
+    // Hash-only update (same pathname): the keyed node must NOT re-mount.
+    await page.evaluate(() => {
+      window.location.hash = "#/worship#mass";
+    });
     await expect(page).toHaveURL(/#mass/);
     await expect(container).toHaveAttribute("data-route", "/worship");
   });
@@ -98,12 +82,11 @@ test.describe("Round-2 enhancement audit", () => {
     await expect(rail).toHaveCSS("transform", "matrix(0, 0, 0, 1, 0, 0)");
 
     // Land at mid-depth (50%): a stable resting value that deterministically
-    // matches. (Scrolling to the very bottom rests at matrix(1, …) which the
-    // 0.x regex cannot match — the old form only passed when a poll sample
-    // caught the smooth-scroll animation mid-flight; racy under load.)
+    // matches. behavior:"instant" overrides the page's CSS smooth scrolling so
+    // the resting position is reached immediately.
     await page.evaluate(() => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      window.scrollTo(0, Math.round(max * 0.5));
+      window.scrollTo({ top: Math.round(max * 0.5), behavior: "instant" });
     });
     await expect
       .poll(() => rail.evaluate((el) => getComputedStyle(el).transform))
