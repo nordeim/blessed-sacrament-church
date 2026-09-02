@@ -14,7 +14,7 @@ export function Footer() {
       <Container>
         <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
           {/* Explore */}
-          <div>
+          <nav aria-label="Explore">
             <h3 className="mb-4 font-display text-sm font-semibold uppercase tracking-wider text-bsc-cream">
               Explore
             </h3>
@@ -30,10 +30,10 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Get Involved */}
-          <div>
+          <nav aria-label="Get involved">
             <h3 className="mb-4 font-display text-sm font-semibold uppercase tracking-wider text-bsc-cream">
               Get Involved
             </h3>
@@ -49,7 +49,7 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Parish */}
           <div>

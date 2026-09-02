@@ -1,9 +1,12 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * Playwright E2E for risen-christ-church — HashRouter SPA.
+ * Playwright E2E for blessed-sacrament-church — HashRouter SPA.
  * Chromium-only in v1 (fast). Add firefox/webkit later.
  * webServer reuses existing dev server if running; otherwise starts `pnpm dev`.
+ * Project uses `channel: "chromium"` (new headless): the rAF-throttled scroll
+ * hooks (useScrollProgress) need continuous BeginFrames, which the
+ * headless-shell build does not schedule.
  */
 export default defineConfig({
   testDir: "./e2e",
@@ -33,7 +36,7 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Chrome"], channel: "chromium" },
     },
   ],
 });

@@ -26,7 +26,10 @@ export function Layout() {
       }
       window.scrollTo({ top: 0, behavior: "auto" });
     };
-    resolveAnchor();
+    // resolveAnchor returns the clearTimeout cleanup for a pending anchor
+    // scroll — returning it cancels a stale scroll if the route changes
+    // inside the 80ms window (round-16 audit L1).
+    return resolveAnchor();
   }, [pathname, hash]);
 
   return (

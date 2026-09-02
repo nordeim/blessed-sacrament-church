@@ -77,6 +77,18 @@ export function Header() {
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [mobileOpen]);
 
+  // Escape dismisses an open desktop dropdown from anywhere on the page
+  // (round-16 audit L3 — the drawer has its own Escape handling in
+  // handleDrawerKeyDown; this covers the keyboard-focus-open menu).
+  useEffect(() => {
+    if (!desktopOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDesktopOpen(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [desktopOpen]);
+
   const isActive = (to: string) => {
     if (to.includes("#")) {
       const [path, fragment] = to.split("#");
@@ -129,7 +141,7 @@ export function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
           {primaryNav.map((item) => {
             if (item.children) {
               const active = isParentActive(item);
@@ -210,7 +222,7 @@ export function Header() {
         <button
           ref={hamburgerRef}
           onClick={() => setMobileOpen((o) => !o)}
-          aria-label="Toggle menu"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           className="flex h-11 w-11 items-center justify-center rounded-md text-bsc-cream lg:hidden"
         >
@@ -242,7 +254,7 @@ export function Header() {
               <X className="h-5 w-5" />
             </button>
           </div>
-          <nav className="space-y-1">
+          <nav aria-label="Mobile" className="space-y-1">
             {primaryNav.map((item, i) => {
               if (item.children) {
                 const active = isParentActive(item);

@@ -18,7 +18,13 @@ export function useScrollProgress(): number {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        // Reset the guard — StrictMode's double-mount (dev) runs
+        // effect → cleanup → effect on one instance; leaving the stale id
+        // here permanently disabled the hook after remount (round-16).
+        rafRef.current = 0;
+      }
     };
   }, []);
 

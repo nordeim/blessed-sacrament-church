@@ -39,6 +39,7 @@ export function BackToTop() {
       ref={buttonRef}
       data-testid="back-to-top"
       onClick={scrollToTop}
+      aria-label="Back to top"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
       className={cn(
