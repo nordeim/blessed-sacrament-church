@@ -27,7 +27,7 @@ port_provenance: Singapore port of https://www.bsc.org.sg/ — Blessed Sacrament
 **What v3 fixes structurally (the systemic root cause):** the three source files restated every volatile fact (test counts, file counts, color counts, version numbers, CSP allowlists, src.orig policy) **5–8 times each**, and each hop's appendices were copy-forwarded **without a previous-parish fossil sweep** — so the older a fact, the more stale copies of it survived (evidence per file in Appendix G). v3 therefore introduces:
 
 1. **§0 — Volatile Facts Register.** The *only* section allowed to state a mutable number. Every other section **references** §0 ("see §0") instead of restating. Historical snapshots are permitted *only* in the lineage appendices, and only with an explicit **`as of <date>`** label.
-2. **A completed contracts layer.** §4.3's register matches the 27 utility classes + 7 keyframes measured in this snapshot; §18 gains the `z-[60]` scroll-rail row; §6 covers all three hooks; §5.2's tree includes every hook/util the test harness proves exists; §20's `SafeImageProps` includes `fetchPriority`.
+2. **A completed contracts layer.** §4.3's register matches the 30 utility classes + 9 keyframes measured in this snapshot (round-17 re-pin); §18 gains the `z-[60]` scroll-rail row; §6 covers all three hooks; §5.2's tree includes every hook/util the test harness proves exists; §20's `SafeImageProps` includes `fetchPriority`.
 3. **A fossil-sweep protocol** (Appendix G.4) that any future port must run before its doc ships — the checklist that would have caught every defect catalogued in Appendix G.
 
 ---
@@ -44,9 +44,9 @@ port_provenance: Singapore port of https://www.bsc.org.sg/ — Blessed Sacrament
 | E2E tests | **51 tests — green, 8 spec files + helpers** (`smoke 11 + navigation 8 + ministries 4 + give-faq 4 + enhancements 7 + enhancements-round5 6 + enhancements-round7 8 + deep-links 3` = 51 — retargeted to BSC parish facts, F2B) | §2, §3.1, §3.2, §11, App C |
 | `src/` inventory | **63 files — 41 source + 21 tests + 1 setup** (`find src -type f \| wc -l` → 63; harness ported) | §5.2 |
 | `public/images/` | **9 files** (`hero-church`, `damien-hall`, `faith-formation`, `family-life`, `garden`, `liturgical`, `pastoral-care`, `youth`, `community`) + `public/_headers`; all images local | §5.2, §11, App B |
-| Build artifact | `dist/index.html` **466.20 kB** (JS+CSS inlined) + `dist/_headers` + `dist/robots.txt` + `dist/images/` (9 files, publicDir copy) | §2, §11, Quick Ref |
+| Build artifact | `dist/index.html` **467.31 kB** (JS+CSS inlined) + `dist/_headers` + `dist/robots.txt` + `dist/images/` (9 files, publicDir copy) | §2, §11, Quick Ref |
 | Design tokens | **33 colors + 2 shadows (35 `@theme` entries)** — sapphire-blue palette (`bsc-*`), includes `terracotta-600 #8f5038` + `gold-700 #85641c` + round-16 chip steps `pine-50/300` + `terracotta-50/300` | §4.1, §4.4, §19, ADR-3 |
-| Utilities / keyframes | **27 utility classes + 7 keyframes** + themed scrollbar + `@media print` reveal override; `card-tint` present | §4.3, §5.2, Quick Ref |
+| Utilities / keyframes | **30 utility classes + 9 keyframes** + themed scrollbar + `@media print` reveal override; `card-tint` present; round-17 adds `scrim-hero` / `scrim-page` / `hero-fade` / `rule-draw` | §4.3, §5.2, Quick Ref |
 | Hooks | **3** — `useScrolled`, `useScrollProgress`, `useScrollSpy` (drives the Ministries pill `aria-current`) | §6, §5.2, Quick Ref |
 | Utils | **5** — `cn`, `massDay`, `monogram`, `deepLinks`, `categoryTone` | §5.2, §20, Quick Ref |
 | Routes | **17 `Route` entries** (16 content paths + `*`), **7 alias paths in 5 groups**, **9 hash anchors** (3 on `/worship`, 6 on `/ministries` — sixth ministry `id` in BSC data is **`community`** with title Community & Outreach) — 18 `<Route>` tags incl. the Layout wrapper (17 path entries) | §5.4, App B |
@@ -192,7 +192,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 | `playwright.built.config.ts` | Extends the base config — `baseURL = E2E_BASE_URL ?? http://127.0.0.1:4173`; `webServer: pnpm exec vite preview --port 4173` (skipped when `E2E_BASE_URL` is set) | Built-artifact pass (`pnpm test:e2e:built`): runs the same 51 tests against `dist/` via `vite preview`, or against the live host via `E2E_BASE_URL`. Exists because the singlefile pipeline rewrites root-relative asset refs (`/favicon.svg` → `./favicon.svg`) — dev-only assertions pass on `pnpm dev` and fail on the built artifact (round-9 E2E-L1). |
 | `e2e/` | 51 tests — `smoke.spec.ts` (11), `navigation.spec.ts` (8), `ministries.spec.ts` (4), `give-faq.spec.ts` (4), `enhancements.spec.ts` (7), `enhancements-round5.spec.ts` (6), `enhancements-round7.spec.ts` (8), `deep-links.spec.ts` (3) + `helpers.ts` | **green — retargeted to BSC (F2B)** — assertions assert BSC copy (1 Commonwealth Drive, UEN T08CC1234A, Join Us at the Altar, Stewardship & Generosity); routes/anchors 17/7/9 unchanged. |
 | `.github/workflows/ci.yml` | CI: lint → typecheck → test → test:e2e (chromium) → build + artifacts | `pnpm 11`, `node 24`. All steps green — CI mirrors the local gate. Drift guards restored in `src/`: `ci-workflow` (4) + `repo-hygiene` (4) + `docs-contract` (round-13/14, 22). |
-| `src/index.css` | `@import "tailwindcss"` + `@theme` (33 colors + 2 shadows incl. gold-700 #85641c, §0) + `@layer base/utilities` (27 utilities + 7 keyframes incl. card-tint, §4.3) + themed scrollbar in `@layer base` + `@media print` reveal override | Only token source; no `tailwind.config.*` exists. `src/token-integrity.test.ts` fails on any referenced-but-undefined `bsc-*` class. |
+| `src/index.css` | `@import "tailwindcss"` + `@theme` (33 colors + 2 shadows incl. gold-700 #85641c, §0) + `@layer base/utilities` (30 utilities + 9 keyframes incl. card-tint + round-17 scrims/hero-fade/rule-draw, §4.3) + themed scrollbar in `@layer base` + `@media print` reveal override | Only token source; no `tailwind.config.*` exists. `src/token-integrity.test.ts` fails on any referenced-but-undefined `bsc-*` class. |
 | `index.html` | `lang en`, `viewport`, `meta description`, scoped `Content-Security-Policy` meta + `referrer` meta, inline ⛪ emoji data-URI favicon, OG (`og:title`/`og:description`/`og:type`/`og:url`) + Church JSON-LD, preconnect `fonts.googleapis.com`, `Fraunces`+`Source Sans 3`, `#root` + `src/main.tsx` | CSP: `img-src 'self' data: blob:` (all images local), `frame-src https://www.google.com` (maps embed), `script-src` inline (singlefile) + `https://static.cloudflareinsights.com`, `connect-src 'self' https://cloudflareinsights.com` (host-injected analytics beacon). Social identity for Blessed Sacrament Church (www.bsc.org.sg, Corpus Christi — Sunday after Trinity Sunday). Head facts re-guarded by the e2e head test. |
 | `.gitignore` | Ignores `node_modules/`, `.next/`, `dist/`, `/scripts/`, `src.orig/`, `docs/ssh-key.txt`, `/package-lock.json` + `nohup.out`, `.venv`, `bak.git/` (root-anchored; round-13) | `skills/` is intentionally **tracked** (the old `skills/` ignore rule was removed in round-13 — it made 2,360 tracked files match `.gitignore`, the L14 trap in reverse). `src.orig/` stays ignored (local-only artifact, never in the repo). Root `package-lock.json` untracked (round-13 hygiene). |
 
@@ -260,7 +260,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 
 ### 4.3 Custom Utilities (`@layer utilities`) — complete register
 
-> **v3 fix:** the three source files' §4.3 tables listed only the hop-1 subset (~18 rows) while §3.2 claimed 27 utilities, and their keyframe prose listed 6 while claiming 8. This section's register matches the **27 utility classes + 7 keyframes** measured in `src/index.css` (round-16 re-pin; `gold-rule-draw` and `bloom-drift` keyframes are not present in this snapshot). If you add a utility, add its row here *and* update the count in §0 — never leave the two out of sync.
+> **round-17 re-pin:** this register matches the **30 utility classes + 9 keyframes** measured in `src/index.css` (2026-09-02). Row 28 (`bloom-drift`) is a lineage fossil — not present in the BSC snapshot. The round-17 additions are `scrim-hero` / `scrim-page` / `hero-fade` / `rule-draw` ("Light on the Tent"). If you add a utility, add its row here *and* update the count in §0 — never leave the two out of sync.
 
 | # | Name | CSS | Purpose |
 |---|---|---|---|
@@ -270,30 +270,34 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 | 4 | `.bg-gold-bloom` | radial gold bloom gradient (round-5) | Warm gold wash on dark CTA bands |
 | 5 | `.divider-weave` | 2px `repeating-linear-gradient(90deg, stone 0 8px, transparent 8px 12px)` | Section weave strip |
 | 6 | `.divider-weave-thin` | 1px `repeating-linear-gradient(90deg, stone 0 6px, transparent 6px 10px)` | Thin weave (footer top) |
-| 7 | `.gold-rule` | `linear-gradient(90deg, transparent, gold-500 18%, gold-300 50%, gold-500 82%, transparent)` height 1px + `gold-rule-draw` 0.9s | Centered gold rule (section dividers) |
-| 8 | `.gold-rule-left` | `linear-gradient(90deg, gold-500, transparent)` height 1px + `gold-rule-draw` 0.9s | Left-aligned gold rule (eyebrow / `SectionHeading` line) |
-| 9 | `.hero-ken-burns` | `scale(1)→1.05` 20s ease-out `hero-ken-burns` | Hero image slow zoom |
+| 7 | `.gold-rule` | `::after` 64px × 2px bar, `linear-gradient(90deg, gold-400, gold-600)`, `margin-top 0.75rem` | Gold rule under `SectionHeading` titles |
+| 8 | `.gold-rule-left` | left-aligns the `.gold-rule` bar (`margin-left: 0; margin-right: auto`) | Left-aligned gold rule variant |
+| 9 | `.hero-ken-burns` | `scale(1)→scale(1.08) translate(-1%,-1%)`, 20s ease-in-out infinite alternate | Home hero image slow zoom (round-17: Home wraps the img in a `hero-fade` layer — opacity on the wrapper, transform on the img) |
 | 10 | `.mask-fade-b` | `linear-gradient(to bottom, black 70%, transparent)` | Mask for image fades |
 | 11 | `.reveal` | `translateY(24px)→0`, `opacity 0→1`, `0.7s cubic-bezier(0.22,1,0.36,1)` + `prefers-reduced-motion` kill | Scroll-reveal via `Reveal.tsx` + `IntersectionObserver` (print override round-7) |
 | 12 | `.reveal-visible` | paired state class of `.reveal` | Applied by `Reveal.tsx` on intersect |
-| 13 | `.rise-in` | `rise-in` keyframe: `translateY(20px)→0`, `opacity 0→1`, `0.7s ease-out`, fill `both` | Staged entrance for Home hero + PageHero content (eyebrow→title→copy→CTA) |
-| 14 | `.rise-in-d1` | delay 90ms | Stage 2 (title) |
-| 15 | `.rise-in-d2` | delay 180ms | Stage 3 (copy) |
-| 16 | `.rise-in-d3` | delay 280ms | Stage 4 (CTA) |
-| 17 | `.rise-in-d4` | delay 380ms | Stage 5 (extras) |
-| 18 | `.menu-in` | `menu-in` keyframe: `translateY(-4px)→0`, `opacity 0→1`, `0.18s ease-out` | Desktop dropdown `<ul>` entrance (runs on conditional mount) |
-| 19 | `.drawer-in` | `drawer-in` keyframe: `translateY(-12px)→0`, `opacity 0→1`, `0.24s ease-out` | Mobile drawer panel entrance (runs on conditional mount) |
-| 20 | `.drawer-item-in` | staggered item entrance inside the mobile drawer | Drawer link cascade |
+| 13 | `.rise-in` | `rise-in` keyframe: `translateY(30px)→0`, `opacity 0→1`, `0.8s ease-out`, fill `both` | Staged entrance for Home hero + PageHero content (eyebrow→title→copy→CTA) |
+| 14 | `.rise-in-d1` | delay 100ms | Stage 2 (title) |
+| 15 | `.rise-in-d2` | delay 200ms | Stage 3 (copy) |
+| 16 | `.rise-in-d3` | delay 350ms | Stage 4 (CTA) |
+| 17 | `.rise-in-d4` | delay 500ms | Stage 5 (extras) |
+| 18 | `.menu-in` | `menu-in` keyframe: `translateY(-8px) scale(0.98)→0/1`, `opacity 0→1`, `0.25s ease-out` | Desktop dropdown `<ul>` entrance (runs on conditional mount) |
+| 19 | `.drawer-in` | `drawer-in` keyframe: `translateX(100%)→0`, `opacity 0→1`, `0.35s ease-out` | Mobile drawer panel entrance (runs on conditional mount) |
+| 20 | `.drawer-item-in` | `drawer-item-in` keyframe: `translateX(16px)→0`, `opacity 0→1`, `0.3s ease-out` | Drawer link cascade |
 | 21 | `.page-in` | keyed route-transition entrance (round-2) | Page wrapper fade/slide on route change |
-| 22 | `.dot-pulse` | `::after` gold ring `halo-pulse` 2.6s infinite (scale 0.6→1.7 + fade); reduced-motion → `opacity:0` | Timeline dot halo |
-| 23 | `.card-lift` | hover `translateY(-4px)` + `shadow-shrine` + gold border tint, 300ms ease-out | Uniform card hover (grounds/devotions/pillars/roles/giving/events) |
+| 22 | `.dot-pulse` | `::after` gold ring `halo-pulse` 2s infinite (scale 1→1.6, opacity 0.6→0); reduced-motion → killed | Timeline dot halo |
+| 23 | `.card-lift` | hover `translateY(-4px)` + `shadow-bsc` + `gold-400` border, 300ms ease | Uniform card hover (grounds, round-17 also featured event cards) |
 | 24 | `.card-tint` | info-card honesty tint (round-7) — present in BSC `index.css` | Distinguishes informational cards from interactive ones |
 | 25 | `.link-underline` | `::after` gold gradient underline, `scaleX(0)→1` 300ms on hover/focus (+ `aria-current` state) | Footer nav, top-bar Give link, priest contacts, WhatsApp links |
-| 26 | `.skip-link` | `fixed z-[100] -translate-y-24 → focus:translate-y-0` | Skip-to-content link (`SkipLink.tsx` + `Layout.tsx`) |
+| 26 | `.skip-link` | `absolute top -40px → focus top:0`, `z-[100]`, sapphire-900 bg | Skip-to-content link (`SkipLink.tsx`) |
 | 27 | `.img-zoom` | grounds/ministries image drift-on-hover (round-5) | Image interior pan while card lifts |
-| 28 | `.bloom-drift` | `bloom-drift` keyframe: gold-bloom translate/scale drift, 14s ease-in-out infinite alternate; reduced-motion → single frame (round-15) | Ambient life on the three dark CTA bands (Home / NewsEvents / Give) |
+| 28 | `.bloom-drift` | *(lineage fossil — not present in the BSC snapshot)* gold-bloom drift keyframe (round-15, Risen Christ) | Retained for lineage only |
+| 29 | `.scrim-hero` | `linear-gradient(to bottom, rgba(10,17,34,0.30), rgba(10,17,34,0.55) 55%, rgba(10,17,34,0.95))` | Bottom-heavy Home-hero scrim — roof reads at top, text contrast at bottom (round-17) |
+| 30 | `.scrim-page` | same family, `0.45 / 0.75 55% / 0.96` | PageHero scrim, heavier for shorter bands (round-17) |
+| 31 | `.hero-fade` | `hero-fade` keyframe: `opacity 0→1` + `scale 1.04→1`, 1.4s ease-out `both`; reduced-motion → killed | Hero/PageHero image settle before the Ken Burns drift (round-17) |
+| 32 | `.rule-draw` | pairs `.gold-rule`: `rule-draw` keyframe `scaleX(0)→1`, 0.9s `cubic-bezier(0.4,0,0.2,1)` both, `transform-origin left`; reduced-motion → static `scaleX(1)` | The gold rule draws itself in on every `SectionHeading` (round-17) |
 
-**Keyframes (9 — complete):** `gold-rule-draw` (scaleX 0→1) · `hero-ken-burns` · `rise-in` · `menu-in` · `drawer-in` · `drawer-item-in` · `page-in` · `halo-pulse` · `bloom-drift` — all killed/instant under `prefers-reduced-motion` (global 0.01ms override in `@layer base` + `.dot-pulse::after` opacity 0; motion kill expanded 1→7 rules at hop 2). Plus a themed scrollbar in `@layer base` and an `@media print` reveal override (round-7) — neither counts as a utility.
+**Keyframes (9 — complete, measured):** `hero-ken-burns` · `rise-in` · `menu-in` · `drawer-in` · `drawer-item-in` · `page-in` · `halo-pulse` · `hero-fade` (round-17) · `rule-draw` (round-17) — all killed/instant under `prefers-reduced-motion` (global 0.01ms override in `@layer base` + explicit utilities-override list incl. `.hero-fade` / `.rule-draw.gold-rule::after`; `rule-draw` resolves to static `scaleX(1)`). Plus a themed scrollbar in `@layer base` and an `@media print` reveal override (round-7) — neither counts as a utility. `motion-contract.test.ts` (round-17) pins this register.
 
 **Accordion collapse contract:** panels animate via `grid-template-rows 0fr↔1fr` (`grid grid-rows-[0fr|1fr]` + inner `overflow-hidden`) — never `hidden`. Closed panels carry `aria-hidden="true"` + `inert`; `aria-expanded` on the button stays the single source of truth (see `docs/ui-ux-remediation-plan-2026-08-28.md`).
 
@@ -327,7 +331,7 @@ No global store, no API layer, no `server/` — add only with an ADR.
 src/ (63 files — 41 source + 21 tests + 1 setup; counts per §0 — harness restored F1)
   App.tsx                 # HashRouter + 17 Route entries (16 content paths + * NotFound; 5 alias groups, 7 alias paths)
   main.tsx                # StrictMode + createRoot + resolveHashRedirect pre-mount rewrite (F-3: path-style deep links land on their page)
-  index.css               # @theme (33 colors + 2 shadows incl. gold-700 #85641c, §0) + @layer base/utilities (27 utilities + 7 keyframes incl. card-tint + themed scrollbar)
+  index.css               # @theme (33 colors + 2 shadows incl. gold-700 #85641c, §0) + @layer base/utilities (30 utilities + 9 keyframes incl. card-tint + round-17 scrims/hero-fade/rule-draw + themed scrollbar)
   components/
     Layout.tsx            # Outlet + hash-aware scroll restoration (double-hash aware, 80ms, timeout cleanup) + ScrollProgress (decoupled rail z-[60]) + SkipLink + BackToTop + keyed page-in container
     Header.tsx            # z-50 fixed sapphire-950 bar (solid = scrolled||!isHome||mobileOpen; translucent+blur when solid, transparent at top of Home), useScrolled(16) (default 12), hover/focus-open dropdown (no click-toggle — keyboard via onFocusCapture), mobile modal drawer (round-4 L-5: role=dialog + aria-modal + initial focus + Tab/Shift+Tab focus trap + focus restore to hamburger + outside-tap close; Escape handler, parentActive, 44px hamburger, menu-in/drawer-in)
@@ -622,7 +626,7 @@ Verify new pairings with a contrast checker before merging — or extend the gua
 }
 ```
 
-- `src/index.css` kills all 7 keyframes and `.reveal` (opacity/transform) under `prefers-reduced-motion: reduce` (global block + utilities override); `Reveal.tsx` constructs its `IntersectionObserver` in try/catch and falls back visible if unsupported (round-7).
+- `src/index.css` kills all 9 keyframes and `.reveal` (opacity/transform) under `prefers-reduced-motion: reduce` (global block + utilities override); `Reveal.tsx` constructs its `IntersectionObserver` in try/catch and falls back visible if unsupported (round-7).
 - `@media print` overrides `.reveal` to visible (round-7 "Honest Light") — printed pages must not depend on scroll-triggered opacity.
 
 ---
@@ -798,7 +802,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 - **Imports:** Always `@/` for cross-directory; relative `./` only within the same folder.
 - **Types:** `interface` for shapes, `type` for unions; `import type` for type-only imports; rely on inference, add explicit returns only at public boundaries. Never `any`.
 - **React:** Hooks-only, composition over inheritance, early returns, handle `loading`/`error`/`empty`/`success` where data is async; disable buttons during async ops.
-- **Styling:** Extend `@theme` before adding a utility; keep bespoke CSS to `@layer base/utilities` in `src/index.css`; mobile-first `sm:`/`lg:`; one shadow (`shadow-bsc`), two radii (`sm`/`full`). Use the `bsc-*` scales + the 27 utilities in §4.3. Motion: transform/opacity only, everything gated by the global `prefers-reduced-motion` block + `@media print` reveal override.
+- **Styling:** Extend `@theme` before adding a utility; keep bespoke CSS to `@layer base/utilities` in `src/index.css`; mobile-first `sm:`/`lg:`; one shadow (`shadow-bsc`), two radii (`sm`/`full`). Use the `bsc-*` scales + the 30 utilities in §4.3. Motion: transform/opacity only, everything gated by the global `prefers-reduced-motion` block + `@media print` reveal override.
 - **Data:** Keep `site.ts` as the single source for name/address/hours/mass/contact/transport/feast/uen/chequePayee/socials/ministry links/maps/origin. Pages consume it — don't duplicate. `content.ts` arrays + `nav.ts` nav are the only other data sources.
 - **Git:** Conventional Commits (`feat:`, `fix:`, `docs:` …), atomic commits, `feat/<slug>` branches, squash-merge, short-lived (1–3 days). Don't edit `package.json` by hand for deps — use `pnpm install <pkg>`. Adding a path to `.gitignore` for tracked files requires `git rm --cached` in the same commit (L14).
 - **Docs:** Update `README.md` + `AGENTS.md` + `CLAUDE.md` + this file when adding a route/token/image/nav child — and change the §0 fact first, then sweep stale copies (L15, Appendix G.4). The drift guards live in `src/docs-contract.test.ts` (23) + `src/ci-workflow.test.ts` (4) + `src/repo-hygiene.test.ts` (4) — restored round-13.
@@ -1615,7 +1619,7 @@ Every finding above is an instance of one failure mode: **volatile facts restate
 | Deep workflow + parish fidelity | `CLAUDE.md` |
 | Intent lineage | `docs/prompts.md` (if present) |
 | **Volatile facts (versions, counts, policies) — all gates green (17/98 + 51/51 + built)** | **§0 of this file — the single source; everything else defers to it** |
-| Tokens (27 colors + 2 shadows, §0) + utilities (28 + 9 keyframes incl. card-tint, §4.3) | `src/index.css` (sapphire-blue `bsc-*` palette) |
+| Tokens (33 colors + 2 shadows, §0) + utilities (30 + 9 keyframes incl. card-tint + round-17 set, §4.3) | `src/index.css` (sapphire-blue `bsc-*` palette) |
 | Route table + aliases + anchors | `src/App.tsx` — 17 Route entries (16 content paths + `*`), 7 alias paths in 5 groups (§5.4), 9 hash anchors (3 on `/worship`, 6 on `/ministries` — sixth is `#community` = Community & Outreach) + path-style deep-link rewrite (`utils/deepLinks.ts` → `main.tsx` pre-mount) |
 | Nav single-source | `src/data/nav.ts` (`primaryNav` 6 + `footerNav` 10) |
 | Content arrays (10) + images + site | `src/data/content.ts` (per §0/§7.1: `priests` 3 SS.CC, `ppcMembers` 6, `lifeTimeline` 7 [1954–Today], `grounds` 3 (main-church/damien-hall/garden), `ministries` 6 (sixth `community` = Community & Outreach), `faqs` 6, `upcomingEvents` 6, `givingOptions` 6 (PayNow UEN T08CC1234A), `serveRoles` 4, `devotions` 6 + `images` 7 all-local) + `src/data/site.ts` (`site as const`: hours 6 + mass 9 keys (sunday 6) + transport Queenstown EW19 · Commonwealth EW20 / buses 32/51/111/122/145/195/855 + feast Corpus Christi Sunday after Trinity + UEN T08CC1234A + cheque + facebook/instagram/youtube + maps + url/ogImage) |
