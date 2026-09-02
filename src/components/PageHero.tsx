@@ -34,18 +34,21 @@ export function PageHero({
             alt=""
             fallback={fallback}
             className={cn(
-              "absolute inset-0 h-full w-full object-cover",
-              variant === "light" ? "opacity-40" : "opacity-25"
+              "hero-fade absolute inset-0 h-full w-full object-cover",
+              variant === "light" ? "opacity-55" : "opacity-45"
             )}
             fetchPriority="high"
           />
           <div
+            aria-hidden="true"
             className={cn(
               "absolute inset-0",
-              variant === "light"
-                ? "bg-gradient-to-b from-bsc-sapphire-950/60 via-bsc-sapphire-950/80 to-bsc-sapphire-950"
-                : "bg-gradient-to-b from-bsc-sapphire-950/70 via-bsc-sapphire-950/85 to-bsc-sapphire-950"
+              variant === "light" ? "scrim-hero" : "scrim-page"
             )}
+          />
+          <div
+            aria-hidden="true"
+            className="divider-weave-thin absolute inset-x-0 bottom-0 opacity-50"
           />
         </>
       )}
@@ -56,7 +59,7 @@ export function PageHero({
             {title}
           </h1>
           {subtitle && (
-            <p className="rise-in rise-in-d1 mt-4 text-lg text-bsc-cream/75 sm:text-xl">
+            <p className="rise-in rise-in-d1 mt-4 text-lg text-bsc-cream/85 sm:text-xl">
               {subtitle}
             </p>
           )}

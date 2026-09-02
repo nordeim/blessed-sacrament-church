@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { Emblem } from "@/components/Emblem";
 import { SafeImage } from "@/components/SafeImage";
 import { EventMeta } from "@/components/EventMeta";
 import { site } from "@/data/site";
@@ -16,13 +17,15 @@ export function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-bsc-sapphire-950">
-        <SafeImage
-          src="/images/hero-church.jpg"
-          alt=""
-          className="hero-ken-burns absolute inset-0 h-full w-full object-cover opacity-30"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-bsc-sapphire-950/60 via-bsc-sapphire-950/80 to-bsc-sapphire-950" />
+        <div aria-hidden="true" className="hero-fade absolute inset-0">
+          <SafeImage
+            src="/images/hero-church.jpg"
+            alt=""
+            className="hero-ken-burns h-full w-full object-cover opacity-55"
+            fetchPriority="high"
+          />
+        </div>
+        <div aria-hidden="true" className="scrim-hero absolute inset-0" />
         <div className="bg-grain absolute inset-0" />
         <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-end px-5 pb-16 pt-32 sm:px-8 lg:pb-24 lg:pt-40">
           <div className="max-w-3xl">
@@ -43,7 +46,8 @@ export function Home() {
                 About Us
               </Button>
             </div>
-            <div className="rise-in rise-in-d4 mt-10 flex flex-wrap gap-6 text-sm text-bsc-cream/60">
+            <div aria-hidden="true" className="divider-weave-thin mt-10 opacity-50" />
+            <div className="rise-in rise-in-d4 mt-6 flex flex-wrap gap-x-8 gap-y-3 text-sm text-bsc-cream/70">
               <span className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-bsc-gold-400" />
                 {site.address.street}
@@ -66,7 +70,8 @@ export function Home() {
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <Reveal>
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-bsc-sapphire-500">
+              <Emblem className="mx-auto h-20 w-20 text-bsc-gold-500" />
+              <p className="mt-6 text-xs font-bold uppercase tracking-[0.15em] text-bsc-sapphire-500">
                 Welcome
               </p>
               <h2 className="mt-4 font-display text-3xl font-semibold text-bsc-sapphire-900 sm:text-4xl">
@@ -116,6 +121,13 @@ export function Home() {
                     <p className="mt-2 text-sm leading-relaxed text-bsc-charcoal">
                       {place.description}
                     </p>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-bsc-gold-600">
+                      Visit
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+                      />
+                    </span>
                   </div>
                 </Link>
               </Reveal>
@@ -140,7 +152,7 @@ export function Home() {
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {featuredEvents.map((event, i) => (
               <Reveal key={event.title} delay={i * 100}>
-                <div className="card-tint group flex h-full flex-col rounded-2xl border p-5">
+                <div className="card-lift card-tint group flex h-full flex-col rounded-2xl border p-5">
                   <EventMeta event={event} />
                   <h3 className="mt-3 font-display text-lg font-semibold text-bsc-sapphire-900">
                     {event.title}
