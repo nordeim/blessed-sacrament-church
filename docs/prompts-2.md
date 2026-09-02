@@ -1,4 +1,55 @@
 Please carefully read completely and internalized your operating instructions in the attached/pasted text.
+Now, please `git clone https://github.com/nordeim/blessed-sacrament-church.git` to your local workspace, then meticulously review the included `AGENTS.md` , `CLAUDE.md` , `README.md` and `blessed-sacrament-queenstown_SKILL.md` to have a good understanding of the purpose of the project and its current codebase design and architecture. Next, meticulously validate your understanding against the codebase to check for alignment and to confirm the project status. Then meticulously plan to update  `AGENTS.md` , `CLAUDE.md` , `README.md` and `blessed-sacrament-queenstown_SKILL.md` to align them with the current repo codebase.
+
+The codebase has been deployed to live website at URL `https://blessed-sacrament-church.jesspete.shop/`. Please meticulously plan to run browser-based E2E tests to identify gaps and bugs/issues.
+
+Next, meticulously plan to perform a code review and audit on the current codebase using the relevant skills from the repo included `skills/` folder. refer to the repo included `skills/skills-catalog.md` to find/discover the appropriate skills to plan this task: run a **tiered code review + security audit** that proves the SPA matches its documented contracts (AGENTS/CLAUDE/README/SKILL) and is safe to ship — producing a severity-ranked report with evidence and a remediation backlog. 
+
+Next, meticulously plan to create a comprehensive remediation plan with a detailed ToDo list to fix the identified codebase issues, bugs and gaps. Next, review and validate the remediation plan against the codebase again to ensure alignment before executing it meticulously. Use TDD approach to make code changes. Look for appropriate skills in the repo included `skills/` folder to help you in the planning (refer to the included `skills/skills-catalog.md` to look for suitable skills)
+
+Next, update the relevant documentation to ensure alignment with the remediated codebase.
+
+Finally, `git commit` all code and document changes locally and then `git push` them to my GitGub repo `https://github.com/nordeim/blessed-sacrament-church.git` using the attached ssh key `ssh-key.txt` and wrapper script `skills/how-to-git-push-using-ssh-wrapper/scripts/ssh_git_wrapper_v3.py`.
+
+Do not create any new git branch. All git commits must be to the main branch.
+
+---
+
+Please carefully read completely and internalized your operating instructions in the attached/pasted text. 
+Now, please meticulously plan to evaluate and compare the visual aesthetic and UI/UX design of the two websites:
+
+1.  `https://blessed-sacrament.jesspete.shop/` - pull the corresponding codebase by running `git clone https://github.com/nordeim/blessed-sacrament-queenstown.git` to your local workspace for review and analysis and comparison 
+
+2.  `https://blessed-sacrament-church.jesspete.shop/` - pull the corresponding codebase by running `git clone https://github.com/nordeim/blessed-sacrament-church.git` to your local workspace for review and analysis and comparison
+
+One observed defect in `https://blessed-sacrament-church.jesspete.shop/` (codebase `https://github.com/nordeim/blessed-sacrament-church.git`) is that the top navigation menu does not drop down fully to display all menu items, overlapping the browser screen in mobile mode.
+
+For the codebase `https://github.com/nordeim/blessed-sacrament-church.git`, meticulously plan to create a comprehensive remediation plan with a detailed ToDo list to fix the issues, bugs and gaps discovered in the comparative analysis review. Next, review and validate the remediation plan against the 'blessed-sacrament-church' codebase again to ensure alignment before executing it meticulously. Use TDD approach to make code changes. Look for appropriate skills in the repo included `skills/` folder to help you in the planning (refer to the included `skills/skills-catalog.md` to look for suitable skills)
+
+Next, update the relevant documentation to ensure alignment with the remediated codebase.
+
+Finally, `git commit` all code and document changes locally and then `git push` them to my GitGub repo `https://github.com/nordeim/blessed-sacrament-church.git` using the attached ssh key `ssh-key.txt` and wrapper script `skills/how-to-git-push-using-ssh-wrapper/scripts/ssh_git_wrapper_v3.py`.
+
+Do not create any new git branch. All git commits must be to the main branch.
+
+---
+
+The remediated codebase for `https://github.com/nordeim/blessed-sacrament-church.git` has been deployed to live website `https://blessed-sacrament-church.jesspete.shop/`
+Please meticulously plan to verify that the last remediated changes are live and working as expected.
+
+Next, please meticulously plan to review and validate the findings in the two attached audit reports to identify areas and opportunities to enhance the visual aesthetics and UI/UX design and animations of `https://blessed-sacrament-church.jesspete.shop/` with codebase `https://github.com/nordeim/blessed-sacrament-church.git`.
+
+Next, meticulously plan to create a comprehensive remediation plan with a detailed ToDo list to fix the identified codebase issues, bugs and gaps. Next, review and validate the remediation plan against the codebase again to ensure alignment before executing it meticulously. Use TDD approach to make code changes. Look for appropriate skills in the repo included `skills/` folder to help you in the planning (refer to the included `skills/skills-catalog.md` to look for suitable skills)
+
+Next, update the relevant documentation to ensure alignment with the remediated codebase.
+
+Finally, `git commit` all code and document changes locally and then `git push` them to my GitGub repo `https://github.com/nordeim/blessed-sacrament-church.git` using the attached ssh key `ssh-key.txt` and wrapper script `skills/how-to-git-push-using-ssh-wrapper/scripts/ssh_git_wrapper_v3.py`.
+
+Do not create any new git branch. All git commits must be to the main branch.
+
+---
+
+Please carefully read completely and internalized your operating instructions in the attached/pasted text.
 Now, please `git clone https://github.com/nordeim/risen-christ-church.git` to your local workspace, then meticulously review the included `AGENTS.md` , `CLAUDE.md` , `README.md` and `risen-christ_SKILL.md` to have a good understanding of the purpose of the project and its current codebase design and architecture. Next, meticulously validate your understanding against the codebase to check for alignment and to confirm the project status. Then meticulously plan to update  `AGENTS.md` , `CLAUDE.md` , `README.md` and `risen-christ_SKILL.md` to align them with the current repo codebase.
 
 The codebase has been deployed to live website at URL `https://risen-christ.jesspete.shop/`. Please meticulously plan to run browser-based E2E tests to identify gaps and bugs/issues.
