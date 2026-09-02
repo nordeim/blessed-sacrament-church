@@ -19,18 +19,18 @@ All commands verified in `package.json` `scripts`. Don't document a script until
 | `pnpm typecheck` | Type gate `tsc --noEmit` — **run before every push** |
 | `pnpm lint` | ESLint flat (`eslint . --max-warnings 0`) |
 | `pnpm lint:fix` | ESLint auto-fix (`eslint . --fix`) |
-| `pnpm test` | Vitest `jsdom` `run` — **26 files / 149 tests green** (`src/test/setup.ts` harness — MockIntersectionObserver + scroll stubs + matchMedia; round-16 guards: `docs-contract` 8 + `repo-hygiene` 4 + `ci-workflow` 4 + `public-contract` 6 + `token-integrity` 2; round-17 visual contracts: `motion-contract` 8 + `PageHero` 7 + `SectionHeading` 4 + `home-hero` 6 + `worship-sacraments` 3 + `Button` ext 4; round-18 drawer contracts: `Header` ext 5) |
+| `pnpm test` | Vitest `jsdom` `run` — **29 files / 181 tests green** (`src/test/setup.ts` harness — MockIntersectionObserver + scroll stubs + matchMedia; round-16 guards: `docs-contract` 8 + `repo-hygiene` 4 + `ci-workflow` 4 + `public-contract` 6 + `token-integrity` 2; round-17 visual contracts: `motion-contract` 8 + `PageHero` 7 + `SectionHeading` 4 + `home-hero` 6 + `worship-sacraments` 3 + `Button` ext 4; round-18 drawer contracts: `Header` ext 5) |
 | `pnpm test:watch` | Vitest watch mode (`vitest`) |
 | `pnpm test:coverage` | Vitest with coverage (`vitest run --coverage` via @vitest/coverage-v8) |
-| `pnpm test:e2e` | Playwright `chromium` (9 specs + helpers — **59 tests green** — BSC retargeted round 16: `1 Commonwealth Drive`, `SS.CC. since 1958`, `Join Us at the Altar`, `Stewardship & Generosity`, `T08CC1234A` etc. + round-18 `mobile-navigation.spec.ts` 8 drawer contracts at 390×844) |
+| `pnpm test:e2e` | Playwright `chromium` (10 specs + helpers — **67 tests green** — BSC retargeted round 16: `1 Commonwealth Drive`, `SS.CC. since 1958`, `Join Us at the Altar`, `Stewardship & Generosity`, `T08CC1234A` etc. + round-18 `mobile-navigation.spec.ts` 8 drawer contracts at 390×844) |
 | `pnpm test:e2e:ui` | Playwright UI mode |
 | `pnpm test:e2e:report` | Open last Playwright HTML report |
-| `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` | Pre-push gate (all five **green**: lint 0, typecheck 0, test 26/149, test:e2e 59, build) |
+| `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` | Pre-push gate (all five **green**: lint 0, typecheck 0, test 29/181, test:e2e 69, build) |
 
 ## Structure
 
 ```
-src/ (41 source + 26 tests + 1 setup = 68 files; 26 files / 149 tests green + 59 E2E)
+src/ (41 source + 29 tests + 1 setup = 71 files; 29 files / 181 tests green + 67 E2E)
   App.tsx              # HashRouter + 17 Route path entries (16 content paths + * NotFound) inside the Layout wrapper Route (18 <Route> tags total; see Routing below)
   main.tsx             # StrictMode + createRoot + resolveHashRedirect pre-mount rewrite (stripped deepLinks — no JSDoc)
   index.css            # @theme tokens (33 colors incl. gold-700 #85641c + terracotta-600 #8f5038 + 2 shadows = 35) + @layer base/utilities (30 utilities: text-balance, bg-adobe-texture, bg-gold-bloom, bg-grain, divider-weave, divider-weave-thin, gold-rule, gold-rule-left, hero-ken-burns, img-zoom, mask-fade-b, reveal, reveal-visible, rise-in + rise-in-d1..d4, menu-in, drawer-in, drawer-item-in, page-in, dot-pulse, card-lift, card-tint, link-underline, skip-link + round-17 scrim-hero, scrim-page, hero-fade, rule-draw + 9 keyframes hero-ken-burns/rise-in/menu-in/drawer-in/drawer-item-in/page-in/halo-pulse/hero-fade/rule-draw + themed scrollbar (sapphire thumb on parchment track, webkit + scrollbar-color) + @media print reveal override; token-integrity guard backs every referenced bsc-* class)
@@ -44,7 +44,7 @@ vite.config.ts         # alias @→src + test { globals, jsdom, setupFiles: src/
 tsconfig.json          # strict + noUnusedLocals/noUnusedParameters/noFallthroughCasesInSwitch/isolatedModules/noEmit + include [src, vite.config.ts, eslint.config.js, playwright.config.ts] + types [node, vitest/globals] + paths @/*
 eslint.config.js       # flat config (typescript-eslint 8 + react-hooks 5 + react-refresh); ignores [dist, node_modules, coverage, playwright-report, test-results, skills, src.orig]
 playwright.config.ts   # Playwright 1.55.1 (chromium, webServer → pnpm exec vite :5173, expect timeout 15s; CSP is a meta tag in index.html, not a config header)
-e2e/                   # 9 spec files + helpers.ts — 59 tests green, retargeted to BSC copy (round 16) + mobile drawer contracts (round 18): smoke.spec.ts + navigation.spec.ts + mobile-navigation.spec.ts + ministries.spec.ts + give-faq.spec.ts + enhancements.spec.ts + enhancements-round5.spec.ts + enhancements-round7.spec.ts + deep-links.spec.ts + helpers.ts — 59/59 green on dev and built artifact
+e2e/                   # 10 spec files + helpers.ts — 67 tests green, retargeted to BSC copy (round 16) + mobile drawer contracts (round 18) + round-19 merge contracts: smoke.spec.ts + navigation.spec.ts + mobile-navigation.spec.ts + ministries.spec.ts + give-faq.spec.ts + enhancements.spec.ts + enhancements-round5.spec.ts + enhancements-round7.spec.ts + deep-links.spec.ts + helpers.ts — 59/59 green on dev and built artifact
 .github/workflows/ci.yml # CI: lint → typecheck → test → test:e2e → build + artifacts (Node 24, pnpm 11) — mirrors the green gate (triggers `branches: [main]` on push + pull_request)
 public/                 # 9 images (hero-church.jpg, damien-hall.jpg, garden.jpg, community.jpg, faith-formation.jpg, family-life.jpg, liturgical.jpg, pastoral-care.jpg, youth.jpg → dist/images/) + `favicon.svg` (legacy — index.html uses inline emoji favicon) + `robots.txt`
 index.html             # Inline SVG favicon (⛪ emoji); Google Fonts Fraunces + Source Sans 3; CSP `img-src 'self' data: blob:` only, `object-src 'none'`, `base-uri 'self'`, frames from google.com (maps embed); OG tags + Church JSON-LD for Church of the Blessed Sacrament (www.bsc.org.sg) — title Church of the Blessed Sacrament — Singapore, og:image bsc.org.sg/images/hero-church.jpg, image alt folded blue tent roof
