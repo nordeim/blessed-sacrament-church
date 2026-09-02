@@ -270,6 +270,44 @@
     background: radial-gradient(ellipse at 30% 20%, rgba(212, 173, 66, 0.12) 0%, transparent 60%),
                 radial-gradient(ellipse at 70% 80%, rgba(196, 154, 44, 0.08) 0%, transparent 50%);
   }
+  /* Round-17 "Light on the Tent" — bottom-heavy hero scrims: the folded-blue-roof
+     imagery reads at the top of the band while headline contrast is preserved
+     where the text sits (last stop ≈ sapphire-950 at 0.95+). */
+  .scrim-hero {
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 17, 34, 0.3) 0%,
+      rgba(10, 17, 34, 0.55) 55%,
+      rgba(10, 17, 34, 0.95) 100%
+    );
+  }
+  .scrim-page {
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 17, 34, 0.45) 0%,
+      rgba(10, 17, 34, 0.75) 55%,
+      rgba(10, 17, 34, 0.96) 100%
+    );
+  }
+  /* Hero/page-hero imagery settles in (opacity + scale only — compositor-safe),
+     then hands off to the 20s hero-ken-burns drift. */
+  .hero-fade {
+    animation: hero-fade 1.4s ease-out both;
+  }
+  @keyframes hero-fade {
+    from { opacity: 0; transform: scale(1.04); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  /* The gold rule under section headings draws itself in — same motif as the
+     timeline rail draw and link-underline. Pairs with .gold-rule. */
+  .rule-draw.gold-rule::after {
+    transform-origin: left;
+    animation: rule-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  @keyframes rule-draw {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
   @media (prefers-reduced-motion: reduce) {
     .hero-ken-burns,
     .reveal,
@@ -282,10 +320,15 @@
     .drawer-in,
     .drawer-item-in,
     .page-in,
-    .dot-pulse::after {
+    .dot-pulse::after,
+    .hero-fade,
+    .rule-draw.gold-rule::after {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
+    }
+    .rule-draw.gold-rule::after {
+      transform: scaleX(1);
     }
     .reveal {
       opacity: 1;
