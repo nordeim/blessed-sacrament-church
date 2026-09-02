@@ -40,8 +40,8 @@ Every row below is implemented — no placeholders. Pages are named exports from
 | Icons | lucide-react | `1.38.0` | Header/footer + page iconography |
 | Utils | clsx + tailwind-merge | `2.1.1` / `3.6.0` | `cn()` class merging — always merge via `cn()` |
 | Bundling | vite-plugin-singlefile | `2.3.3` | Inlines JS+CSS into `dist/index.html` (`public/images/` copied to `dist/images/`) |
-| Testing | Vitest + Testing Library + jsdom | `3.2.6` / `16.2.0` / `26.1.0` | `vitest run` — **17 files + setup harness green** (harness `src/test/setup.ts` — F1; BSC fixtures; round-13/14 guard suites included). |
-| E2E | Playwright | `1.55.1` | `chromium`, `webServer` → `pnpm exec vite --port 5173 --host 127.0.0.1 --strictPort`, `e2e/` — **8 spec files + helpers — 51 tests green — retargeted to BSC** (A tent of meeting, 1 Commonwealth Drive, Queenstown EW19 · Commonwealth EW20); built-artifact pass: `pnpm test:e2e:built` (`playwright.built.config.ts` — `vite preview :4173`, `E2E_BASE_URL` → live host) |
+| Testing | Vitest + Testing Library + jsdom | `3.2.6` / `16.2.0` / `26.1.0` | `vitest run` — **21 files / 112 tests green** (harness `src/test/setup.ts` — F1; BSC fixtures; round-13/16 guard suites included). |
+| E2E | Playwright | `1.55.1` | `chromium` (`channel: "chromium"` new headless), `webServer` → `pnpm exec vite --port 5173 --host 127.0.0.1 --strictPort`, `e2e/` — **8 spec files + helpers — 51 tests green — retargeted to BSC copy** (1 Commonwealth Drive, SS.CC. since 1958, Join Us at the Altar); built-artifact pass: `pnpm test:e2e:built` (`playwright.built.config.ts` — `vite preview :4173`, `E2E_BASE_URL` → live host) |
 | Linting | ESLint flat + typescript-eslint + react-hooks | `9.39.5` / `8.28.0` / `5.2.0` | `eslint . --max-warnings 0`, `eslint.config.js` (ignores `dist`, `skills`, `src.orig`) |
 | Fonts | Google Fonts | — | `Fraunces` (display) + `Source Sans 3` (body) via `index.html` |
 
@@ -83,7 +83,7 @@ flowchart TB
   P --> D[src/data — nav.ts + content.ts (1954–Today Tent of Meeting) + site.ts (1 Commonwealth Drive)]
   H & F & P --> S[Tailwind @theme — src/index.css — bsc-* sapphire palette + 2 shadows + gold accents]
   R --> V[Vite 7.3.6 + viteSingleFile 2.3.3]
-  V --> O[dist/index.html ~392 kB + dist/images/ — single file + public assets]
+  V --> O[dist/index.html ~466 kB + dist/_headers + dist/robots.txt + dist/images/ — single file + public assets]
   O --> G[GitHub Pages / S3]
 ```
 
@@ -104,8 +104,8 @@ flowchart TB
 ├── 📂 public/
 │   ├── 📂 images/           # 9 files: hero-church.jpg, damien-hall.jpg, faith-formation.jpg, family-life.jpg, garden.jpg, liturgical.jpg, pastoral-care.jpg, youth.jpg, community.jpg (Vite publicDir → dist/images/ — upload alongside dist/index.html); all local
 │   └── 📄 _headers          # Cloudflare Pages security headers (HSTS/XCTO/XFO/Referrer-Policy/Permissions-Policy) → dist/_headers — honored only on Cloudflare Pages deploys + robots.txt
-├── 📂 src/                  # 58+ files — source + 17 tests + 1 setup (harness F1)
-│   ├── 📄 App.tsx           # HashRouter + 17 Route entries (16 content paths + * → NotFound; 5 alias groups / 7 alias paths; hash anchors #mass/#confession/#visit + 6 ministry ids)
+├── 📂 src/                  # 63 files — 41 source + 21 tests + 1 setup (harness F1)
+│   ├── 📄 App.tsx           # HashRouter + 17 Route path entries (16 content paths + * → NotFound inside the Layout wrapper; 5 alias groups / 7 alias paths; hash anchors #mass/#confession/#visit + 6 ministry ids)
 │   ├── 📄 main.tsx          # StrictMode + createRoot + resolveHashRedirect pre-mount rewrite
 │   ├── 📄 index.css         # @theme bsc-* tokens (sapphire-blue palette + gold accents + 2 shadows) + @layer base/utilities (28+ utilities: text-balance, bg-adobe-texture, bg-gold-bloom, bg-grain, divider-weave, divider-weave-thin, gold-rule, gold-rule-left, hero-ken-burns, img-zoom, mask-fade-b, reveal, reveal-visible, rise-in + rise-in-d1..d4, menu-in, drawer-in, drawer-item-in, page-in, dot-pulse, card-lift, card-tint, link-underline, skip-link, bloom-drift + keyframes)
 │   ├── 📂 components/
@@ -130,15 +130,15 @@ flowchart TB
 │   │   ├── 📄 nav.ts        # primaryNav (6 top-level: Home / About{The Parish, Our History, FAQ} / Worship{Mass Times, Confession & Adoration, Find Us} / Ministries{Liturgical, Faith Formation, Pastoral Care} / News & Events / Serve) + footerNav 10 links
 │   │   ├── 📄 content.ts    # 10 interfaces + images 7 keys (all local) + priests 3 (Johan/William/Odo — SS.CC) + ppcMembers 6 + lifeTimeline 7 (1954–Today) + grounds 3 (main-church/damien-hall/garden) + ministries 6 (liturgical/faith-formation/pastoral-care/family-life/youth/community→Community & Outreach) + faqs 6 + upcomingEvents 6 (Corpus Christi feast-first, Parish/Devotion categories) + givingOptions 6 (UEN T08CC1234A, cheque Church of the Blessed Sacrament) + serveRoles 4 + devotions 6
 │   │   └── 📄 site.ts       # canonical single source: name Church of the Blessed Sacrament/shortName Blessed Sacrament Church/tagline A Household of Faith, Hope & Love./vision To be a vibrant Eucharistic community…/congregation SS.CC, address 1 Commonwealth Drive 149603, hours (church/office/reception/adoration/confession), mass (weekdayMorning 8.30+12.30/weekdayEvening 18.30/saturday 8.30+18.00+19.30 Tamil 3rd Sat/sunday×6 incl. Mandarin 7.30 + Indo last Sun 13.00 + Tagalog 15.15/confession/adoration/secondCollection + note public holidays + monthly), contact (6474 0582 / fax 6472 6545 + secretariat@bsc.org.sg), transport (Queenstown EW19 · Commonwealth EW20 + buses 32/51/111/122/145/195/855), feast Corpus Christi Sunday after Trinity, uen T08CC1234A, chequePayee Church of the Blessed Sacrament, socials (facebook/instagram/youtube) + archdiocese + mapsUrl/mapsEmbedSrc — Footer + Worship + About consume it, don't duplicate
-│   ├── 📂 utils/            # 4 files — cn + massDay + monogram + deepLinks
+│   ├── 📂 utils/            # 5 files — cn + massDay + monogram + deepLinks + categoryTone
 │   │   ├── 📄 cn.ts         # twMerge(clsx) — always merge via cn()
 │   │   ├── 📄 massDay.ts    # massDayKey(date) — single source for the Worship today-highlight
 │   │   ├── 📄 monogram.ts   # monogram(name) — honorific stripping for priest discs
 │   │   └── 📄 deepLinks.ts  # knownRoutePaths + resolveHashRedirect — path-style deep links rewrite to hash routes pre-mount + drift guard
 │   ├── 📂 test/
 │   │   └── 📄 setup.ts      # Vitest harness (F1 — restored)
-│   └── 📂 **/*.test.{ts,tsx} # 17 files — green
-├── 📂 e2e/                  # 8 spec files + helpers.ts — 51 tests green (BSC retargeted F2B): smoke.spec.ts (11) + navigation.spec.ts (8) + ministries.spec.ts (4) + give-faq.spec.ts (4) + enhancements.spec.ts (7) + enhancements-round5.spec.ts (6) + enhancements-round7.spec.ts (8) + deep-links.spec.ts (3)
+│   └── 📂 **/*.test.{ts,tsx} # 21 files — green (incl. round-16 public-contract + token-integrity + Header + Layout.anchor)
+├── 📂 e2e/                  # 8 spec files + helpers.ts — 51 tests green (BSC retargeted, round 16): smoke.spec.ts (11) + navigation.spec.ts (8) + ministries.spec.ts (4) + give-faq.spec.ts (4) + enhancements.spec.ts (7) + enhancements-round5.spec.ts (6) + enhancements-round7.spec.ts (8) + deep-links.spec.ts (3)
 │   ├── 📄 smoke.spec.ts     # hero + rise-in entrance + Worship/Ministries aliases + hash anchors + NotFound + mobile drawer + event chips + back-to-top (BSC)
 │   ├── 📄 navigation.spec.ts# desktop Worship/Ministries dropdown + keyboard + SkipLink + footer 10 links + Give + aria-current (BSC)
 │   ├── 📄 ministries.spec.ts# 6 sections + jump nav + imageAlt (BSC)
@@ -159,7 +159,7 @@ flowchart TB
 └── 📄 AGENTS.md             # Compact agent cheat sheet
 ```
 
-Current audits — **round-13+ (Blessed Sacrament): all gates green — `pnpm lint` 0 + `pnpm typecheck` 0 + `pnpm test` 17 files + `pnpm test:e2e` 51/51 + `pnpm build` ~392 kB + `pnpm test:e2e:built` 51/51; live host verified (byte-identical deploy, 15-route browser journey, zero console errors). Round-15 (2026-09-02, `docs/design-enhancement-round15-2026-09-02.md`): visual/UI-UX/motion remediation under the round-15 motion contract — Ken Burns drift on PageHero imagery + retuned hero gradients (photography breathes, bottom-anchored text contrast preserved), History timeline rail draw-in + staggered `Reveal` entries, `bloom-drift` ambient glow on the three dark CTA bands, BackToTop lift entrance, Worship confession grid centering, hero fact-row un-wrapped, NewsEvents `Read more` gains an external-link affordance icon; guards extended first (docs-contract 23 checks), 17 files green, e2e 51/51 dev + built, build ~392 kB. `index.html` is Church of the Blessed Sacrament (1 Commonwealth Drive, Corpus Christi, Queenstown EW19 · Commonwealth EW20, Fraunces + Source Sans 3, CSP `img-src 'self' data: blob:`, inline favicon, title "Church of the Blessed Sacrament — Singapore"). Historical audits are retained in `docs/` and marked **(historical)**.
+Current audits — **round-16 (2026-09-02, `docs/code-review-audit-round16-2026-09-02.md` + `docs/remediation-plan-round16-2026-09-02.md`)**: tiered review + security audit + docs re-pin. Repo hygiene restored (leaked `docs/ssh-key.txt`, `src.orig/`, ignored `package-lock.json` + `docs/*.zip` untracked — the round-6/12/13 remediations had regressed); `public/_headers` + `public/robots.txt` restored and shipped to `dist/`; CSP extended with the Cloudflare Insights beacon allowlist (fixes the live console error); four missing design tokens added (`pine-50/300`, `terracotta-50/300`) with a new `token-integrity` guard; Header a11y (stateful "Open menu"/"Close menu" hamburger, window-level Escape for the desktop dropdown, `aria-label="Primary"/"Mobile"` nav landmarks) + `BackToTop` `aria-label="Back to top"` + Footer `nav` landmarks; `useScrollProgress` StrictMode rafRef fix (dev-only freeze); Layout anchor-scroll cleanup; the 8 e2e specs retargeted to the shipped BSC copy. All gates green — `pnpm lint` 0 + `pnpm typecheck` 0 + `pnpm test` 21 files / 112 tests + `pnpm test:e2e` 51/51 (dev) + `pnpm test:e2e:built` 51/51 (dist) + `pnpm build` ~466 kB; live host re-verified (43/51 pre-deploy — the 8 pending failures are the new a11y contracts, resolved by deploying the rebuilt artifact). `index.html` is Church of the Blessed Sacrament (1 Commonwealth Drive, Corpus Christi — Sunday after Trinity, Queenstown EW19 · Commonwealth EW20, Fraunces + Source Sans 3, CSP `img-src 'self' data: blob:`, inline emoji favicon, title "Church of the Blessed Sacrament — Singapore"). Historical audits are retained in `docs/` and marked **(historical)**.
 
 ## Quick Start
 
@@ -194,9 +194,9 @@ pnpm preview
 pnpm lint               # eslint flat — expect no output (clean)
 pnpm typecheck         # tsc --noEmit — expect no output (clean)
 pnpm build              # expect: "✓ built in ~3s" + "Inlining: index-*.js / style-*.css"
-ls -lh dist/index.html  # expect: single HTML file ~392 kB, no separate assets chunk
+ls -lh dist/index.html  # expect: single HTML file ~466 kB, no separate assets chunk
 ls -lh dist/images/     # expect: 9 images (hero-church + damien-hall + faith-formation + family-life + garden + liturgical + pastoral-care + youth + community)
-pnpm test               # expect: 17 files green (harness src/test/setup.ts — F1)
+pnpm test               # expect: 21 files / 112 tests green (harness src/test/setup.ts — F1)
 pnpm test:e2e           # expect: 51 tests green (BSC retargeted F2B)
 ```
 
@@ -205,9 +205,9 @@ pnpm test:e2e           # expect: 51 tests green (BSC retargeted F2B)
 | `pnpm dev` | Vite ready on `:5173`, HMR active |
 | `pnpm lint` | Exit `0`, no warnings (`--max-warnings 0`) |
 | `pnpm typecheck` | Exit `0`, no errors |
-| `pnpm test` | **17 files green** (`src/test/setup.ts` — F1) |
+| `pnpm test` | **21 files / 112 tests green** (`src/test/setup.ts` — F1) |
 | `pnpm test:e2e` | **51 tests / 8 spec files green** — BSC retargeted (smoke 11 + navigation 8 + ministries 4 + give-faq 4 + enhancements 7 + enhancements-round5 6 + enhancements-round7 8 + deep-links 3) |
-| `pnpm build` | `dist/index.html` ~392 kB + `dist/images/` (9 files) + `dist/_headers` |
+| `pnpm build` | `dist/index.html` ~466 kB + `dist/images/` (9 files) + `dist/_headers` + `dist/robots.txt` |
 | `pnpm preview` | Prod preview on `:4173`, alias routes (`/mass-times`, `/ministry`, `/donate`, `/volunteer`…) + hash anchors (`#/worship#mass`, `#/ministries#liturgical`) navigate |
 
 ## Design System
@@ -235,18 +235,22 @@ Tokens live in `src/index.css` `@theme`. Extend there — never use arbitrary `b
 | `bsc-gold-500` | `#c49a2c` | Gold primary |
 | `bsc-gold-600` | `#a67f22` | Gold hover |
 | `bsc-gold-700` | `#85641c` | Deep gold — text on parchment + hover shade |
+| `bsc-pine-50` | `#eef4f0` | Pine chip tint (Formation chip bg) |
+| `bsc-pine-300` | `#7fa88f` | Pine chip border |
 | `bsc-pine-500` | `#2d5a40` | Pine accent |
 | `bsc-pine-600` | `#1f422e` | Accent / weave |
+| `bsc-terracotta-50` | `#f7ece7` | Terracotta chip tint (Archdiocese chip bg) |
+| `bsc-terracotta-300` | `#d19a83` | Terracotta chip border |
 | `bsc-terracotta-500` | `#a86545` | Devotion chip border (decorative) |
 | `bsc-terracotta-600` | `#8f5038` | Devotion chip text — AA on parchment |
 | `shadow-bsc` | `0 20px 60px -20px rgba(15,26,51,.45)` | Hero, cards, emblem |
 | `shadow-bsc-lg` | `0 40px 90px -30px rgba(15,26,51,.55)` | Elevated cards, header dropdown |
 
-**Typography:** `Fraunces` (display, quote, `font-display` / `h1–h4`) + `Source Sans 3` (body, `font-sans` / `font-body` alias) — loaded in `index.html`, set in `@theme` + `@layer base`. Utilities: `text-balance`, `bg-adobe-texture`, `bg-gold-bloom`, `bg-grain`, `divider-weave` / `divider-weave-thin`, `gold-rule` / `gold-rule-left`, `reveal` / `reveal-visible`, `skip-link`, `mask-fade-b`, `hero-ken-burns` (20s Ken Burns), plus the "Sacred Motion" set: `rise-in` (+ `rise-in-d1..d4` stagger delays) for hero/PageHero entrances, `menu-in` / `drawer-in` / `drawer-item-in` / `page-in` for dropdown/drawer/route entrances, `card-lift` (hover lift + shadow + gold border) for every interactive card, `card-tint` (honest tint) for info cards, `link-underline` (gold underline draws in on hover/focus), `dot-pulse` (timeline halo). All are transform/opacity-only and gated by the global `prefers-reduced-motion` block in `src/index.css`.
+**Typography:** `Fraunces` (display, quote, `font-display` / `h1–h4`) + `Source Sans 3` (body, `font-sans` / `font-body` alias) — loaded in `index.html`, set in `@theme` + `@layer base`. Utilities (27 + 7 keyframes): `text-balance`, `bg-adobe-texture`, `bg-gold-bloom`, `bg-grain`, `divider-weave` / `divider-weave-thin`, `gold-rule` / `gold-rule-left`, `reveal` / `reveal-visible`, `skip-link`, `mask-fade-b`, `img-zoom`, `hero-ken-burns` (20s Ken Burns), plus the "Sacred Motion" set: `rise-in` (+ `rise-in-d1..d4` stagger delays) for hero/PageHero entrances, `menu-in` / `drawer-in` / `drawer-item-in` / `page-in` for dropdown/drawer/route entrances, `card-lift` (hover lift + shadow + gold border) for every interactive card, `card-tint` (honest tint) for info cards, `link-underline` (gold underline draws in on hover/focus), `dot-pulse` (timeline halo). All are transform/opacity-only and gated by the global `prefers-reduced-motion` block in `src/index.css`.
 
 ## Deployment
 
-Primary artifact `dist/index.html` (~392 kB, + `dist/images/` — 9 files, + `dist/_headers`) — no server, no env vars, no rewrites needed. The artifact ships a scoped `Content-Security-Policy` meta (`img-src 'self' data: blob:` only, `object-src 'none'`, `base-uri 'self'`, Google Fonts, `frame-src` Google Maps) + a `Referrer-Policy` meta. `public/_headers` adds the host-level headers a static file cannot set (HSTS, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`) — **on Cloudflare Pages only**. The current host is not assumed to be Pages — those headers are not served on generic static hosts (S3, GH Pages, proxied origins) without an explicit host config. Add the five headers via the host's header config (Cloudflare Transform Rules / `_headers` on Pages / S3 metadata) if the deployment target is not Pages.
+Primary artifact `dist/index.html` (~466 kB, + `dist/images/` — 9 files, + `dist/_headers` + `dist/robots.txt`) — no server, no env vars, no rewrites needed. The artifact ships a scoped `Content-Security-Policy` meta (`img-src 'self' data: blob:` only, `object-src 'none'`, `base-uri 'self'`, Google Fonts, `frame-src` Google Maps, `script-src` + `connect-src` allow `static.cloudflareinsights.com` for the host-injected analytics beacon) + a `Referrer-Policy` meta. `public/_headers` adds the host-level headers a static file cannot set (HSTS, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`) — **on Cloudflare Pages only**. The current host is not assumed to be Pages — those headers are not served on generic static hosts (S3, GH Pages, proxied origins) without an explicit host config. Add the five headers via the host's header config (Cloudflare Transform Rules / `_headers` on Pages / S3 metadata) if the deployment target is not Pages.
 
 CSP (current `index.html`): `default-src 'self'` + `script-src 'self' 'unsafe-inline'` + `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com` + `font-src https://fonts.gstatic.com data:` + `img-src 'self' data: blob:` + `frame-src https://www.google.com` + `object-src 'none'` + `base-uri 'self'`; `<meta name="referrer" content="strict-origin-when-cross-origin">`.
 
@@ -263,11 +267,11 @@ Why `HashRouter`: deep-links like `/#/worship#mass` or `/#/ministries#liturgical
 
 This repo follows the six-phase workflow in `CLAUDE.md` (ANALYZE → PLAN → VALIDATE → IMPLEMENT → VERIFY → DELIVER).
 
-- **TDD:** `RED → GREEN → REFACTOR → Commit` — one cycle per commit; write a failing test before fixing a bug. The Vitest harness is restored (F1) — `pnpm test` (17 files) gates again alongside lint/typecheck/build.
+- **TDD:** `RED → GREEN → REFACTOR → Commit` — one cycle per commit; write a failing test before fixing a bug. The Vitest harness is restored (F1) — `pnpm test` (21 files / 112 tests) gates again alongside lint/typecheck/build.
 - **Commits:** Conventional Commits — `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `style:` — atomic, subject ≤72 chars.
 - **Branches:** `feat/<slug>`, `fix/<slug>`, `docs/<slug>` — short-lived (1–3 days), squash-merge.
 - **Conventions:** `PascalCase.tsx` for components/pages, `camelCase.ts` for data/utils, `primaryNav` single-source, alias routes preserved, `cn()` for merges, `bsc-*` tokens only (including `bsc-gold-700` `#85641c`).
-- **Pre-push gate:** `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` — **all five green** (lint 0 + typecheck 0 + 17 test files + 51/51 + ~392 kB). CI mirrors this in `.github/workflows/ci.yml` (Node 24, pnpm 11). Sixth built-artifact check: `pnpm test:e2e:built` — vs `vite preview`/live (also green).
+- **Pre-push gate:** `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` — **all five green** (lint 0 + typecheck 0 + 21 test files / 112 tests + 51/51 + ~466 kB). CI mirrors this in `.github/workflows/ci.yml` (Node 24, pnpm 11). Sixth built-artifact check: `pnpm test:e2e:built` — vs `vite preview`/live (also green).
 
 > `skills/` is vendored reference content — tracked in full; lint/build tooling ignores it — do not import from or lint it. `src.orig/` is **not part of the repository**; lineage lives in `docs/` + git history. See `AGENTS.md` for the compact cheat sheet.
 
@@ -291,4 +295,4 @@ Private — all rights reserved. © Church of the Blessed Sacrament, Archdiocese
 
 ---
 
-**Docs:** [`blessed-sacrament-church_SKILL.md`](blessed-sacrament-church_SKILL.md) (canonical) · [`CLAUDE.md`](CLAUDE.md) · [`AGENTS.md`](AGENTS.md) · Live: [www.bsc.org.sg](https://www.bsc.org.sg/) (canonical parish site)
+**Docs:** [`blessed-sacrament-queenstown_SKILL.md`](blessed-sacrament-queenstown_SKILL.md) (canonical) · [`CLAUDE.md`](CLAUDE.md) · [`AGENTS.md`](AGENTS.md) · Live: [www.bsc.org.sg](https://www.bsc.org.sg/) (canonical parish site)
