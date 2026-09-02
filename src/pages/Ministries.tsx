@@ -1,13 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { PageHero } from "@/components/PageHero";
 import { SafeImage } from "@/components/SafeImage";
 import { ministries } from "@/data/content";
+import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/utils/cn";
 
 export function Ministries() {
-  const { hash } = useLocation();
+  const activeId = useScrollSpy(ministries.map((m) => m.id));
 
   return (
     <>
@@ -31,11 +32,11 @@ export function Ministries() {
                 to={`/ministries#${m.id}`}
                 className={cn(
                   "shrink-0 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
-                  hash === `#${m.id}`
+                  activeId === m.id
                     ? "border-bsc-sapphire-600 bg-bsc-sapphire-700 text-bsc-cream"
                     : "border-bsc-stone bg-bsc-cream text-bsc-charcoal hover:bg-bsc-parchment"
                 )}
-                aria-current={hash === `#${m.id}` ? "true" : undefined}
+                aria-current={activeId === m.id ? "true" : undefined}
               >
                 {m.title}
               </Link>

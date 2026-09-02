@@ -1,16 +1,54 @@
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
+import { cn } from "@/utils/cn";
 import type { TimelineEntry } from "@/data/content";
 
 interface TimelineProps {
   entries: TimelineEntry[];
+  className?: string;
 }
 
-export function Timeline({ entries }: TimelineProps) {
+/**
+ * Scroll choreography: the rail draws downward once the list enters the
+ * viewport and each entry rises in with a staggered delay.
+ * Transform/opacity only — the global prefers-reduced-motion neutralizer
+ * flattens every transition, and the observer short-circuits to the drawn
+ * state when reduced motion is requested or IO is unavailable.
+ */
+export function Timeline({ entries, className }: TimelineProps) {
+  const listRef = useRef<HTMLDivElement>(null);
+  const [drawn, setDrawn] = useState(false);
+
+  useEffect(() => {
+    const node = listRef.current;
+    if (!node) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || typeof IntersectionObserver === "undefined") {
+      setDrawn(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setDrawn(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -20% 0px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="relative">
+    <div ref={listRef} className={cn("relative", className)}>
       <div
         data-testid="timeline-rail"
-        className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-bsc-sapphire-400 via-bsc-sapphire-500 to-bsc-sapphire-700 sm:left-1/2"
+        aria-hidden="true"
+        className={cn(
+          "absolute bottom-2 left-4 top-0 w-px origin-top bg-gradient-to-b from-bsc-sapphire-400 via-bsc-gold-400/70 to-bsc-gold-500 transition-transform duration-[1100ms] ease-out sm:left-1/2",
+          drawn ? "scale-y-100" : "scale-y-0",
+        )}
       />
       <div className="space-y-12">
         {entries.map((entry, i) => {

@@ -1,6 +1,6 @@
 export function monogram(name: string): string {
   const cleaned = name
-    .replace(/^(Fr\.?\s+|Father\s+|Rev\.?\s+|Rev\.?\s+Fr\.?\s+)/i, "")
+    .replace(/^(Fr\.?\s+|Father\s+|Rev\.?\s+|Rev\.?\s+Fr\.?\s+|Friar\s+|Msgr\.?\s+|OFM\s+)/i, "")
     .replace(/,\s*SS\.CC\.?$/i, "")
     .trim();
   const parts = cleaned.split(/\s+/);

@@ -11,19 +11,20 @@ export function Layout() {
 
   useEffect(() => {
     const resolveAnchor = () => {
+      // Handle both single-hash (#/path) and double-hash (#/path#anchor) forms
       const raw = window.location.hash;
       const parts = raw.split("#").filter(Boolean);
       const anchor = parts.length > 1 ? parts[parts.length - 1] : null;
       if (anchor) {
         const el = document.getElementById(anchor);
         if (el) {
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             el.scrollIntoView({ behavior: "auto" });
           }, 80);
+          return () => clearTimeout(timer);
         }
-      } else {
-        window.scrollTo({ top: 0, behavior: "auto" });
       }
+      window.scrollTo({ top: 0, behavior: "auto" });
     };
     resolveAnchor();
   }, [pathname, hash]);

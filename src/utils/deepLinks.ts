@@ -22,6 +22,7 @@ export function resolveHashRedirect(
   hash: string
 ): string | null {
   const path = pathname.replace(/\/$/, "");
+  if (path === "" || path === "/") return null;
   if (!knownRoutePaths.includes(path as (typeof knownRoutePaths)[number])) {
     return null;
   }

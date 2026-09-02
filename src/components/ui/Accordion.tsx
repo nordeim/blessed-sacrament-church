@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useId, useState, useRef, useCallback } from "react";
 import { cn } from "@/utils/cn";
 import { ChevronDown } from "lucide-react";
 
@@ -10,10 +10,12 @@ interface AccordionItem {
 
 interface AccordionProps {
   items: AccordionItem[];
+  className?: string;
 }
 
-export function Accordion({ items }: AccordionProps) {
-  const [openId, setOpenId] = useState<string | null>(null);
+export function Accordion({ items, className }: AccordionProps) {
+  const baseId = useId();
+  const [openId, setOpenId] = useState<string | null>(items[0]?.id ?? null);
   const buttonRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
   const handleKeyDown = useCallback(
@@ -39,22 +41,25 @@ export function Accordion({ items }: AccordionProps) {
   );
 
   return (
-    <div className="space-y-3">
+    <div className={cn("space-y-3", className)}>
       {items.map((item, index) => {
         const isOpen = openId === item.id;
+        const panelId = `${baseId}-panel-${index}`;
+        const triggerId = `${baseId}-trigger-${index}`;
         return (
           <div
             key={item.id}
             className="overflow-hidden rounded-xl border border-bsc-stone bg-bsc-cream"
           >
             <button
+              id={triggerId}
               ref={(el) => {
                 if (el) buttonRefs.current.set(item.id, el);
               }}
               onClick={() => setOpenId(isOpen ? null : item.id)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               aria-expanded={isOpen}
-              aria-controls={`panel-${item.id}`}
+              aria-controls={panelId}
               className={cn(
                 "flex w-full items-center justify-between px-5 py-4 text-left transition-colors",
                 "hover:bg-bsc-parchment focus:outline-none focus:ring-2 focus:ring-inset focus:ring-bsc-sapphire-400",
@@ -73,12 +78,15 @@ export function Accordion({ items }: AccordionProps) {
               />
             </button>
             <div
-              id={`panel-${item.id}`}
+              id={panelId}
+              role="region"
+              aria-labelledby={triggerId}
+              aria-hidden={isOpen ? undefined : true}
+              inert={!isOpen ? true : undefined}
               className={cn(
                 "grid transition-all duration-300 ease-out",
                 isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
               )}
-              aria-hidden={!isOpen}
             >
               <div className="overflow-hidden">
                 <div className="px-5 pb-5 pt-1 text-bsc-charcoal leading-relaxed">

@@ -44,6 +44,7 @@ export function Header() {
     (e: React.KeyboardEvent) => {
       if (e.key === "Escape") {
         setMobileOpen(false);
+        setDesktopOpen(null);
         return;
       }
       if (e.key !== "Tab") return;
@@ -139,6 +140,11 @@ export function Header() {
                   onMouseEnter={() => setDesktopOpen(item.label)}
                   onMouseLeave={() => setDesktopOpen(null)}
                   onFocusCapture={() => setDesktopOpen(item.label)}
+                  onBlurCapture={(event) => {
+                    const next = event.relatedTarget as HTMLElement | null;
+                    if (next && event.currentTarget.contains(next)) return;
+                    setDesktopOpen(null);
+                  }}
                 >
                   <button
                     className={cn(

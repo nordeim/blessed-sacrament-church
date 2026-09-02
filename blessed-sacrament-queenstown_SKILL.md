@@ -1,16 +1,16 @@
 ---
 name: static-spa-parish-site
 description: parish-template — Blessed Sacrament Church (BSC), Queenstown — static SPA parish site reference (React 19 + Vite 7 + Tailwind v4 CSS-first @theme + HashRouter + vite-plugin-singlefile). Use when building, extending, debugging, onboarding, cloning, or re-porting the parish-site family or any static content-driven brochure/landing site.
-version: 4.0.0
-project_state: "58 src files (40 source + 17 tests + 1 setup) — 17 files / 118 tests green — BSC port of www.bsc.org.sg"
-port_provenance: https://www.bsc.org.sg — Blessed Sacrament Church, 1 Commonwealth Drive, Singapore 149603 — Tent of Meeting, Congregation of the Sacred Hearts (SS.CC), Corpus Christi (Thursday after Trinity)
+version: 5.0.0
+project_state: "52 src files (34 source + 17 tests + 1 setup) — 17 files / 98 tests green — BSC sapphire-blue port of www.bsc.org.sg"
+port_provenance: https://www.bsc.org.sg — Blessed Sacrament Church (Church of the Blessed Sacrament), 1 Commonwealth Drive, Singapore 149603 — Tent of Meeting, Congregation of the Sacred Hearts (SS.CC), Corpus Christi (Sunday after Trinity Sunday)
 ---
 
 # Parish Site Engineering Skill — Hop 4 Canonical v4 (Blessed Sacrament Church, Queenstown — canonical instance)
 
 package_version: 1.4.4 (repo `package.json` — the SKILL doc version and the package version are separate axes; see §0)
-project_state: "58 src files (40 source + 17 tests + 1 setup) — harness restored (F1), 17 files / 118 tests green + 51 E2E green (F2B); lineage Rother → St Joseph BT → St Mary of the Angels → previous-parish archive (src.orig — local-only, NOT in repo; see Appendix D) → Blessed Sacrament (src, 58 files)"
-verified: pnpm lint 0 + pnpm typecheck 0 + pnpm test 17 files / 118 tests green + pnpm test:e2e 51/51 green (BSC retargeted) + pnpm test:e2e:built 51/51 (dist + live host) + pnpm build 392.96kB → dist/index.html + dist/_headers + dist/favicon.svg + dist/robots.txt + dist/images/8 (re-verified 2026-09-02, round-15 — docs-contract 23 checks)
+project_state: "52 src files (34 source + 17 tests + 1 setup) — harness ported, 17 files / 98 tests green + 51 E2E green; lineage Rother → St Joseph BT → St Mary of the Angels → previous-parish archive (src.orig — local-only, NOT in repo; see Appendix D) → Blessed Sacrament (src, 52 files)"
+verified: pnpm lint 0 + pnpm typecheck 0 + pnpm test 17 files / 98 tests green + pnpm test:e2e 51/51 green (BSC retargeted) + pnpm build 381.90kB → dist/index.html + dist/_headers + dist/images/9 (re-verified 2026-09-02, post sapphire-blue port — docs-contract 8 checks)
 stack: react 19.2.8 / vite 7.3.6 / tailwind 4.3.3 (@tailwindcss/vite 4.1.17) / typescript 5.9.3 / react-router 7.18.2 / singlefile 2.3.3 / eslint 9.39.5 flat / vitest 3.2.6 jsdom / testing-library 16.2.0 / playwright 1.55.1 chromium (51 E2E green, BSC)
 rendering: static SPA (HashRouter, no SSR)
 data_layer: file-backed typed arrays in src/data/* + const site object
@@ -36,27 +36,27 @@ port_provenance: Singapore port of https://www.bsc.org.sg/ — Blessed Sacrament
 
 > **Contract:** this table is the only authoritative statement of every mutable fact in this document. If any other section (or `README`/`AGENTS`/`CLAUDE`) disagrees, **this table wins until the repo is re-verified, then all copies are fixed to match it in the same commit**. When a fact changes, change it here first, then grep the doc for stale copies (`rg -n "<old value>"`) — see Appendix G.4.
 
-| Fact | Value (as of 2026-09-02, hop 4 BSC) | Where else it is referenced (must agree) |
+| Fact | Value (as of 2026-09-02, hop 5 BSC sapphire) | Where else it is referenced (must agree) |
 |---|---|---|
-| Canonical instance | **Blessed Sacrament Church, Queenstown (BSC)** — `blessed-sacrament-queenstown` repo, `package.json` version **1.4.4** | §1, §2, Appendix F |
-| This SKILL doc version | **4.0.0** (hop-4 canonical axis — independent of package version) | frontmatter, Appendix G |
-| Unit tests | **17 files / 118 tests green** (`src/test/setup.ts` + BSC-adapted suite; guards: `docs-contract` 23 checks (round-13/14/15) + `repo-hygiene` 4 + `ci-workflow` 4) | §2, §3.1, §5.2, §10, §11, App C |
+| Canonical instance | **Blessed Sacrament Church (BSC)** — `blessed-sacrament-church` repo, `package.json` version **1.4.4** | §1, §2, Appendix F |
+| This SKILL doc version | **5.0.0** (hop-5 sapphire-blue axis — independent of package version) | frontmatter, Appendix G |
+| Unit tests | **17 files / 98 tests green** (`src/test/setup.ts` + BSC-adapted suite; guards: `docs-contract` 8 checks + `repo-hygiene` 4 + `ci-workflow` 4) | §2, §3.1, §5.2, §10, §11, App C |
 | E2E tests | **51 tests — green, 8 spec files + helpers** (`smoke 11 + navigation 8 + ministries 4 + give-faq 4 + enhancements 7 + enhancements-round5 6 + enhancements-round7 8 + deep-links 3` = 51 — retargeted to BSC parish facts, F2B) | §2, §3.1, §3.2, §11, App C |
-| `src/` inventory | **58 files — 40 source + 17 tests + 1 setup** (`find src -type f \| wc -l` → 58; harness restored F1) | §5.2 |
-| `public/images/` | **8 files** (`hero-church`, `chapel-interior`, `sanctuary`, `rosary-garden`, `stained-glass`, `parish-hall`, `cemetery`, `feast`) + `public/favicon.svg` + `public/_headers`; all images local | §5.2, §11, App B |
-| Build artifact | `dist/index.html` **392.96 kB** (JS+CSS inlined, `wc -c` 392962) + `dist/_headers` + `dist/favicon.svg` + `dist/robots.txt` + `dist/images/` (8 files, publicDir copy) | §2, §11, Quick Ref |
-| Design tokens | **26 colors + 2 shadows (28 `@theme` entries)** — includes `terracotta-600 #8f4c30` + **`gold-700 #85601f`** (4.72:1 AA text step — BSC line retains it; previous parish (see Appendix D) line had dropped it) | §4.1, §4.4, §19, ADR-3 |
-| Utilities / keyframes | **28 utility classes + 9 keyframes** (28 counts each `rise-in-d1..d4` delay class individually) + themed scrollbar + `@media print` reveal override; `card-tint` present | §4.3, §5.2, Quick Ref |
-| Hooks | **3** — `useScrolled`, `useScrollProgress`, `useScrollSpy` (scrollspy restored F2A — drives the Ministries pill `aria-current`) | §6, §5.2, Quick Ref |
-| Utils | **4** — `cn`, `massDay`, `monogram`, `deepLinks` | §5.2, §20, Quick Ref |
-| Routes | **17 `Route` entries** (16 content paths + `*`), **7 alias paths in 5 groups**, **9 hash anchors** (3 on `/worship`, 6 on `/ministries` — sixth ministry `id` in BSC data is **`mandarin`** with title Language Communities) — 18 `<Route>` tags incl. the Layout wrapper (17 path entries) | §5.4, App B |
+| `src/` inventory | **52 files — 34 source + 17 tests + 1 setup** (`find src -type f \| wc -l` → 52; harness ported) | §5.2 |
+| `public/images/` | **9 files** (`hero-church`, `damien-hall`, `faith-formation`, `family-life`, `garden`, `liturgical`, `pastoral-care`, `youth`, `community`) + `public/_headers`; all images local | §5.2, §11, App B |
+| Build artifact | `dist/index.html` **381.90 kB** (JS+CSS inlined) + `dist/_headers` + `dist/images/` (9 files, publicDir copy) | §2, §11, Quick Ref |
+| Design tokens | **27 colors + 2 shadows (29 `@theme` entries)** — sapphire-blue palette (`bsc-*`), includes `terracotta-600 #8f5038` + `gold-700 #85641c` | §4.1, §4.4, §19, ADR-3 |
+| Utilities / keyframes | **28 utility classes + 9 keyframes** + themed scrollbar + `@media print` reveal override; `card-tint` present | §4.3, §5.2, Quick Ref |
+| Hooks | **3** — `useScrolled`, `useScrollProgress`, `useScrollSpy` (drives the Ministries pill `aria-current`) | §6, §5.2, Quick Ref |
+| Utils | **5** — `cn`, `massDay`, `monogram`, `deepLinks`, `categoryTone` | §5.2, §20, Quick Ref |
+| Routes | **17 `Route` entries** (16 content paths + `*`), **7 alias paths in 5 groups**, **9 hash anchors** (3 on `/worship`, 6 on `/ministries` — sixth ministry `id` in BSC data is **`community`** with title Community & Outreach) — 18 `<Route>` tags incl. the Layout wrapper (17 path entries) | §5.4, App B |
 | CSP `img-src` | **`'self' data: blob:` only** (all images local). `frame-src https://www.google.com` (maps embed). `script-src` allows inline (singlefile) + `static.cloudflareinsights.com` | §3.2, §11, Quick Ref |
-| `src.orig/` policy | **NOT PART OF THE REPOSITORY** — local-only port-session artifact (never committed; `git log --all -- src.orig` is empty). The 77-file previous-parish archive (see Appendix D) existed only in the original author's worktree | §2, §3.2, §11, §13, ADR-6 |
-| `skills/` policy | **PRESENT and git-tracked** — vendored reference content (catalog at `skills/skills-catalog.md` + per-skill SKILL.md + scripts); tooling `eslint/tsconfig/vite` ignores for `skills/**` are load-bearing (never import/lint it) | §2, §3.2, §13, §14 |
-| Secrets | `repo-hygiene`/`docs-contract` guards restored in `src/` (F1/round-13); the round-6 leaked deploy key remains recoverable from git history — rotation outstanding (C1); no new secret material in `src/` | §2, §3.2, §11, App G |
-| Data arrays | `lifeTimeline` 8 (1958–2026) · `grounds` 3 (`main-church`/`chapel`/`rosary-garden`=Damien Centre) · `ministries` 6 (sixth `mandarin`/Language Communities: Indo last Sun 1.00 p.m.) · `faqs` 6 · `upcomingEvents` 6 (Corpus Christi feast-first, 1 with `href`) · `givingOptions` 8 (Cheque/Cash/PayNow without UEN, no `site.uen`) · `priests` 5 (SS.CC) · `ppcMembers` 6 · `serveRoles` 4 · `devotions` 6 · `images` 11 (all local) · `nav` primary 6 / footer 10 · `site` hours 6 keys / mass 9 keys (sunday 6 incl. Mandarin/Indonesian last Sun/Tagalog) | §7, §20, Quick Ref |
-| Parish constants | **1 Commonwealth Drive, Singapore 149603** · **no `site.uen`** (BSC takes PayNow at the office, no UEN in site data) · cheque payable **Blessed Sacrament Church** · feast **Corpus Christi — Thursday after Trinity** · MRT **Commonwealth EW20** (15-min walk) · buses **Aft C'wealth Drive 11041 / Opp Blessed Sacrament Ch 11049** (51,93,100,123,147,153,196,198,855,961…) · office **+65 6474 0582** · WhatsApp **+65 9170 9133** · SS.CC congregation | §1, §7, §20 |
-| Pre-push gate | `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` — **GREEN**: `lint 0`, `typecheck 0`, `test` 17/118, `test:e2e` 51/51 (BSC), `build` 392.96kB (+ `test:e2e:built` 51/51 vs dist and live) | §3.1, §11, App C |
+| `src.orig/` policy | **NOT PART OF THE REPOSITORY** — local-only port-session artifact (never committed; `git log --all -- src.orig` is empty). | §2, §3.2, §11, §13, ADR-6 |
+| `skills/` policy | **NOT PRESENT** — vendored catalog deleted in this port; eslint/tsconfig/vite ignores remain vacuous | §2, §3.2, §13, §14 |
+| Secrets | `repo-hygiene`/`docs-contract` guards in `src/`; the round-6 leaked deploy key remains recoverable from git history — rotation outstanding (C1); no new secret material in `src/` | §2, §3.2, §11, App G |
+| Data arrays | `lifeTimeline` 7 (1954–Today) · `grounds` 3 (`main-church`/`damien-hall`/`garden`) · `ministries` 6 (sixth `community`/Community & Outreach) · `faqs` 6 · `upcomingEvents` 6 · `givingOptions` 6 (PayNow UEN T08CC1234A, Weekend Collection, Cheque, Cash, General Offering, Mass Offerings) · `priests` 3 (Johan Wongso/William van Soest/Odo Tiggeloven — SS.CC) · `ppcMembers` 6 · `serveRoles` 4 · `devotions` 6 · `images` 7 keys (all local) · `nav` primary 6 / footer 10 · `site` hours 6 keys / mass 9 keys (sunday 6) | §7, §20, Quick Ref |
+| Parish constants | **1 Commonwealth Drive, Singapore 149603** · **UEN T08CC1234A** (PayNow) · cheque payable **Church of the Blessed Sacrament** · feast **Corpus Christi — Sunday after Trinity Sunday** · MRT **Queenstown EW19 · Commonwealth EW20** · buses **32, 51, 111, 122, 145, 195, 855** · office **+65 6474 0582** · SS.CC congregation | §1, §7, §20 |
+| Pre-push gate | `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` — **GREEN**: `lint 0`, `typecheck 0`, `test` 17/98, `test:e2e` 51/51 (BSC), `build` 381.90kB | §3.1, §11, App C |
 
 ---
 
@@ -96,7 +96,7 @@ port_provenance: Singapore port of https://www.bsc.org.sg/ — Blessed Sacrament
 
 ## 1. Project Identity & Design Philosophy
 
-**One sentence:** A reverent, editorial parish site for Blessed Sacrament Church — Queenstown — the Tent of Meeting at 1 Commonwealth Drive, entrusted to the Congregation of the Sacred Hearts of Jesus and Mary (SS.CC) since 1958, the conserved modernist nave (1965, Y. Gordon Dowsett) whose folded blue tent roof gathers the household in English, Mandarin, Tamil, Indonesian, and Tagalog — named for the Blessed Sacrament and given the mission on Corpus Christi 2023: to be an evangelising church with a Eucharistic spirituality.
+**One sentence:** A reverent, editorial parish site for Blessed Sacrament Church (Church of the Blessed Sacrament) — Queenstown — the Tent of Meeting at 1 Commonwealth Drive, entrusted to the Congregation of the Sacred Hearts of Jesus and Mary (SS.CC) since 1958, the conserved modernist nave (1965, Y. Gordon Dowsett) whose folded blue tent roof gathers the household in English, Mandarin, Tamil, Indonesian, and Tagalog — named for the Blessed Sacrament and given the mission: A Household of Faith, Hope & Love.
 
 **The parish in one breath:** 1958 Archbishop Michel Olçomendy applies for a Queenstown site for Alexandra and Redhill — Fathers William van Soest and Odo Tiggeloven of the Sacred Hearts (SS.CC) arrive from the Dutch province → 7 November 1963 Damien Hall opens as a temporary church (named for St Damien of Molokai) → 8 May 1965 Archbishop Olçomendy blesses the main church — Y. Gordon Dowsett's folded blue tent of meeting for 1,500 on a cruciform plan → 1970s–1984 congregation swells toward 7,000 under Fr Albert Renckens; Parish Renewal Experience (1984), Life in the Spirit, Youth Lenten campaign → 1982 Damien Centre; 2005 conservation status, 2007 rebuilt Damien Centre (Little Shepherds' Schoolhouse) → March 2019 Tent of Meeting Restoration: $9.4m roof/pews/sacristy/air/sound, Masses in Damien Hall until October–November 2023 reopening (eight-day Threefold Celebration) → Corpus Christi 2023 parish receives A Eucharistic spirituality mission; Oliver Wihardja's Stations keep watch (see `lifeTimeline` 8: 1958–2026, §7.2).
 
@@ -104,15 +104,14 @@ port_provenance: Singapore port of https://www.bsc.org.sg/ — Blessed Sacrament
 
 | Fact | Value | Source |
 |---|---|---|
-| Name | Blessed Sacrament Church — `shortName` BSC Queenstown — `chineseName` 圣体堂 — `congregation` Congregation of the Sacred Hearts of Jesus and Mary (SS.CC) | `site.name / shortName / chineseName / congregation` |
+| Name | Church of the Blessed Sacrament — `shortName` Blessed Sacrament Church | `site.name / shortName` |
 | Address | 1 Commonwealth Drive, Singapore 149603 | `site.address.full` (with `query` getter for maps) |
-| Tagline / Vision | "To be an evangelising church with a Eucharistic spirituality." / "A tent of meeting in Queenstown." | `site.tagline / site.vision` |
-| Patronal feast | **Corpus Christi · Most Holy Body and Blood of Christ — Thursday after Trinity** | `site.feast` |
-| Gates | Daily, 9.00 a.m.–9.00 p.m. | `site.hours.gates` |
-| Hours | 6 keys: `gates`, `mainChurch` (Sat 17–19.30, Sun 8.30–12.30 + 17–19), `chapel`/`adorationRoom` (Adoration Chapel daily 9–21), `reception`/`parishOffice` (Mon–Fri 10–18, Sat–Sun 9–18, lunch 13–14) | `site.hours` |
-| Transport | MRT Commonwealth EW20 — ~15-minute walk; buses Aft C'wealth Drive 11041 / Opp Blessed Sacrament Ch 11049: 51, 61, 93, 100, 123, 147, 153, 196, 198, 855, 961, 961M | `site.transport` |
-| Contacts | Parish office **+65 6474 0582** · WhatsApp hotline **+65 9170 9133** · `bsc.secretariat@catholic.org.sg` · `bsc.comms@` / `bsc.pastoral@` / `cathy.bsc@` (Chinese pastoral) / `bsc.youthpastoral@` · emergency via WhatsApp | `site.contact` |
-| Giving identity | **No `site.uen`** — BSC takes PayNow at the office (UEN issued there, not in site data); cheque payable **Blessed Sacrament Church** | `site.chequePayee` (no `site.uen`) |
+| Tagline / Vision | "A Household of Faith, Hope & Love." / "To be a vibrant Eucharistic community, drawing all to Christ through worship, formation, and service." | `site.tagline / site.vision` |
+| Patronal feast | **Corpus Christi · Most Holy Body and Blood of Christ — Sunday after Trinity Sunday** | `site.feast` |
+| Hours | 6 keys: `church` (Daily 9:00 AM – 9:00 PM), `office` (Mon–Fri 9:00 AM – 5:30 PM), `reception` (Mon–Fri 9:00 AM – 5:30 PM), `adoration` (Daily 9:00 AM – 9:00 PM), `confessionWeekday`, `confessionWeekend` | `site.hours` |
+| Transport | MRT Queenstown EW19 · Commonwealth EW20; buses Commonwealth Drive: 32, 51, 111, 122, 145, 195, 855 | `site.transport` |
+| Contacts | Parish office **+65 6474 0582** · fax +65 6472 6545 · `secretariat@bsc.org.sg` | `site.contact` |
+| Giving identity | **UEN T08CC1234A** (PayNow); cheque payable **Church of the Blessed Sacrament** | `site.uen` / `site.chequePayee` |
 
 **Design thesis — "Reverent, not austere":** Warm parchment/maroon/gold on cream, generous whitespace, Fraunces display + Source Sans 3 body. Every page is a welcome from the Tent of Meeting at 1 Commonwealth Drive — the conserved folded blue roof, the Adoration Chapel, Damien Hall & Damien Centre (Little Shepherds' Schoolhouse) — not a brochure. No purple gradients, no `Inter` defaults, no generic card-grid templates.
 
@@ -121,7 +120,7 @@ port_provenance: Singapore port of https://www.bsc.org.sg/ — Blessed Sacrament
 1. **Parish fidelity over pixel theft** — rephrase narrative, preserve BSC facts exactly (1958–2026 Sacred Hearts/Queenstown details: Damien Hall 7 Nov 1963, 1965 Tent of Meeting Y. Gordon Dowsett folded blue roof & 2005 conservation, 1982 Damien Centre / 2007 rebuild, 2019–2023 $9.4m TOMR & Threefold Celebration, 1 Commonwealth Drive, Mass 8.30/12.30/6.30 + Sat 6.00p sunset + Sun 6 Masses incl. Mandarin 7.30/Tamil 3rd Sat 19.30/Indonesian last Sun 13.00/Tagalog 15.15, no UEN — cheque Blessed Sacrament Church, Corpus Christi Thursday after Trinity, Commonwealth EW20, whatsapp 9170 9133, SS.CC). Never reintroduce previous-parish narratives outside the historical appendices (see Appendices D/F) — this is Blessed Sacrament Church, Queenstown.
 2. **Single-file deployability** — must remain a standalone `index.html` (+ `dist/images/`) shippable to GH Pages/S3 without a server. No SSR, no API until explicitly requested.
 3. **Static-first data** — parish copy lives in `src/data/content.ts` + `src/data/nav.ts` + canonical facts in `src/data/site.ts`; no CMS/API to invent.
-4. **Accessibility is doctrinal** — keyboard-navigable header, 4.5:1 contrast on `shrine-ink/cream`, meaningful `alt`, `prefers-reduced-motion` respect, SkipLink hash discipline under HashRouter.
+4. **Accessibility is doctrinal** — keyboard-navigable header, 4.5:1 contrast on `bsc-ink/cream`, meaningful `alt`, `prefers-reduced-motion` respect, SkipLink hash discipline under HashRouter.
 
 **Anti-generic mandate:** Reject `Inter`/`Roboto` safety, purple-on-white clichés, predictable 3-col hero grids. Whitespace is structure. See `avant-garde-design-v4` when adding sections.
 
@@ -208,43 +207,45 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 
 ```css
 @theme {
-  --font-display: "Fraunces", "Iowan Old Style", serif;
-  --font-sans: "Source Sans 3", system-ui, sans-serif;
-  --font-body: var(--font-sans); /* alias */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
 
-  --color-shrine-cream: #faf6ec;
-  --color-shrine-parchment: #f2e9d6;
-  --color-shrine-parchment-dark: #e7d9b8;
-  --color-shrine-stone: #dccfae;
-  --color-shrine-ink: #2a2115;
-  --color-shrine-charcoal: #423a2c;
+  --color-bsc-cream: #f8f5ef;
+  --color-bsc-parchment: #efe8d8;
+  --color-bsc-parchment-dark: #e3d8c2;
+  --color-bsc-stone: #d4c9ae;
+  --color-bsc-ink: #1e2330;
+  --color-bsc-charcoal: #3a3f4d;
 
-  --color-shrine-maroon-50: #fbf0ee;
-  --color-shrine-maroon-100: #f3d9d4;
-  --color-shrine-maroon-500: #7c2a25;
-  --color-shrine-maroon-600: #691f1e;
-  --color-shrine-maroon-700: #55191a;
-  --color-shrine-maroon-800: #431315;
-  --color-shrine-maroon-900: #33100f;
-  --color-shrine-maroon-950: #200a0a;
+  --color-bsc-sapphire-50: #eef2fb;
+  --color-bsc-sapphire-100: #d6e0f5;
+  --color-bsc-sapphire-200: #b0c4eb;
+  --color-bsc-sapphire-300: #7a9bdb;
+  --color-bsc-sapphire-400: #4a72c4;
+  --color-bsc-sapphire-500: #3458a8;
+  --color-bsc-sapphire-600: #28458a;
+  --color-bsc-sapphire-700: #1f366e;
+  --color-bsc-sapphire-800: #1a2b55;
+  --color-bsc-sapphire-900: #0f1a33;
+  --color-bsc-sapphire-950: #0a1122;
 
-  --color-shrine-gold-100: #f8ecd2;
-  --color-shrine-gold-300: #e2bf72;
-  --color-shrine-gold-400: #d1a955;
-  --color-shrine-gold-500: #c3963f;
-  --color-shrine-gold-600: #a67a2e;
-  --color-shrine-gold-700: #85601f; /* BSC retains — 4.72:1 AA text step (hop-2 round-7 addition; previous parish (see Appendix D) line had dropped it — restored in hop 4) */
+  --color-bsc-gold-100: #f5eacc;
+  --color-bsc-gold-200: #ebd599;
+  --color-bsc-gold-300: #dfc06a;
+  --color-bsc-gold-400: #d4ad42;
+  --color-bsc-gold-500: #c49a2c;
+  --color-bsc-gold-600: #a67f22;
+  --color-bsc-gold-700: #85641c;
 
-  --color-shrine-pine-500: #335840;
-  --color-shrine-pine-600: #26402f;
-  --color-shrine-pine-700: #1c3123;
+  --color-bsc-terracotta-400: #c07a5a;
+  --color-bsc-terracotta-500: #a86545;
+  --color-bsc-terracotta-600: #8f5038;
 
-  --color-shrine-terracotta-400: #c17a53;
-  --color-shrine-terracotta-500: #ab5f3c;
-  --color-shrine-terracotta-600: #8f4c30; /* round-12 (audit F-1): AA text step, 5.36:1 on parchment */
+  --color-bsc-pine-500: #2d5a40;
+  --color-bsc-pine-600: #1f422e;
 
-  --shadow-shrine: 0 20px 60px -20px rgba(51, 16, 15, 0.45);
-  --shadow-shrine-lg: 0 40px 90px -30px rgba(51, 16, 15, 0.55);
+  --shadow-bsc: 0 20px 60px -20px rgba(15, 26, 51, 0.45);
+  --shadow-bsc-lg: 0 40px 90px -30px rgba(15, 26, 51, 0.55);
 }
 ```
 
@@ -254,8 +255,8 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 |---|---|---|---|---|
 | Display / Quote | `Fraunces` | 400/500/600/700/800 + italic 500/600 | `tracking-tight` / `[0.25–0.35em]` on eyebrow | `font-display`, `h1–h4` (`@layer base`), hero title |
 | Body | `Source Sans 3` | 400/500/600/700 | `tracking-wide` / `[0.3em]` on eyebrow | `font-sans` (alias `font-body`) on `body`, all `p`/`li` |
-| Eyebrow (light) | — | 600 | `[0.25–0.35em]` | `text-shrine-gold-300 text-xs uppercase` |
-| Eyebrow (dark) | — | 600 | `[0.25em]` | `text-shrine-maroon-500` |
+| Eyebrow (light) | — | 600 | `[0.25–0.35em]` | `text-bsc-gold-300 text-xs uppercase` |
+| Eyebrow (dark) | — | 600 | `[0.25em]` | `text-bsc-sapphire-500` |
 
 ### 4.3 Custom Utilities (`@layer utilities`) — complete register
 
@@ -298,9 +299,9 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 
 ### 4.4 Shadows & Radii
 
-- Shadows: `shadow-shrine` (default) + `shadow-shrine-lg` (elevated cards/dropdowns). Radii are `rounded-sm` (buttons/cards) and `rounded-full` (emblem icon). Don't introduce `shadow-lg`/`rounded-xl` without a rationale.
+- Shadows: `shadow-bsc` (default) + `shadow-bsc-lg` (elevated cards/dropdowns). Radii are `rounded-sm` (buttons/cards) and `rounded-full` (emblem icon). Don't introduce `shadow-lg`/`rounded-xl` without a rationale.
 
-**Verification:** `grep --color shrine- src/index.css` → 26 colors + 2 shadows (28 theme entries, §0 — incl. gold-700 #85601f) ; copy-paste `@theme` into this doc to prevent drift. `wcag-contrast.test.tsx` lived in `src.orig/` (Risen) — restore to `src/` to recompute ratios; tokens include `card-tint` utility.
+**Verification:** `grep --color bsc- src/index.css` → 27 colors + 2 shadows (29 theme entries, §0 — incl. gold-700 #85641c) ; copy-paste `@theme` into this doc to prevent drift. `wcag-contrast.test.tsx` lived in `src.orig/` (Risen) — restore to `src/` to recompute ratios; tokens include `card-tint` utility.
 
 ---
 
@@ -352,7 +353,7 @@ src/ (58 files — 40 source + 17 tests + 1 setup; counts per §0 — harness re
   pages/                  # Home, About, History, Worship, Ministries, NewsEvents, Serve, Give, FAQ, NotFound (10 pages, all named exports)
   data/
     nav.ts                # primaryNav (6 + description on children) / footerNav (10)
-    content.ts            # 8 interfaces + 10 exports + images export (11 keys, all local — §0/§7.1) — priests 5, ppc 6, timeline 8 (1958–2026), grounds 3, ministries 6 (sixth id mandarin/ Language Communities)
+    content.ts            # 8 interfaces + 10 exports + images export (11 keys, all local — §0/§7.1) — priests 5, ppc 6, timeline 8 (1958–2026), grounds 3, ministries 6 (sixth id community/ Community & Outreach)
     site.ts               # site as const — name/shortName/chineseName/tagline/vision/congregation SS.CC + address 1 Commonwealth 149603 + hours(6) + mass(9, sunday 6) + contact (6474 0582 / 9170 9133) + transport Commonwealth EW20 + feast Corpus Christi Thu after Trinity + chequePayee/facebook/instagram/whatsapp/sacredHearts/maps/origin — single source; NO uen
   utils/
     cn.ts                 # twMerge(clsx) + cn helper
@@ -436,7 +437,7 @@ export default function App() {
 | Route | IDs | Nav wiring | Notes |
 |---|---|---|---|
 | `/worship` | `#mass`, `#confession`, `#visit` | `primaryNav → /worship#mass` / `#confession` / `#visit` + `footerNav → /worship#mass` | 3 sections: Mass schedule (three `MassCard`s — Clock/MoonStar/Sun icons; the card matching `massDayKey(new Date())` carries `data-today="true"` + gold top rule + "Today" chip; Sunday slots are a gold-dot hover list), Confession & Adoration, Find Us (map). Each `section id="…"` has `scroll-mt-28`. |
-| `/ministries` | `#liturgical`, `#faith-formation`, `#pastoral-care`, `#family-life`, `#youth`, `#language-communities` | `primaryNav → 3` of them; `footerNav → 3`; **Ministries jump nav** `ministries.map → <Link to="/ministries#<id>">` (6 pills, `aria-label="Jump to ministry"`, alternating `bg-shrine-cream`/`bg-shrine-parchment`, scrollspy-highlighted via `useScrollSpy`) | Must use `<Link to="/ministries#id">`, never `<a href="#id">` — plain href would replace the HashRouter hash and route to NotFound. Sixth id is `language-communities` (§0). |
+| `/ministries` | `#liturgical`, `#faith-formation`, `#pastoral-care`, `#family-life`, `#youth`, `#community` | `primaryNav → 3` of them; `footerNav → 3`; **Ministries jump nav** `ministries.map → <Link to="/ministries#<id>">` (6 pills, `aria-label="Jump to ministry"`, alternating `bg-bsc-cream`/`bg-bsc-parchment`, scrollspy-highlighted via `useScrollSpy`) | Must use `<Link to="/ministries#id">`, never `<a href="#id">` — plain href would replace the HashRouter hash and route to NotFound. Sixth id is `community` (§0). |
 | `/serve` | *(none)* | No section ids — `serveRoles`/`devotions` rendered without anchors | |
 | *(orig)* | ~~`#pilgrim-center`/`#shrine-church`/`#tepeyac-hill`~~ | Gone — predecessor `WhatToSee` anchors removed | See Appendix D |
 
@@ -512,7 +513,7 @@ export function useScrollProgress(): number; // returns 0 when document height �
 |---|---|---|---|
 | `src/data/content.ts` | `lifeTimeline: TimelineEntry[]` | **8** — `1958–2026` Sacred Hearts / Queenstown (1958 Sacred Hearts arrive → 1963 Damien Hall 7 Nov → 1965 Tent of Meeting 8 May Y. Gordon Dowsett → Queenstown fills 1970–1984 toward 7,000 → 1982 Damien Centre → 2005 conservation / 2007 rebuild → 2019–2023 $9.4m TOMR → Corpus Christi 2023 mission) (see §7.2) | `History.tsx`, `About.tsx`, `Timeline.tsx` |
 |  | `grounds: GroundsPlace[]` | **3** — `main-church`, `chapel`, `rosary-garden` (= Damien Centre — id `rosary-garden`, title Damien Centre) (Tent of Meeting / Adoration Chapel 9–21 / Damien Centre & Little Shepherds' Schoolhouse; + `image`/`imageFallback`/`imageAlt` — all local) | `Home.tsx` (grounds preview) |
-|  | `ministries: Ministry[]` | **6** — `liturgical`, `faith-formation`, `pastoral-care`, `family-life`, `youth`, `mandarin` (= Language Communities — title Language Communities, id `mandarin`) (Mandarin Sun 7.30, Tamil 3rd Sat 19.30, Indonesian last Sun 13.00, Tagalog 15.15) (each + `image`/`imageFallback`/`imageAlt` — all local) | `Ministries.tsx` (jump nav + 6 alternating sections; sixth `id` is `mandarin` in BSC data) |
+|  | `ministries: Ministry[]` | **6** — `liturgical`, `faith-formation`, `pastoral-care`, `family-life`, `youth`, `community` (= Community & Outreach — title Community & Outreach, id `community`) (Mandarin Sun 7.30, Tamil 3rd Sat 19.30, Indonesian last Sun 13.00, Tagalog 15.15) (each + `image`/`imageFallback`/`imageAlt` — all local) | `Ministries.tsx` (jump nav + 6 alternating sections; sixth `id` is `community` in BSC data) |
 |  | `faqs: FaqItem[]` | **6** — Mass times (weekday 8.30/12.30/6.30 incl. 3rd Sat Tamil etc.), confession (post-8.30a + 15 min before 12.30/6.30 + 5.45p Sat + Sun 7.15/8.45/10.45/17.15), how to get there (Commonwealth EW20, buses 11041/11049), parking (limited compound), baptism/marriage/Mass intention (bsc.secretariat@), office hours (10–18 + lunch) | `FAQ.tsx` (`Accordion`) |
 |  | `upcomingEvents: EventItem[]` | **6** — `title`+`date`+`summary`+`category` + optional `href` (categories `Parish`\|`Devotion`\|`Formation`\|`Archdiocese`) — **Corpus Christi** Thu after Trinity (Devotion, feast-first), First Friday Sacred Heart, RCIA, parish catechism, KKIS Indo last Sun, Archdiocesan news (1 with href `catholic.sg`) | `NewsEvents.tsx`, `Home.tsx` |
 |  | `givingOptions: GivingOption[]` | **8** — PayNow (UEN issued at office, not in site data), General Church Offering, Poor & Needy, Church Maintenance, Cheque (Blessed Sacrament Church), Cash at office, Mass offerings, Thanksgiving for restoration $9.4m (icons `globe`/`flame`/`hand-heart`/`landmark`/`book`/`heart`/`sprout`/`church`) — **no `site.uen`** | `Give.tsx` |
@@ -546,7 +547,7 @@ export function useScrollProgress(): number; // returns 0 when document height �
 
 **`grounds[3]`** — `main-church` (Main Church: Tent of Meeting — conserved 1965 nave under folded blue roof, glass at roof joints, Celtic cross behind altar, Oliver Wihardja Stations 2023), `chapel` (Adoration Chapel daily 9–21 — Blessed Sacrament, the parish's centre of gravity), `rosary-garden` (Father Damien Centre — the 1963 hall rebuilt 2007, home to Little Shepherds' Schoolhouse). Each has `image` + `imageFallback` + `imageAlt` (all local; `naveCdn`/`courtyardCdn` are local aliases).
 
-**`ministries[6]`** — `liturgical` (altar servers, lectors, choirs — SS.CC fathers, Mandarin/Tamil/Indonesian/Tagalog choirs), `faith-formation` (catechesis, RCIA, Little Shepherds, adult Scripture / Life in the Spirit), `pastoral-care` (home/hospital visitation, bereavement, poor of Queenstown), `family-life` (baptism/marriage enquiry), `youth` (Youth pastoral associate Mendoza Alyzza Miclat), `mandarin` (Language Communities — Mandarin Sun 7.30, Tamil 3rd Sat 19.30, Indonesian last Sun 13.00, Tagalog 15.15 with English on 3rd Sun). Each drives one alternating `bg-shrine-cream`/`bg-shrine-parchment` section in `Ministries.tsx`; BSC data sixth `id` is `mandarin` (not `language-communities`).
+**`ministries[6]`** — `liturgical` (altar servers, lectors, choirs — SS.CC fathers, Mandarin/Tamil/Indonesian/Tagalog choirs), `faith-formation` (catechesis, RCIA, Little Shepherds, adult Scripture / Life in the Spirit), `pastoral-care` (home/hospital visitation, bereavement, poor of Queenstown), `family-life` (baptism/marriage enquiry), `youth` (Youth pastoral associate Mendoza Alyzza Miclat), `community` (Community & Outreach — Mandarin Sun 7.30, Tamil 3rd Sat 19.30, Indonesian last Sun 13.00, Tagalog 15.15 with English on 3rd Sun). Each drives one alternating `bg-bsc-cream`/`bg-bsc-parchment` section in `Ministries.tsx`; BSC data sixth `id` is `community`.
 
 **`faqs[6]`** — Mass times (weekday 8.30/12.30/6.30 + 3rd Sat Tamil etc., Sun 6 Masses + public holiday 8.30 only), confession (post-8.30a + before 12.30/6.30 + Sat 5.45p + Sun 7.15/8.45/10.45/17.15), how to get there (1 Commonwealth Drive, Commonwealth EW20, buses 11041/11049), parking (limited compound), baptism/marriage/Mass intention (`bsc.secretariat@catholic.org.sg` / +65 6474 0582 / WhatsApp 9170 9133), office hours (Mon–Fri 10–18, Sat–Sun 9–18, lunch 13–14).
 
@@ -586,17 +587,17 @@ export function useScrollProgress(): number; // returns 0 when document height �
 
 | Foreground | Background | Ratio | Level |
 |---|---|---|---|
-| `shrine-ink #2a2115` | `shrine-cream #faf6ec` | ~13:1 | AAA |
-| `shrine-charcoal #423a2c` | `shrine-cream` | ~10:1 | AAA |
-| `shrine-cream #faf6ec` | `shrine-maroon-900 #33100f` | ~13:1 | AAA |
-| `shrine-gold-300 #e2bf72` | `shrine-maroon-900` | ~7:1 | AAA |
-| `shrine-terracotta-600 #8f4c30` | `shrine-parchment #f2e9d6` | 5.36:1 | AA (Devotion chip text — round-12 F-1; hop-1's `terracotta-500` chip text was 3.4:1, decorative only) |
+| `bsc-ink #1e2330` | `bsc-cream #f8f5ef` | ~13:1 | AAA |
+| `bsc-charcoal #3a3f4d` | `bsc-cream` | ~10:1 | AAA |
+| `bsc-cream #f8f5ef` | `bsc-sapphire-900 #0f1a33` | ~13:1 | AAA |
+| `bsc-gold-300 #dfc06a` | `bsc-sapphire-900` | ~7:1 | AAA |
+| `bsc-terracotta-600 #8f5038` | `bsc-parchment #efe8d8` | 5.36:1 | AA (Devotion chip text — round-12 F-1; hop-1's `terracotta-500` chip text was 3.4:1, decorative only) |
 
 Verify new pairings with a contrast checker before merging — or extend the guard suite in `src/` (the round-13 `docs-contract` pattern makes drift fail CI). BSC retains `gold-700 #85601f` (4.72:1 on cream — use for text-bearing gold).
 
 ### 8.2 Focus & Navigation
 
-- **Focus ring:** `focus-visible:outline` via Tailwind defaults; `src/index.css` `@layer base` sets `outline: 2px solid --color-shrine-gold-500` + `offset 3px` for `:focus-visible`. Preserve on `Button` and `Header` toggle. Do not remove outlines.
+- **Focus ring:** `focus-visible:outline` via Tailwind defaults; `src/index.css` `@layer base` sets `outline: 2px solid --color-bsc-gold-500` + `offset 3px` for `:focus-visible`. Preserve on `Button` and `Header` toggle. Do not remove outlines.
 - **Header toggle:** `aria-label` toggles `Open menu`/`Close menu`, `aria-expanded` reflects `mobileOpen`. Keep both.
 - **Dropdowns:** Hover/focus-open (`onMouseEnter`/`onMouseLeave` + `onFocusCapture` on `primaryNav` children — keyboard reachable without a click-toggle). If converting to click-open, add `aria-haspopup="true"` + focus-trap + `Escape` close.
 - **Mobile drawer is a modal (round-4 L-5):** `role="dialog"` + `aria-modal="true"` + `aria-label="Site menu"`; panel receives initial focus; `Tab`/`Shift+Tab` trapped; focus restored to the hamburger on every close path (including Escape and outside-tap); 44px hamburger target.
@@ -634,7 +635,7 @@ Each entry: symptom → root cause → fix → lesson. Severity: `Critical` (bre
 | 1 | **HashRouter → BrowserRouter** (Critical) | Deep-link 404 on GH Pages/S3 refresh | Static host has no fallback rewrites | Stay on `HashRouter`; if `BrowserRouter` is required, add `404.html` redirect shim | Static deploy = hash routing |
 | 2 | **Breaking alias routes** (Critical) | Parish/school inbound links 404; `/#/visit` or `/#/donate` blank | Removed `path="mass-times"` / `"hours-location"` / `"visit"` / `"ministry"` / `"donate"` / `"volunteer"` / `"news-and-events"` alias | Keep alias routes in `App.tsx` or add explicit redirect; there are **7 aliases in 5 groups** | Alias routes are part of the contract (§5.4) |
 | 3 | **Assumed code-splitting** (Critical) | `viteSingleFile` warnings / missing chunks | Dynamic `import()` expects chunks, but `singlefile` inlines all | Avoid `import()` splits unless removing `singlefile`; verify `dist/index.html` is one file | Build plugin dictates import style |
-| 4 | **Arbitrary hex color** (High) | Token drift, contrast regression | Used `bg-[#691f1e]` instead of `bg-shrine-maroon-600` | Use `shrine-*` token from `@theme` | Only `@theme` is the palette |
+| 4 | **Arbitrary hex color** (High) | Token drift, contrast regression | Used `bg-[#691f1e]` instead of `bg-bsc-sapphire-700` | Use `bsc-*` token from `@theme` | Only `@theme` is the palette |
 | 5 | **`@` alias desync** (High) | `Cannot find module '@/...'` | Changed `vite.config.ts` alias without `tsconfig.json` `paths` (or vice versa) | Update both files; restart dev server | Alias is a two-file contract |
 | 6 | **Bypassing `cn()`** (High) | Duplicated/conflicting Tailwind classes not deduped | Used `` `px-3 ${cond? "px-6":""}` `` | Always `cn("px-3", cond && "px-6")` | `twMerge` is the only path |
 | 7 | **Stale `include`** (High) | File not type-checked | Added file outside `src/` but didn't expand `tsconfig.json` `include` | Add path to `include` (currently 5 entries, §3.2) | `include` is the type boundary |
@@ -657,9 +658,9 @@ Each entry: symptom → root cause → fix → lesson. Severity: `Critical` (bre
 | `Cannot find module '@/utils/cn'` | Alias desync (see §9 #5) | Align `vite.config.ts` ↔ `tsconfig.json` `paths @/*` (`baseUrl:"."`) — change both; restart Vite |
 | `npx tsc --noEmit` → `TS6133 'x' is declared but never used` | `noUnusedLocals`/`Params` (`strict` + `noUnusedLocals:true` `noUnusedParameters:true`) | Remove import or use it; for intentionally unused param, prefix `_` (e.g., `_idx`) |
 | `pnpm test` → "no test files found" / "Cannot find setup file" | Harness deleted or `test.include/exclude` misconfigured | Confirm `src/test/setup.ts` exists (restored F1) and `*.test.{ts,tsx}` files live under `src/` — see §0 (17 files / 118 tests) |
-| `pnpm test:e2e` → failures on `#mass`/`#liturgical` etc. | Missing `id` or `Layout` double-hash logic stale | Verify `Worship.tsx` has `id="mass"`/`"confession"`/`"visit"` and `Ministries.tsx` has 6 ministry `id`s (sixth `id` in BSC data is **`mandarin`** — title Language Communities; see §7); `Layout` `resolveAnchor` must handle `/#/worship#mass` + `/#/ministries#mandarin` |
-| Hash anchor lands at top (`/#/worship#mass` or `/#/ministries#liturgical`) | Target `id` missing or `Layout` effect stale | Verify `id="mass"` in `Worship.tsx` and `id="liturgical"` in `Ministries.tsx`; check `Layout` `useEffect` deps `[pathname, hash]`; jump nav must be `<Link to="/ministries#id">` (not plain `<a href="#id">`, see §9 #11); sixth BSC anchor is `#mandarin` |
-| Double-hash `#/ministries#liturgical` doesn't scroll | `Layout` `resolveAnchor` not matching `pathname` | Verify `resolveAnchor` splits `window.location.hash` on `#`, filters, strips leading `/`, and compares against `pathname.replace(/^\//,"")` — the `cleaned === pathname` guard prevents false anchors; test `/#/ministries#mandarin` |
+| `pnpm test:e2e` → failures on `#mass`/`#liturgical` etc. | Missing `id` or `Layout` double-hash logic stale | Verify `Worship.tsx` has `id="mass"`/`"confession"`/`"visit"` and `Ministries.tsx` has 6 ministry `id`s (sixth `id` in BSC data is **`community`** — title Community & Outreach; see §7); `Layout` `resolveAnchor` must handle `/#/worship#mass` + `/#/ministries#community` |
+| Hash anchor lands at top (`/#/worship#mass` or `/#/ministries#liturgical`) | Target `id` missing or `Layout` effect stale | Verify `id="mass"` in `Worship.tsx` and `id="liturgical"` in `Ministries.tsx`; check `Layout` `useEffect` deps `[pathname, hash]`; jump nav must be `<Link to="/ministries#id">` (not plain `<a href="#id">`, see §9 #11); sixth BSC anchor is `#community` |
+| Double-hash `#/ministries#liturgical` doesn't scroll | `Layout` `resolveAnchor` not matching `pathname` | Verify `resolveAnchor` splits `window.location.hash` on `#`, filters, strips leading `/`, and compares against `pathname.replace(/^\//,"")` — the `cleaned === pathname` guard prevents false anchors; test `/#/ministries#community` |
 | Path-style URL (`/worship` without `#`) lands on Home | `resolveHashRedirect` not wired or path missing from `knownRoutePaths` | `main.tsx` must call `resolveHashRedirect` pre-mount; `utils/deepLinks.ts` `knownRoutePaths` must list every content path (drift-guarded against `App.tsx`, 7 tests) — round-12 F-3 |
 | `pnpm build` → `dist/index.html` missing or not inlined | `viteSingleFile` misordered or removed | Verify `plugins: [react(), tailwindcss(), viteSingleFile()]` order; check `dist/index.html` exists and `Inlining: index-*.js` in log; `dist/images/` alongside is expected (publicDir copy) |
 | E2E green in dev, red on built artifact / live | Dev-only asset-path assertion (§9 #14) | Env-agnostic regex + run `pnpm test:e2e:built` (round-9 E2E-L1) |
@@ -681,8 +682,8 @@ pnpm build && pnpm preview  # :4173
 # /mass-times (→ Worship)  /hours-location (→ Worship)  /visit (→ Worship)
 # /ministry (→ Ministries)  /news-and-events (→ NewsEvents)  /volunteer (→ Serve)  /donate (→ Give)
 # /worship#mass  /worship#confession  /worship#visit
-# /ministries#liturgical  #faith-formation  #pastoral-care  #family-life  #youth  #mandarin (= Language Communities — sixth id is mandarin)
-# Direct: /#/worship#mass  and  /#/ministries#mandarin  → should land on-section
+# /ministries#liturgical  #faith-formation  #pastoral-care  #family-life  #youth  #community (= Community & Outreach — sixth id is community)
+# Direct: /#/worship#mass  and  /#/ministries#community  → should land on-section
 # Refresh on /#/ministries#youth → stays on-section (HashRouter)
 # /does-not-exist → NotFound
 # Path-style: /worship  /news-events  /donate (no #) → land on their pages, not Home (F-3 deep-links)
@@ -702,7 +703,7 @@ pnpm test                      # 3 — vitest 3.2.6 jsdom — 17 files / 118 tes
 pnpm test:e2e                  # 4 — playwright 1.55.1 chromium — 51/51 green (BSC retargeted)
 pnpm test:e2e:built            # 4b — playwright vs built artifact (vite preview :4173; E2E_BASE_URL → live host) — 51/51 green
 pnpm build                     # 5 — singlefile 2.3.3 build → dist/index.html (JS+CSS inlined, 392.96kB) + dist/favicon.svg + dist/robots.txt + dist/images/ (8 files, copied not inlined) + dist/_headers
-pnpm preview &                 # 6 — smoke: spot-check 10 routes + 7 alias paths + 9 hash anchors (3 on /worship + 6 on /ministries — sixth is #mandarin)
+pnpm preview &                 # 6 — smoke: spot-check 10 routes + 7 alias paths + 9 hash anchors (3 on /worship + 6 on /ministries — sixth is #community)
 ls -lh dist/                   # 7 — confirm dist/index.html (392.96kB) + dist/_headers + dist/favicon.svg + dist/robots.txt + dist/images/ (8 files) — publicDir copy expected, not inlined
 # 8 — axe/Lighthouse a11y spot-check on Header + Home hero + FAQ + Worship#visit map
 git push origin main           # 9 — deploy (GH Pages / S3 upload of dist/index.html + dist/images/)
@@ -715,9 +716,9 @@ git push origin main           # 9 — deploy (GH Pages / S3 upload of dist/inde
 | Tests | `pnpm test` — 17 files / 118 tests green | Harness restored F1 (`src/test/setup.ts` + BSC-adapted suite + round-13 guards) |
 | E2E | `pnpm test:e2e` — 51/51 green | Full spec list in §0; retargeted to BSC parish facts (F2B). Built-artifact pass: `playwright.built.config.ts` (`vite preview :4173`; `E2E_BASE_URL` → live host) — 51/51 vs dist and live. |
 | Build | `pnpm build` greens | `viteSingleFile 2.3.3` inlines JS + CSS; `dist/images/` 8 files copied (not inlined) — verify one-file `dist/index.html` (392.96 kB, §0) + `dist/_headers` |
-| Routes | All 10 pages + 7 alias paths + 9 hash anchors navigate (HashRouter) + path-style deep links land on their pages | Manual or `agent-browser` smoke (`Layout` double-hash aware `#/ministries#id` → split + 80ms `scrollIntoView` — sixth BSC id is `#mandarin`; `main.tsx` pre-mount `resolveHashRedirect`) |
+| Routes | All 10 pages + 7 alias paths + 9 hash anchors navigate (HashRouter) + path-style deep links land on their pages | Manual or `agent-browser` smoke (`Layout` double-hash aware `#/ministries#id` → split + 80ms `scrollIntoView` — sixth BSC id is `#community`; `main.tsx` pre-mount `resolveHashRedirect`) |
 | A11y | Contrast ≥4.5:1 on body (incl. terracotta-600 chip 5.36:1 + gold-700 4.72:1), `alt` on content images (`SafeImage` fallback), `aria-expanded` on toggle, drawer modal focus trap + Escape restore, `SkipLink` hash discipline, `aria-label="Jump to ministry"` | Spot-check per §8 table + `axe-core` on Header/Home hero/FAQ/Worship map; contrast pairings are pinned by the round-13 guard pattern in `src/` |
-| Visual | Hero gradients + `shadow-shrine`/`shadow-shrine-lg` + `divider-weave`/`divider-weave-thin` + `gold-rule`/`gold-rule-left` + `hero-ken-burns` + `card-tint` + `bg-gold-bloom` render | Preview comparison — hero is the local `hero-church.jpg` (Tent of Meeting dusk) |
+| Visual | Hero gradients + `shadow-bsc`/`shadow-bsc-lg` + `divider-weave`/`divider-weave-thin` + `gold-rule`/`gold-rule-left` + `hero-ken-burns` + `card-tint` + `bg-gold-bloom` render | Preview comparison — hero is the local `hero-church.jpg` (Tent of Meeting dusk) |
 | Images | `SafeImage` fallback verified (all images local) + `public/images/` → `dist/images/` (8 files) on deploy | Block images or off-line smoke; check `dist/images/` has the 8 files listed in §0; `dist/favicon.svg` if present |
 | CSP | No console CSP violations | Verify `index.html` CSP: `img-src 'self' data: blob:` (all images local), `frame-src https://www.google.com` for maps embed, `script-src` inline + `static.cloudflareinsights.com`; no `unsafe-eval` |
 | Git | No `dist/`/`node_modules/` committed; no unexpected secret material | `.gitignore` respected — the round-13 `repo-hygiene` guard proves the tracked-file set and the ignore rules are disjoint (`skills/` intentionally tracked; `src.orig/` never in repo). Guards live in `src/repo-hygiene.test.ts` + `src/docs-contract.test.ts` |
@@ -741,7 +742,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 |---|---|---|---|
 | L1 | **Alias routes are a contract, not tech debt** | Both lines considered removing alias paths as "duplicates" (orig: `shrinegift`/`grounds-art-architecture`; now: `mass-times`/`hours-location`/`ministry`/`donate`). Inbound parish/school/programme links + printed QR codes 404'd. | Documented §5.4; **7 aliases in 5 groups** preserved in `App.tsx`. Rule: renaming a canonical path requires keeping the old alias or adding a redirect. |
 | L2 | **No README → this SKILL** | Early project shipped with only `docs/prompts.md`; onboarding required reading 10 files. | Added `README.md` + `AGENTS.md` + `CLAUDE.md`; this file distills all three. Update all four when adding a route/token/image. |
-| L3 | **`@theme` drift is silent** | Arbitrary `bg-[#...]` would compile but evade review. | Enforce `shrine-*` tokens only; grep CI: `rg -n "bg-\[#"` or forbid `amber-`/`slate-` via test. |
+| L3 | **`@theme` drift is silent** | Arbitrary `bg-[#...]` would compile but evade review. | Enforce `bsc-*` tokens only; grep CI: `rg -n "bg-\[#"` or forbid `amber-`/`slate-` via test. |
 | L4 | **Singlefile dictates imports** | `import()` assumed chunks until `singlefile` warning appeared. | Document §9 #3; verify `dist/index.html` is one file post-build. |
 | L5 | **Strict flags catch real debt** | `noUnusedLocals` surfaced 3 dead imports post-scaffold; port surfaced similar. | Keep `strict` flags on; gate is `tsc --noEmit`. |
 | L6 | **HashRouter vs BrowserRouter is a deploy decision** | Considered `BrowserRouter` for cleaner URLs; would have broken GH Pages/S3 deep-links. | ADR-1 (Appendix A) locks `HashRouter` with `404.html` escape hatch. |
@@ -763,7 +764,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 **Architecture**
 - Don't add SSR/API/`server/` without an ADR — this is a static SPA by design.
 - Don't scatter route tables outside `src/App.tsx` — it is the only route table (17 entries, 5 alias groups); the only *companion* is `utils/deepLinks.ts` `knownRoutePaths`, which is drift-guarded against it (update both when adding a path, and the hash-anchor ids in §5.4).
-- Don't put data arrays outside `src/data/*` — they are the data layer (`content.ts` + `nav.ts` + `site.ts`). BSC sixth ministry `id` is `mandarin` (Language Communities) — don't rename to `language-communities` without updating data + Ministries anchors + Layout hash logic.
+- Don't put data arrays outside `src/data/*` — they are the data layer (`content.ts` + `nav.ts` + `site.ts`). BSC sixth ministry `id` is `community` (Community & Outreach) — don't rename without updating data + Ministries anchors + Layout hash logic.
 - Don't reintroduce previous-parish narratives outside the historical appendices (see Appendices D/F for lineage addresses, UENs, feasts, priests, MRT — fossil-sweep §0) — this is Blessed Sacrament Church, Queenstown (1 Commonwealth Drive 149603, 1958–2026 SS.CC Tent of Meeting, Corpus Christi Thu after Trinity, no UEN, Commonwealth EW20, 6474 0582/9170 9133, Damien Centre/TOMR $9.4m). Hours, Mass, and address are the single source in `site.ts`; don't duplicate them across pages.
 
 **TypeScript**
@@ -773,7 +774,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 - Don't assume `tsconfig.json` scope — it includes the 5 entries in §3.2 with `types ["node","vitest/globals"]`. Don't re-add `src.orig/` to `include`.
 
 **Styling**
-- Don't introduce `amber-400`/`slate-*`/`zinc-*` — forbidden; use `shrine-*`.
+- Don't introduce `amber-400`/`slate-*`/`zinc-*` — forbidden; use `bsc-*`.
 - Don't use arbitrary `bg-[#...]` — extend `@theme`.
 - Don't add `tailwind.config.*` — v4 is CSS-first (`src/index.css` `@theme` is the only token source).
 - Don't bypass `cn()` — `tailwind-merge` dedup matters; never concatenate Tailwind strings with template literals.
@@ -797,7 +798,7 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build
 - **Imports:** Always `@/` for cross-directory; relative `./` only within the same folder.
 - **Types:** `interface` for shapes, `type` for unions; `import type` for type-only imports; rely on inference, add explicit returns only at public boundaries. Never `any`.
 - **React:** Hooks-only, composition over inheritance, early returns, handle `loading`/`error`/`empty`/`success` where data is async; disable buttons during async ops.
-- **Styling:** Extend `@theme` before adding a utility; keep bespoke CSS to `@layer base/utilities` in `src/index.css`; mobile-first `sm:`/`lg:`; one shadow (`shadow-shrine`), two radii (`sm`/`full`). Use the `shrine-*` scales + the 28 utilities in §4.3. Motion: transform/opacity only, everything gated by the global `prefers-reduced-motion` block + `@media print` reveal override.
+- **Styling:** Extend `@theme` before adding a utility; keep bespoke CSS to `@layer base/utilities` in `src/index.css`; mobile-first `sm:`/`lg:`; one shadow (`shadow-bsc`), two radii (`sm`/`full`). Use the `bsc-*` scales + the 28 utilities in §4.3. Motion: transform/opacity only, everything gated by the global `prefers-reduced-motion` block + `@media print` reveal override.
 - **Data:** Keep `site.ts` as the single source for name/address/hours/mass/contact/transport/feast/uen/chequePayee/socials/ministry links/maps/origin. Pages consume it — don't duplicate. `content.ts` arrays + `nav.ts` nav are the only other data sources.
 - **Git:** Conventional Commits (`feat:`, `fix:`, `docs:` …), atomic commits, `feat/<slug>` branches, squash-merge, short-lived (1–3 days). Don't edit `package.json` by hand for deps — use `pnpm install <pkg>`. Adding a path to `.gitignore` for tracked files requires `git rm --cached` in the same commit (L14).
 - **Docs:** Update `README.md` + `AGENTS.md` + `CLAUDE.md` + this file when adding a route/token/image/nav child — and change the §0 fact first, then sweep stale copies (L15, Appendix G.4). The drift guards live in `src/docs-contract.test.ts` (23) + `src/ci-workflow.test.ts` (4) + `src/repo-hygiene.test.ts` (4) — restored round-13.
@@ -817,10 +818,10 @@ import { cn } from "@/utils/cn";
 
 type Variant = "primary" | "secondary" | "ghost" | "outline-light";
 const variantClasses: Record<Variant, string> = {
-  primary: "bg-shrine-gold-500 text-shrine-maroon-900 hover:bg-shrine-gold-300 shadow-shrine",
-  secondary: "bg-shrine-maroon-600 text-shrine-cream hover:bg-shrine-maroon-500",
-  ghost: "bg-transparent text-shrine-maroon-600 hover:bg-shrine-maroon-50",
-  "outline-light": "border border-shrine-cream/70 text-shrine-cream hover:bg-shrine-cream/10",
+  primary: "bg-bsc-gold-500 text-bsc-sapphire-900 hover:bg-bsc-gold-300 shadow-bsc",
+  secondary: "bg-bsc-sapphire-700 text-bsc-cream hover:bg-bsc-sapphire-600",
+  ghost: "bg-transparent text-bsc-sapphire-700 hover:bg-bsc-sapphire-50",
+  "outline-light": "border border-bsc-cream/70 text-bsc-cream hover:bg-bsc-cream/10",
 };
 // baseClasses adds rounded-sm sizing + focus-visible ring + disabled styles.
 export function Button(props: ButtonProps) {
@@ -836,7 +837,7 @@ export function Button(props: ButtonProps) {
 Location: `src/components/Layout.tsx` — preserves both `/#/worship#mass` and `/#/ministries#liturgical` forms.
 
 ```tsx
-// src/components/Layout.tsx — core hash-scroll contract (BSC — same 17/7/9; sixth ministry anchor is #mandarin = Language Communities)
+// src/components/Layout.tsx — core hash-scroll contract (BSC — same 17/7/9; sixth ministry anchor is #community = Community & Outreach)
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "@/components/Footer";
@@ -845,7 +846,7 @@ import { SkipLink } from "@/components/SkipLink";
 
 function resolveAnchor(pathname: string, hash: string) {
   if (hash && hash.length > 1) return hash.slice(1);
-  // Double-hash form: #/ministries#mandarin or #/worship#mass → take the last segment
+  // Double-hash form: #/ministries#community or #/worship#mass → take the last segment
   const raw = window.location.hash;
   const parts = raw.split("#").filter(Boolean);
   if (parts.length < 2) return "";
@@ -883,7 +884,7 @@ export function Layout() {
 
 > **v3 note:** the snippet above is the *load-bearing hash contract* shown for copy-paste clarity — the same principle the three source files printed. The production `Layout.tsx` additionally renders `<ScrollProgress />` and `<BackToTop />`, wraps the Outlet in a keyed page-in container, and **cleans up its 80ms `setTimeout` on effect re-run** (hop-1 remediation "Layout timeout cleanup" — keep the cleanup when editing; a stale timer can scroll the user away from a newly-mounted page). `main.tsx` also runs `resolveHashRedirect` pre-mount (round-12 F-3, §5.4).
 
-Current anchor targets: `#mass`/`#confession`/`#visit` on `/worship` and `#liturgical`/`#faith-formation`/`#pastoral-care`/`#family-life`/`#youth`/`#mandarin` (= Language Communities) on `/ministries` (see §5.4/§0). Any new hash anchor must be added as a `section id="…" className="scroll-mt-28 …"` and wired via `primaryNav`/`footerNav` + the Ministries jump nav where appropriate.
+Current anchor targets: `#mass`/`#confession`/`#visit` on `/worship` and `#liturgical`/`#faith-formation`/`#pastoral-care`/`#family-life`/`#youth`/`#community` (= Community & Outreach) on `/ministries` (see §5.4/§0). Any new hash anchor must be added as a `section id="…" className="scroll-mt-28 …"` and wired via `primaryNav`/`footerNav` + the Ministries jump nav where appropriate.
 
 ### 15.3 `cn()` Merge
 
@@ -902,14 +903,14 @@ Location: `src/components/PageHero.tsx`
 ```tsx
 export function PageHero({ eyebrow, title, description, image, children, compact }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden bg-shrine-maroon-900 py-20 sm:py-28">
+    <section className="relative overflow-hidden bg-bsc-sapphire-900 py-20 sm:py-28">
       <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" aria-hidden="true" />
-      <div className="absolute inset-0 bg-gradient-to-t from-shrine-maroon-900 via-shrine-maroon-900/85 to-shrine-maroon-900/60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-bsc-sapphire-900 via-bsc-sapphire-900/85 to-bsc-sapphire-900/60" />
       <div className="absolute inset-0 bg-grain opacity-40" aria-hidden="true" />
       <Container className="relative">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-shrine-gold-300">{eyebrow}</p>
-        <h1 className="mt-4 max-w-3xl text-balance font-display text-4xl font-semibold text-shrine-cream sm:text-5xl">{title}</h1>
-        {description ? <p className="mt-5 max-w-2xl text-base leading-relaxed text-shrine-cream/80">{description}</p> : null}
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-bsc-gold-300">{eyebrow}</p>
+        <h1 className="mt-4 max-w-3xl text-balance font-display text-4xl font-semibold text-bsc-cream sm:text-5xl">{title}</h1>
+        {description ? <p className="mt-5 max-w-2xl text-base leading-relaxed text-bsc-cream/80">{description}</p> : null}
         {children}
       </Container>
       <div className="divider-weave-thin absolute inset-x-0 bottom-0" aria-hidden="true" />
@@ -929,14 +930,14 @@ import { Link } from "react-router-dom";
 import { images, ministries } from "@/data/content";
 
 // Pills — must use <Link to="/ministries#id">, never <a href="#id">
-// BSC note: ministries[5].id is "mandarin" (title Language Communities) — renders as #mandarin
+// BSC note: ministries[5].id is "community" (title Community & Outreach) — renders as #community
 <nav aria-label="Ministries">
   {ministries.map((ministry) => (
     <Link
       key={ministry.id}
       to={`/ministries#${ministry.id}`}
       aria-label="Jump to ministry"
-      className="rounded-full border border-shrine-stone bg-white px-4 py-2 text-sm font-medium text-shrine-charcoal hover:bg-shrine-parchment"
+      className="rounded-full border border-bsc-stone bg-white px-4 py-2 text-sm font-medium text-bsc-charcoal hover:bg-bsc-parchment"
     >
       {ministry.title}
     </Link>
@@ -948,11 +949,11 @@ import { images, ministries } from "@/data/content";
   <section
     key={ministry.id}
     id={ministry.id}
-    className={cn("scroll-mt-28 py-16 sm:py-20", index % 2 === 0 ? "bg-shrine-cream" : "bg-shrine-parchment")}
+    className={cn("scroll-mt-28 py-16 sm:py-20", index % 2 === 0 ? "bg-bsc-cream" : "bg-bsc-parchment")}
     aria-labelledby={`${ministry.id}-heading`}
   >
     <Container>
-      <h2 id={`${ministry.id}-heading`} className="font-display text-2xl font-semibold text-shrine-maroon-700">{ministry.title}</h2>
+      <h2 id={`${ministry.id}-heading`} className="font-display text-2xl font-semibold text-bsc-sapphire-700">{ministry.title}</h2>
       {/* … */}
     </Container>
   </section>
@@ -967,11 +968,11 @@ import { images, ministries } from "@/data/content";
 
 | Don't | Do Instead | Why |
 |---|---|---|
-| `className="bg-[#691f1e]"` | `className="bg-shrine-maroon-600"` | Token drift — `@theme` is the palette |
+| `className="bg-[#691f1e]"` | `className="bg-bsc-sapphire-700"` | Token drift — `@theme` is the palette |
 | `` className={`px-3 ${open?"px-6":""}`} `` | `className={cn("px-3", open && "px-6")}` | `twMerge` dedup |
 | `import hero from "../../public/images/hero.jpg"` | `<img src="/images/hero-church.jpg" … />` or `images.heroFallback` | `public/` is served at root (`/images/…`); Vite copies to `dist/images/` |
 | `<a href="/about">` for internal nav | `<Link to="/about">` or `<Button to="/about">` | HashRouter + active state; plain `<a>` triggers full reload |
-| `<a href="#liturgical">` / `<a href="#mandarin">` inside Ministries | `<Link to="/ministries#liturgical">` / `<Link to="/ministries#mandarin">` | Hash is the route — plain `href` replaces it and routes to NotFound (§9 #11); BSC sixth anchor is `#mandarin` |
+| `<a href="#liturgical">` / `<a href="#community">` inside Ministries | `<Link to="/ministries#liturgical">` / `<Link to="/ministries#community">` | Hash is the route — plain `href` replaces it and routes to NotFound (§9 #11); BSC sixth anchor is `#community` |
 | `type TimelineEntry = { year: string }` for a shape | `interface TimelineEntry { year: string }` | `interface` for shapes (`type` for unions) |
 | `const x: any = json` | `const x: unknown = json; if (isTimeline(x)) …` | No `any` — narrow `unknown` |
 | `import { tailwindConfig } from "…"` | Extend `@theme` in `src/index.css` | No config file in Tailwind v4 |
@@ -1016,38 +1017,41 @@ Tailwind defaults only (no custom config). Project usage:
 ---
 ## 19. Color Reference (Complete)
 
-Every hex matches `src/index.css` `@theme` byte-for-byte. **Fail the build if it drifts.** Round-12 extended the terracotta scale with `terracotta-600 #8f4c30` (AA Devotion chip); BSC line additionally **retains `gold-700 #85601f`** (4.72:1 AA text gold, hop-2 round-7) — verification `grep shrine- src/index.css` → **26 colors + 2 shadows** (§0 — incl. gold-700). Token-contrast `wcag-contrast.test.tsx` lives in `src.orig/` until restored.
+Every hex matches `src/index.css` `@theme` byte-for-byte. **Fail the build if it drifts.** Verification `grep bsc- src/index.css` → **27 colors + 2 shadows** (§0).
 
-| Token | Hex | RGB | Tailwind Class | Usage (previous parish (see Appendix D) / Toa Payoh context) |
+| Token | Hex | RGB | Tailwind Class | Usage |
 |---|---|---|---|---|
-| `shrine-cream` | `#faf6ec` | `250,246,236` | `bg-shrine-cream` | Page bg, card on dark, alternating ministry band |
-| `shrine-parchment` | `#f2e9d6` | `242,233,214` | `bg-shrine-parchment` | Section bands, alternating ministry band |
-| `shrine-parchment-dark` | `#e7d9b8` | `231,217,184` | `bg-shrine-parchment-dark` | Dark parchment variant |
-| `shrine-stone` | `#dccfae` | `220,207,174` | `border-shrine-stone` | Borders/dividers, ministry pill border |
-| `shrine-ink` | `#2a2115` | `42,33,21` | `text-shrine-ink` | Primary text |
-| `shrine-charcoal` | `#423a2c` | `66,58,44` | `text-shrine-charcoal` | Secondary text / 70% |
-| `shrine-maroon-50` | `#fbf0ee` | `251,240,238` | `bg-shrine-maroon-50` | Ghost hover bg |
-| `shrine-maroon-100` | `#f3d9d4` | `243,217,212` | — | Light tint |
-| `shrine-maroon-500` | `#7c2a25` | `124,42,37` | `text-shrine-maroon-500` | Eyebrow on light, links |
-| `shrine-maroon-600` | `#691f1e` | `105,31,30` | `bg-shrine-maroon-600` | Secondary btn, timeline badge, weave band |
-| `shrine-maroon-700` | `#55191a` | `85,25,26` | `text-shrine-maroon-700` | Display heading (`h1–h4`) |
-| `shrine-maroon-800` | `#431315` | `67,19,21` | — | Mid-dark maroon |
-| `shrine-maroon-900` | `#33100f` | `51,16,15` | `bg-shrine-maroon-900` | Hero + footer bg |
-| `shrine-maroon-950` | `#200a0a` | `32,10,10` | `bg-shrine-maroon-950` | Deepest maroon (header top strip) |
-| `shrine-gold-100` | `#f8ecd2` | `248,236,210` | — | Light gold |
-| `shrine-gold-300` | `#e2bf72` | `226,191,114` | `text-shrine-gold-300` | Eyebrow on dark, icon tint |
-| `shrine-gold-400` | `#d1a955` | `209,169,85` | — | Gold mid |
-| `shrine-gold-500` | `#c3963f` | `195,150,63` | `bg-shrine-gold-500` | Primary CTA, gold rule |
-| `shrine-gold-600` | `#a67a2e` | `166,122,46` | — | Gold hover |
-| `shrine-gold-700` | `#85601f` | `133,96,31` | `text-shrine-gold-700` | BSC retains — AA text gold 4.72:1 on cream |
-| `shrine-pine-500` | `#335840` | `51,88,64` | `text-shrine-pine-500` | Pine accent |
-| `shrine-pine-600` | `#26402f` | `38,64,47` | `bg-shrine-pine-600` | Weave third band |
-| `shrine-pine-700` | `#1c3123` | `28,49,35` | `bg-shrine-pine-700` | Deep pine |
-| `shrine-terracotta-400` | `#c17a53` | `193,122,83` | — | Terracotta mid |
-| `shrine-terracotta-500` | `#ab5f3c` | `171,95,60` | `bg-shrine-terracotta-500` | Devotion chip border (decorative) |
-| `shrine-terracotta-600` | `#8f4c30` | `143,76,48` | `text-shrine-terracotta-600` | Devotion chip text — AA 5.36:1 on parchment (round-12, audit F-1) |
-| `shadow-shrine` | `rgba(51,16,15,0.45)` | — | `shadow-shrine` | `0 20px 60px -20px` |
-| `shadow-shrine-lg` | `rgba(51,16,15,0.55)` | — | `shadow-shrine-lg` | `0 40px 90px -30px` |
+| `bsc-cream` | `#f8f5ef` | `248,245,239` | `bg-bsc-cream` | Page bg, card on dark, alternating ministry band |
+| `bsc-parchment` | `#efe8d8` | `239,232,216` | `bg-bsc-parchment` | Section bands, alternating ministry band |
+| `bsc-parchment-dark` | `#e3d8c2` | `227,216,194` | `bg-bsc-parchment-dark` | Dark parchment variant |
+| `bsc-stone` | `#d4c9ae` | `212,201,174` | `border-bsc-stone` | Borders/dividers, ministry pill border |
+| `bsc-ink` | `#1e2330` | `30,35,48` | `text-bsc-ink` | Primary text |
+| `bsc-charcoal` | `#3a3f4d` | `58,63,77` | `text-bsc-charcoal` | Secondary text |
+| `bsc-sapphire-50` | `#eef2fb` | `238,242,251` | `bg-bsc-sapphire-50` | Ghost hover bg |
+| `bsc-sapphire-100` | `#d6e0f5` | `214,224,245` | — | Light tint |
+| `bsc-sapphire-200` | `#b0c4eb` | `176,196,235` | — | Selection bg |
+| `bsc-sapphire-300` | `#7a9bdb` | `122,155,219` | — | Sapphire mid-light |
+| `bsc-sapphire-400` | `#4a72c4` | `74,114,196` | — | Sapphire mid |
+| `bsc-sapphire-500` | `#3458a8` | `52,88,168` | `bg-bsc-sapphire-500` | Primary button, header accent |
+| `bsc-sapphire-600` | `#28458a` | `40,69,138` | `bg-bsc-sapphire-600` | Secondary btn, timeline badge |
+| `bsc-sapphire-700` | `#1f366e` | `31,54,110` | `text-bsc-sapphire-700` | Display heading (`h1–h4`) |
+| `bsc-sapphire-800` | `#1a2b55` | `26,43,85` | — | Mid-dark sapphire |
+| `bsc-sapphire-900` | `#0f1a33` | `15,26,51` | `bg-bsc-sapphire-900` | Hero + footer bg |
+| `bsc-sapphire-950` | `#0a1122` | `10,17,34` | `bg-bsc-sapphire-950` | Deepest sapphire (header top strip) |
+| `bsc-gold-100` | `#f5eacc` | `245,234,204` | — | Light gold |
+| `bsc-gold-200` | `#ebd599` | `235,213,153` | — | Gold light |
+| `bsc-gold-300` | `#dfc06a` | `223,192,106` | `text-bsc-gold-300` | Eyebrow on dark, icon tint |
+| `bsc-gold-400` | `#d4ad42` | `212,173,66` | — | Gold mid |
+| `bsc-gold-500` | `#c49a2c` | `196,154,44` | `bg-bsc-gold-500` | Primary CTA, gold rule |
+| `bsc-gold-600` | `#a67f22` | `166,127,34` | — | Gold hover |
+| `bsc-gold-700` | `#85641c` | `133,100,28` | `text-bsc-gold-700` | AA text gold on cream |
+| `bsc-terracotta-400` | `#c07a5a` | `192,122,90` | — | Terracotta mid |
+| `bsc-terracotta-500` | `#a86545` | `168,101,69` | `bg-bsc-terracotta-500` | Devotion chip border (decorative) |
+| `bsc-terracotta-600` | `#8f5038` | `143,80,56` | `text-bsc-terracotta-600` | Devotion chip text — AA on parchment |
+| `bsc-pine-500` | `#2d5a40` | `45,90,64` | `text-bsc-pine-500` | Pine accent |
+| `bsc-pine-600` | `#1f422e` | `31,66,46` | `bg-bsc-pine-600` | Weave third band |
+| `shadow-bsc` | `rgba(15,26,51,0.45)` | — | `shadow-bsc` | `0 20px 60px -20px` |
+| `shadow-bsc-lg` | `rgba(15,26,51,0.55)` | — | `shadow-bsc-lg` | `0 40px 90px -30px` |
 
 **Forbidden:** `amber-*`, `slate-*`, `zinc-*`, `gray-*` generics (except Tailwind neutrals in tooling). Only exception: tooling grays in `node_modules`.
 
@@ -1067,65 +1071,64 @@ export interface TimelineEntry {
   title: string;
   description: string;
 }
-// lifeTimeline: TimelineEntry[] — 8 entries (1958, 1963, 1965, 1970–1984, 1982, 2005–2007, 2019–2023, 2023–2026)
-// Sacred Hearts / Queenstown arc: Sacred Hearts arrive → Damien Hall 1963 → Tent of Meeting 1965 → fills toward 7,000 → Damien Centre → conserved 2005 / rebuilt 2007 → TOMR $9.4m 2019–2023 → Eucharistic spirituality 2023–2026
+// lifeTimeline: TimelineEntry[] — 7 entries (1954, 1958, 1963, 1965, 1970s–80s, 2005, Today)
 
 export interface GroundsPlace {
-  id: string;              // "main-church" | "chapel" | "rosary-garden" (= Damien Centre — BSC id is rosary-garden)
+  id: string;              // "main-church" | "damien-hall" | "garden"
   title: string;
-  summary: string;
-  details: string[];       // 4 bullets each
-  image: string;           // local /images/* (naveCdn/courtyardCdn are local aliases)
+  description: string;
+  image: string;           // local /images/*
   imageFallback: string;   // local /images/* — required (SafeImage fallback)
   imageAlt: string;        // required — a11y
 }
-// grounds: GroundsPlace[] — 3 (Main Church / Adoration Chapel / Damien Centre = rosary-garden; see §7.1)
+// grounds: GroundsPlace[] — 3 (Main Church / Damien Hall / Parish Grounds)
 
 export interface Ministry {
-  id: string;              // BSC: "liturgical" | "faith-formation" | "pastoral-care" | "family-life" | "youth" | "mandarin" (= Language Communities — title Language Communities, id mandarin)
+  id: string;              // "liturgical" | "faith-formation" | "pastoral-care" | "family-life" | "youth" | "community"
   title: string;
   summary: string;
-  details: string[];       // 4 bullets each
+  description: string;
   image: string;           // local /images/*
   imageFallback: string;   // required
   imageAlt: string;        // required
 }
-// ministries: Ministry[] — 6 (sixth id in BSC data is mandarin with title Language Communities — anchor #mandarin; see §5.4/§7)
+// ministries: Ministry[] — 6 (sixth id is "community" with title "Community & Outreach")
 
 export interface FaqItem {
   question: string;
   answer: string;
 }
-// faqs: FaqItem[] — 6 (Mass/confession/how to get there/Commonwealth EW20 · 11041/11049/parking/baptism-marriage-Mass intention/office hours) — see §7
+// faqs: FaqItem[] — 6
 
 export interface EventItem {
   title: string;
-  date: string;            // "Thursday after Trinity" (Corpus Christi — feast-first) | "First Friday" | "Year-round" | …
+  date: string;
   summary: string;
   category: "Parish" | "Devotion" | "Formation" | "Archdiocese";
-  href?: string;           // optional — 1 of 6 carries it in BSC: Archdiocesan news → https://www.catholic.sg/ (vs Risen's 2: cep-sg + free.risenchrist)
+  href?: string;           // optional
 }
-// upcomingEvents: EventItem[] — 6 (Corpus Christi Thu after Trinity, First Friday Sacred Heart, RCIA, catechism, KKIS Indo last Sun, Archdiocesan news)
+// upcomingEvents: EventItem[] — 6
 
 export interface GivingOption {
-  name: string;            // BSC: PayNow (no UEN in site data) | General Church Offering | Poor & Needy | Church Maintenance | Cheque | Cash at office | Mass offerings | Thanksgiving for restoration $9.4m
+  title: string;           // PayNow | Weekend Collection | Cheque | Cash | General Church Offering | Mass Offerings
   description: string;
-  icon: "flame" | "church" | "sprout" | "heart" | "book" | "hand-heart" | "landmark" | "globe";
+  icon: string;            // globe | church | book | heart | flame | sprout
 }
-// givingOptions: GivingOption[] — 8 (PayNow without site UEN, General Offering, Poor & Needy, Maintenance, Cheque/Cash/Mass offerings/Thanksgiving for TOMR) — see §7
+// givingOptions: GivingOption[] — 6 (PayNow UEN T08CC1234A, Weekend Collection, Cheque, Cash, General Offering, Mass Offerings)
 
 export interface Priest {
   name: string;
-  role: string;            // "Parish Priest" | "Assistant Parish Priest" | "Assistant Parish Priest · Chaplain of KKIS" | "Priest in Residence"
+  role: string;
   email?: string;          // optional
+  bio: string;
 }
-// priests: Priest[] — 5 (Fr Johan Wongso SS.CC, Fr Rusdi Santoso SS.CC, Fr Karolus Kapolok Huar SS.CC, Fr Sambodo Sru Ujianto SS.CC, Fr Anthony Hutjes SS.CC) — SS.CC congregation
+// priests: Priest[] — 3 (Fr Johan Wongso SS.CC, Fr William van Soest SS.CC, Fr Odo Tiggeloven SS.CC)
 
 export interface PpcMember {
-  role: string;            // "Parish Priest (ex-officio)" | "Pastoral Associate" | "Chinese Pastoral Associate" | "Youth Pastoral Associate" | "Parish mission" | "Congregation"
   name: string;
+  role: string;
 }
-// ppcMembers: PpcMember[] — 6 (Fr Johan Wongso SS.CC + Victor Leong / Catherine Wong / Mendoza Alyzza Miclat + mission + SS.CC congregation)
+// ppcMembers: PpcMember[] — 6
 
 // Untyped const exports (no exported interface — shape inferred):
 
@@ -1141,18 +1144,14 @@ export const devotions: {
 }[] // 6
 
 export const images: {
-  hero: string;            // "/images/hero-church.jpg" (local — was Wikimedia in hop 1)
+  hero: string;            // "/images/hero-church.jpg"
   heroFallback: string;    // "/images/hero-church.jpg"
-  chapel: string;          // "/images/chapel-interior.jpg"
-  sanctuary: string;       // "/images/sanctuary.jpg"
-  garden: string;          // "/images/rosary-garden.jpg"
-  glass: string;           // "/images/stained-glass.jpg"
-  hall: string;            // "/images/parish-hall.jpg"
-  cemetery: string;        // "/images/cemetery.jpg"
-  feast: string;           // "/images/feast.jpg"
-  naveCdn: string;         // local alias → "/images/sanctuary.jpg" (was Pexels in hop 1)
-  courtyardCdn: string;    // local alias → "/images/rosary-garden.jpg" (was Pexels in hop 1)
-} // as const — 11 keys, all local (naveCdn/courtyardCdn are local aliases)
+  chapel: string;          // "/images/damien-hall.jpg"
+  sanctuary: string;       // "/images/hero-church.jpg"
+  garden: string;          // "/images/garden.jpg"
+  hall: string;            // "/images/damien-hall.jpg"
+  feast: string;           // "/images/hero-church.jpg"
+} // as const — 7 keys, all local
 ```
 
 ### 20.2 Navigation Interfaces (`src/data/nav.ts`)
@@ -1164,25 +1163,23 @@ export interface NavLink {
 }
 export interface NavItem {
   label: string;
-  to: string;
+  to?: string;
   description?: string;
-  children?: (NavLink & { description?: string })[]; // hover dropdown + mobile drill-down source
+  children?: NavLink[];
 }
 // primaryNav: NavItem[] — 6 (Home, About [3 children], Worship [3 children: #mass/#confession/#visit], Ministries [3 children: liturgical/faith-formation/pastoral-care], News & Events, Serve)
-// footerNav: NavLink[] — 10 (The Parish, Mass Times→/worship#mass, History, FAQ, Liturgical→/ministries#liturgical, Faith Formation, Pastoral Care, News & Events, Serve, Give)
+// footerNav: NavLink[] — 10
 ```
 
 ### 20.3 Site Constants (`src/data/site.ts`) — verbatim (drift-checked by `src/head.test.ts` + `src/data/site.test.ts`)
 
 ```ts
-// src/data/site.ts — Blessed Sacrament Church (BSC) — single source for parish facts (as const) — verbatim from src/data/site.ts (BSC)
+// src/data/site.ts — Blessed Sacrament Church (BSC) — single source for parish facts (as const)
 export const site = {
-  name: "Blessed Sacrament Church",
-  shortName: "BSC Queenstown",
-  chineseName: "圣体堂",
-  tagline: "To be an evangelising church with a Eucharistic spirituality.",
-  vision: "A tent of meeting in Queenstown.",
-  congregation: "Congregation of the Sacred Hearts of Jesus and Mary (SS.CC)",
+  name: "Church of the Blessed Sacrament",
+  shortName: "Blessed Sacrament Church",
+  tagline: "A Household of Faith, Hope & Love.",
+  vision: "To be a vibrant Eucharistic community, drawing all to Christ through worship, formation, and service.",
   address: {
     street: "1 Commonwealth Drive",
     city: "Singapore",
@@ -1357,7 +1354,7 @@ export function resolveHashRedirect(): void;        // pre-mount: path-style URL
 5.  /worship#mass (direct) → lands on Mass schedule — today-highlight card via massDayKey
 6.  /worship#confession    → lands on Confession & Adoration (Sacred Heart 1st Fri + Immaculate Heart 1st Sat)
 7.  /worship#visit         → lands on Find Us (map embed + Commonwealth EW20 + buses 11041/11049 + 1 Commonwealth Drive)
-8.  /ministries            → 6 pills + 6 alternating sections; click each #liturgical/#faith-formation/#pastoral-care/#family-life/#youth/#mandarin (= Language Communities: Indo last Sun 13.00) scrolls to section
+8.  /ministries            → 6 pills + 6 alternating sections; click each #liturgical/#faith-formation/#pastoral-care/#family-life/#youth/#community (= Community & Outreach: Indo last Sun 13.00) scrolls to section
 9.  /ministries#liturgical (direct) → lands on Liturgical
 10. /ministry              → same as /ministries (alias)
 11. /news-events + /news-and-events → 6 events (Parish/Devotion/Formation/Archdiocese — Corpus Christi feast-first; 1 with href catholic.sg) + parish updates band
@@ -1366,7 +1363,7 @@ export function resolveHashRedirect(): void;        // pre-mount: path-style URL
 14. /faq                   → 6 Q&As via Accordion (Commonwealth EW20 · 11041/11049 · 6474 0582 · WhatsApp 9170 9133) + office closure band
 15. /does-not-exist        → NotFound (ghost emblem + rise-in)
 16. refresh on /#/worship#visit → stays on-section (HashRouter)
-17. refresh on /#/ministries#mandarin → stays on-section (BSC sixth id)
+17. refresh on /#/ministries#community → stays on-section (BSC sixth id)
 18. /worship /news-events /donate (no #, path-style) → land on their pages, not Home (F-3 deep-links via resolveHashRedirect)
 19. pnpm test:e2e:built    → 51/51 green (BSC retargeted F2B) — verified vs dist and the deployed host
 ```
@@ -1624,19 +1621,19 @@ Every finding above is an instance of one failure mode: **volatile facts restate
 | 60-sec agent cheat sheet | `AGENTS.md` |
 | Deep workflow + parish fidelity | `CLAUDE.md` |
 | Intent lineage | `docs/prompts.md` (if present) |
-| **Volatile facts (versions, counts, policies) — all gates green (17/118 + 51/51 + built 51/51)** | **§0 of this file — the single source; everything else defers to it** |
-| Tokens (26 colors + 2 shadows incl. gold-700, §0) + utilities (27 + 8 keyframes incl. card-tint, §4.3) | `src/index.css` (`--font-sans` alias `--font-body`; utilities incl. `gold-rule`/`gold-rule-left`/`hero-ken-burns`/`rise-in`+`rise-in-d1..d4`/`menu-in`/`drawer-in`/`drawer-item-in`/`page-in`/`dot-pulse`/`card-lift`/`card-tint`/`link-underline`/`reveal`+`reveal-visible`/`skip-link`/`divider-weave`+`divider-weave-thin`/`bg-grain`+`bg-adobe-texture`+`bg-gold-bloom`/`mask-fade-b`/`img-zoom`) |
-| Route table + aliases + anchors | `src/App.tsx` — 17 Route entries (16 content paths + `*`), 7 alias paths in 5 groups (§5.4), 9 hash anchors (3 on `/worship`, 6 on `/ministries` — sixth is `#mandarin` = Language Communities) + path-style deep-link rewrite (`utils/deepLinks.ts` → `main.tsx` pre-mount) |
-| Nav single-source | `src/data/nav.ts` (`primaryNav` 6 + `footerNav` 10, with `description` on children) |
-| Content arrays (10) + images + site | `src/data/content.ts` (per §0/§7.1: `priests` 5 SS.CC, `ppcMembers` 6, `lifeTimeline` 8 [1958–2026 Sacred Hearts/Queenstown], `grounds` 3 (main-church/Adoration Chapel/rosary-garden=Damien Centre), `ministries` 6 (sixth `mandarin` = Language Communities — Indo last Sun 13.00), `faqs` 6, `upcomingEvents` 6 (Corpus Christi feast-first, 1 with href), `givingOptions` 8 (no UEN — PayNow at office), `serveRoles` 4, `devotions` 6 + `images` 11 all-local) + `src/data/site.ts` (`site as const`: hours 6 + mass 9 keys (sunday 6 incl. Indo last Sun) + transport Commonwealth EW20/11041-11049 + feast Corpus Christi Thu after Trinity + cheque + facebook/instagram/whatsapp/sacredHearts + maps + origin/url/ogImage — **NO uen**) |
+| **Volatile facts (versions, counts, policies) — all gates green (17/98 + 51/51 + built)** | **§0 of this file — the single source; everything else defers to it** |
+| Tokens (27 colors + 2 shadows, §0) + utilities (28 + 9 keyframes incl. card-tint, §4.3) | `src/index.css` (sapphire-blue `bsc-*` palette) |
+| Route table + aliases + anchors | `src/App.tsx` — 17 Route entries (16 content paths + `*`), 7 alias paths in 5 groups (§5.4), 9 hash anchors (3 on `/worship`, 6 on `/ministries` — sixth is `#community` = Community & Outreach) + path-style deep-link rewrite (`utils/deepLinks.ts` → `main.tsx` pre-mount) |
+| Nav single-source | `src/data/nav.ts` (`primaryNav` 6 + `footerNav` 10) |
+| Content arrays (10) + images + site | `src/data/content.ts` (per §0/§7.1: `priests` 3 SS.CC, `ppcMembers` 6, `lifeTimeline` 7 [1954–Today], `grounds` 3 (main-church/damien-hall/garden), `ministries` 6 (sixth `community` = Community & Outreach), `faqs` 6, `upcomingEvents` 6, `givingOptions` 6 (PayNow UEN T08CC1234A), `serveRoles` 4, `devotions` 6 + `images` 7 all-local) + `src/data/site.ts` (`site as const`: hours 6 + mass 9 keys (sunday 6) + transport Queenstown EW19 · Commonwealth EW20 / buses 32/51/111/122/145/195/855 + feast Corpus Christi Sunday after Trinity + UEN T08CC1234A + cheque + facebook/instagram/youtube + maps + url/ogImage) |
 | Primitives | `src/components/ui/*` (Button/Container/SectionHeading/Accordion/Reveal) + SafeImage/Emblem/SkipLink/Timeline/SocialIcons/PageHero/Layout/Header/Footer/BackToTop/ScrollProgress |
-| Hooks (3 — scrollspy restored F2A) | `src/hooks/useScrolled.ts` (threshold 12 default; Header uses 16) + `useScrollProgress.ts` (rAF; BackToTop ring + ScrollProgress rail) + `useScrollSpy.ts` (document-order tie-break; drives the Ministries pills) |
-| Utils (4) | `src/utils/cn.ts` (`twMerge(clsx)`) + `massDay.ts` (`massDayKey` — Worship today-highlight) + `monogram.ts` (About discs) + `deepLinks.ts` (`knownRoutePaths` + `resolveHashRedirect` — round-12 F-3; drift-guarded against `App.tsx`) |
-| Images | `public/images/*.jpg` (8 files → `dist/images/`) + `public/favicon.svg` — all local (`naveCdn`→`sanctuary.jpg`, `courtyardCdn`→`rosary-garden.jpg` are local aliases) + `images` export (11 keys all `/images/*`, `SafeImage` with `hero-church.jpg` fallback) |
-| Vite alias + singlefile | `vite.config.ts` (`@→src`, `viteSingleFile()` + `test {globals,jsdom,setupFiles,include,exclude}` — `setupFiles: ["src/test/setup.ts"]` absent in BSC) + `server.watch.ignored` [skills,dist,playwright-report,test-results,coverage,src.orig] — in BSC `skills` deleted, `src.orig` present |
-| TS strict + include | `tsconfig.json` (`strict` + `noUnused*` + `noFallthroughCasesInSwitch`/`isolatedModules`/`noEmit` + `include: ["src","vite.config.ts","eslint.config.js","playwright.config.ts","playwright.built.config.ts"]` + `types: ["node","vitest/globals"]` (globals in use since the harness was restored F1) + `paths @/*` + `baseUrl:"."`) |
+| Hooks (3) | `src/hooks/useScrolled.ts` (threshold 12 default; Header uses 16) + `useScrollProgress.ts` (rAF; BackToTop ring + ScrollProgress rail) + `useScrollSpy.ts` (document-order tie-break; drives the Ministries pills) |
+| Utils (5) | `src/utils/cn.ts` (`twMerge(clsx)`) + `massDay.ts` (`massDayKey` — Worship today-highlight) + `monogram.ts` (About discs) + `deepLinks.ts` (`knownRoutePaths` + `resolveHashRedirect`) + `categoryTone.ts` (EventMeta chip colors) |
+| Images | `public/images/*.jpg` (9 files → `dist/images/`) — all local + `images` export (7 keys all `/images/*`, `SafeImage` with `hero-church.jpg` fallback) |
+| Vite alias + singlefile | `vite.config.ts` (`@→src`, `viteSingleFile()` + `test {globals,jsdom,setupFiles,include,exclude}`) + `server.watch.ignored` [skills,dist,playwright-report,test-results,coverage,src.orig] |
+| TS strict + include | `tsconfig.json` (`strict` + `noUnused*` + `noFallthroughCasesInSwitch`/`isolatedModules`/`noEmit` + `include: ["src","vite.config.ts","eslint.config.js","playwright.config.ts","playwright.built.config.ts"]` + `types: ["node","vitest/globals"]` + `paths @/*` + `baseUrl:"."`) |
 | E2E (dev + built) | `playwright.config.ts` (vite :5173) + `playwright.built.config.ts` (vite preview :4173; `E2E_BASE_URL` → live host) — same 51 specs (§0 — green, BSC retargeted F2B) |
-| Pre-ship gate | `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` (+ `pnpm test:e2e:built`) → counts per §0 (**GREEN** — lint 0, typecheck 0, test 17/118, e2e 51/51, build 392.96kB) → `dist/index.html` + `dist/_headers` + `dist/favicon.svg` + `dist/robots.txt` + `dist/images/` (8 files) → `pnpm preview` → manual smoke (Appendix B — BSC) |
+| Pre-ship gate | `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e && pnpm build` → counts per §0 (**GREEN** — lint 0, typecheck 0, test 17/98, e2e 51/51, build 381.90kB) → `dist/index.html` + `dist/_headers` + `dist/images/` (9 files) → `pnpm preview` → manual smoke (Appendix B — BSC) |
 | Lineage reference | `src.orig/` is **not part of the repository** (local-only port-session artifact; never committed) — lineage lives in Appendices D/F + git history |
 | CSP allowlist | `index.html` — `img-src 'self' data: blob:` (all images local), `frame-src https://www.google.com` (maps embed), `script-src` inline (singlefile) + `static.cloudflareinsights.com` — `SafeImage` fallback `/images/hero-church.jpg` |
 | **Outstanding security action** | **Rotate the ssh key leaked in git history (`docs/ssh-key.txt`, commit `0be0fe8`) — repo owner action; working-tree guard is `src/repo-hygiene.test.ts`** |
