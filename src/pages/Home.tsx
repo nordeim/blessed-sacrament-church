@@ -17,23 +17,23 @@ export function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-bsc-sapphire-950">
-        <div aria-hidden="true" className="hero-fade absolute inset-0">
+        <div className="hero-fade absolute inset-0">
           <SafeImage
             src="/images/hero-church.jpg"
-            alt=""
+            alt="The Church of the Blessed Sacrament with its folded blue tent-shaped roof at dusk"
             className="hero-ken-burns h-full w-full object-cover opacity-55"
             fetchPriority="high"
           />
         </div>
         <div aria-hidden="true" className="scrim-hero absolute inset-0" />
-        <div className="bg-grain absolute inset-0" />
+        <div aria-hidden="true" className="bg-grain absolute inset-0" />
         <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-end px-5 pb-16 pt-32 sm:px-8 lg:pb-24 lg:pt-40">
           <div className="max-w-3xl">
-            <p className="rise-in text-xs font-bold uppercase tracking-[0.2em] text-bsc-gold-300">
-              {site.feast.name}
+            <p className="rise-in text-xs font-bold uppercase tracking-[0.3em] text-bsc-gold-300">
+              {site.name} — since 1958
             </p>
             <h1 className="rise-in rise-in-d1 mt-4 font-display text-4xl font-bold text-bsc-cream sm:text-5xl lg:text-7xl">
-              {site.name}
+              A tent of meeting.
             </h1>
             <p className="rise-in rise-in-d2 mt-5 text-lg text-bsc-cream/80 sm:text-xl">
               {site.tagline}
@@ -68,19 +68,24 @@ export function Home() {
       {/* Welcome */}
       <section className="bg-bsc-cream py-16 lg:py-24">
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-3xl">
             <Reveal>
-              <Emblem className="mx-auto h-20 w-20 text-bsc-gold-500" />
-              <p className="mt-6 text-xs font-bold uppercase tracking-[0.15em] text-bsc-sapphire-500">
+              <figure className="welcome-quote relative z-10 -mt-24 rounded-2xl border border-bsc-stone bg-bsc-parchment p-8 shadow-bsc-lg sm:p-10 lg:-mt-32 lg:p-12">
+                <blockquote className="gold-rule-left rule-draw font-display text-2xl font-semibold leading-snug text-bsc-sapphire-900 sm:text-3xl">
+                  You are not a visitor here. You are expected.
+                </blockquote>
+              </figure>
+              <Emblem className="mx-auto mt-14 h-20 w-20 text-bsc-gold-500" />
+              <p className="mt-6 text-center text-xs font-bold uppercase tracking-[0.25em] text-bsc-sapphire-500">
                 Welcome
               </p>
-              <h2 className="mt-4 font-display text-3xl font-semibold text-bsc-sapphire-900 sm:text-4xl">
+              <h2 className="mt-4 text-center font-display text-3xl font-semibold text-bsc-sapphire-900 sm:text-4xl">
                 A Household of Faith, Hope & Love
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-bsc-charcoal">
                 {site.vision}
               </p>
-              <div className="mt-8">
+              <div className="mt-8 text-center">
                 <Button to="/about" variant="secondary" icon={ArrowRight}>
                   Discover Our Parish
                 </Button>
@@ -169,7 +174,7 @@ export function Home() {
 
       {/* CTA band */}
       <section className="relative overflow-hidden bg-bsc-sapphire-900 py-16 lg:py-24">
-        <div className="bg-gold-bloom absolute inset-0" />
+        <div aria-hidden="true" className="bloom-drift bg-gold-bloom absolute inset-0" />
         <div className="bg-grain absolute inset-0" />
         <Container className="relative z-10">
           <div className="mx-auto max-w-3xl text-center">

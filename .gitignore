@@ -22,7 +22,12 @@ coverage/
 docs/ssh-key.txt
 /package-lock.json
 docs/audit-shots-round5/
-/scripts/
+/scripts/*
+# round-19: the CSP hash-injection build step is shipped source (the repo's
+# own `pnpm build` depends on it) — tracked despite the historical /scripts/
+# ignore (which was for local scratch); the .d.mts ships with it.
+!/scripts/inject-csp-hashes.mjs
+!/scripts/inject-csp-hashes.d.mts
 
 # binary docs — do not track zipped image packs (root + docs only; the
 # vendored skills/ tree intentionally keeps its own zips + npm locks)

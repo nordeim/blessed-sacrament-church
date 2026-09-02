@@ -32,6 +32,33 @@ describe("no secret material is tracked", () => {
     );
     expect(suspicious).toEqual([]);
   });
+
+  // Round-19 guard (external audit R2-F5): file NAMES are not enough — key
+  // MATERIAL can hide in any tracked text file. Scan executable surface
+  // (source, config, scripts, data) for PEM private-key headers. docs/ and
+  // skills/ prose is exempt: several audit reports and the vendored skill
+  // deliberately QUOTE the pattern as documentation (rounds 3/6/16), and a
+  // quoted header is not executable secret material — the name-based guard
+  // above still rejects any key-shaped FILE anywhere in the tree.
+  it("tracks no private-key material in executable surface (audit R2-F5)", () => {
+    const offenders: string[] = [];
+    for (const file of trackedFiles()) {
+      if (/^(docs|skills|e2e)\//.test(file) || /\.md$|\.txt$/.test(file)) continue;
+      if (/\.(png|jpg|jpeg|gif|webp|ico|woff2?|ttf|zip|pdf)$/i.test(file)) continue;
+      let text: string;
+      try {
+        text = execSync(`git show "HEAD:${file.replace(/"/g, '\\"')}" 2>/dev/null`, {
+          cwd: root,
+          encoding: "utf8",
+          maxBuffer: 4 * 1024 * 1024,
+        });
+      } catch {
+        continue; // binary or unreadable — name guard above covers these
+      }
+      if (/-----BEGIN [A-Z ]*PRIVATE KEY-----/.test(text)) offenders.push(file);
+    }
+    expect(offenders).toEqual([]);
+  });
 });
 
 describe("no reference copies are tracked", () => {

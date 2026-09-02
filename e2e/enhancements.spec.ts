@@ -19,11 +19,12 @@ test.describe("Round-2 enhancement audit", () => {
     await expect(h2).toHaveCSS("color", "rgb(248, 245, 239)");
   });
 
-  test("head ships emoji favicon, og:url, and Church JSON-LD", async ({ page }) => {
+  test("head ships the SVG favicon, og:url, and Church JSON-LD", async ({ page }) => {
     await gotoHash(page, "/");
-    // BSC ships an inline ⛪ emoji data-URI favicon (no favicon.svg asset).
+    // Round-19 (audit R2-F7): the ⛪ emoji data-URI is retired for a
+    // purpose-drawn /favicon.svg (sapphire field, gold folded-roof mark).
     const icon = page.locator('link[rel="icon"][type="image/svg+xml"]');
-    await expect(icon).toHaveAttribute("href", /^data:image\/svg\+xml/);
+    await expect(icon).toHaveAttribute("href", /\.?\/favicon\.svg$/);
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
       "content",
       "https://bsc.org.sg/",

@@ -71,7 +71,8 @@ test.describe("navigation — desktop, keyboard, skip, footer", () => {
     await expect(page.getByText(/This path does not lead to the church/i)).toBeVisible();
     await page.getByRole("link", { name: /Return Home/i }).click();
     await expect(page).toHaveURL(/#\/$|\/#\/\?/);
-    await expect(page.getByRole("heading", { name: /Church of the Blessed Sacrament/i })).toBeVisible();
+    // Round-19 voice merge: the home h1 is "A tent of meeting."
+    await expect(page.getByRole("heading", { name: /A tent of meeting\./i })).toBeVisible();
   });
 
   test("header top bar Give link navigates to /give", async ({ page }) => {

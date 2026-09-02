@@ -3,7 +3,10 @@ import { expect, test } from "@playwright/test";
 test.describe("smoke — routing & hash anchors", () => {
   test("home renders hero and quick facts (Blessed Sacrament)", async ({ page }) => {
     await page.goto("/#/");
-    await expect(page.getByRole("heading", { name: /Church of the Blessed Sacrament/i })).toBeVisible();
+    // Round-19 voice merge (audit R1): the display headline is "A tent of
+    // meeting."; the parish name leads as the hero eyebrow line.
+    await expect(page.getByRole("heading", { name: /A tent of meeting\./i })).toBeVisible();
+    await expect(page.getByText(/Church of the Blessed Sacrament/i).first()).toBeVisible();
     await expect(page.getByText(/A Household of Faith, Hope & Love/i).first()).toBeVisible();
     await expect(page.getByText("1 Commonwealth Drive").first()).toBeVisible();
     await expect(page.getByText("Sunday Masses 7:30 AM – 5:30 PM").first()).toBeVisible();

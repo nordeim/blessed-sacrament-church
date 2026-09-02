@@ -8,6 +8,11 @@ import { Home } from "@/pages/Home";
  * settles via hero-fade under the named scrim, the Welcome section gains
  * the parish Emblem, the hero meta strip is closed by a weave rule, and
  * featured event cards gain the card-lift affordance.
+ *
+ * Round-19 ("The Merge") additions: the hero carries a meaningful alt
+ * naming the folded blue roof, the display headline is "A tent of meeting."
+ * with the parish name in the eyebrow, and the Welcome section closes with
+ * an overlapping parchment quote card (voice 7.6 → ).
  */
 
 function renderHome() {
@@ -51,6 +56,39 @@ describe("Home welcome", () => {
     const { container } = renderHome();
     const emblem = container.querySelector("section svg[viewBox='0 0 120 120']");
     expect(emblem).not.toBeNull();
+  });
+});
+
+describe("Home hero — round-19 voice & alt (audit R1 merge-02)", () => {
+  it("describes the folded blue tent roof in the hero image alt", () => {
+    const { container } = renderHome();
+    const img = container.querySelector("section img");
+    expect(img?.getAttribute("alt")).toMatch(/tent-shaped roof|tent roof/i);
+  });
+
+  it("no longer hides the meaningful hero image behind aria-hidden", () => {
+    const { container } = renderHome();
+    const img = container.querySelector("section img");
+    expect(img?.closest("[aria-hidden='true']")).toBeNull();
+  });
+
+  it("carries the parish name in the eyebrow and the evocative display headline", () => {
+    const { container } = renderHome();
+    const h1 = container.querySelector("h1");
+    expect(h1?.textContent).toContain("A tent of meeting.");
+    const eyebrow = h1?.previousElementSibling;
+    expect(eyebrow?.textContent).toContain("Church of the Blessed Sacrament");
+  });
+});
+
+describe("Home welcome — round-19 overlapping quote card", () => {
+  it("closes with the expected-you quote on the parchment card", () => {
+    const { container } = renderHome();
+    const quote = container.querySelector(".welcome-quote");
+    expect(quote).not.toBeNull();
+    expect(quote?.textContent).toContain(
+      "You are not a visitor here. You are expected.",
+    );
   });
 });
 

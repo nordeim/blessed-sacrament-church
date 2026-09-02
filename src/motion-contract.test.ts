@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 /**
- * Motion & scrim contract — round 17 ("Light on the Tent").
- * Pins the new visual/motion utilities in src/index.css and guards the
- * token budget (33 colors + 2 shadows — no palette growth without docs).
+ * Motion & scrim contract — round 17 ("Light on the Tent"), extended round 19
+ * ("The Merge"): bloom-drift joins the vocabulary (keyframes 9 → 10) and the
+ * token budget stays 33 colors + 2 shadows.
  */
 
 const root = resolve(__dirname, "..");
@@ -36,10 +36,11 @@ describe("round-17 motion utilities", () => {
     expect(css).toContain(".rule-draw");
   });
 
-  it("adds hero-fade and rule-draw keyframes (9 total)", () => {
+  it("adds hero-fade and rule-draw keyframes (10 total — bloom-drift joins in round 19)", () => {
     expect(keyframes).toContain("hero-fade");
     expect(keyframes).toContain("rule-draw");
-    expect(keyframes.length).toBe(9);
+    expect(keyframes).toContain("bloom-drift");
+    expect(keyframes.length).toBe(10);
   });
 
   it("rule-draw starts collapsed (scaleX(0)) and animates the gold rule", () => {
