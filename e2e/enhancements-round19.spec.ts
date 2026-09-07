@@ -98,7 +98,7 @@ test.describe("round-19 accessibility & regression watch", () => {
     expect(outline.color).toContain("212, 173, 66"); // bsc-gold-400 #d4ad42
   });
 
-  test("mobile drawer stays full-height with all 13 links incl. Give", async ({ page }) => {
+  test("mobile drawer stays full-height with all 17 links incl. Give", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await gotoHash(page, "/");
     await page.getByRole("button", { name: "Open menu" }).click();
@@ -110,7 +110,7 @@ test.describe("round-19 accessibility & regression watch", () => {
     });
     expect(box.top).toBe(0);
     expect(box.height).toBeGreaterThanOrEqual(843);
-    expect(await drawer.locator("a").count()).toBe(13);
+    expect(await drawer.locator("a").count()).toBe(17);
     await expect(drawer.locator('a[href*="give"]').last()).toBeVisible();
   });
 });

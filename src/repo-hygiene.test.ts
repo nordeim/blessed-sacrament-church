@@ -97,11 +97,14 @@ describe("no tracked file matches a .gitignore rule (round-13 M5)", () => {
       out = (err as { stdout?: string }).stdout ?? "";
     }
     // Ignored lines are `<source>:<line>:<pattern>\t<path>`; non-ignored are
-    // `::\t<path>`. A tracked file must never appear with a real pattern.
+    // `::\t<path>`; whitelisted `!` lines are also not violations (e.g.
+    // `!/scripts/inject-csp-hashes.mjs`). A tracked file must never appear
+    // with a real (non-negated) ignore pattern.
     const violations = out
       .split("\n")
       .filter(Boolean)
       .filter((line) => !line.startsWith("::\t"))
+      .filter((line) => !line.split("\t")[0]!.includes(":!"))
       .map((line) => line.slice(line.indexOf("\t") + 1));
     expect(violations.sort()).toEqual([]);
   });

@@ -2,15 +2,15 @@ import { describe, expect, it } from "vitest";
 import { footerNav, primaryNav } from "@/data/nav";
 
 describe("nav", () => {
-  it("primaryNav has 6 top-level items", () => {
-    expect(primaryNav).toHaveLength(6);
+  it("primaryNav has 7 top-level items", () => {
+    expect(primaryNav).toHaveLength(7);
   });
 
-  it("exactly 3 primaryNav items have children (About, Worship, Ministries)", () => {
+  it("exactly 4 primaryNav items have children (About, Worship, Ministries, Sacraments)", () => {
     const withChildren = primaryNav.filter((item) => item.children && item.children.length > 0);
-    expect(withChildren).toHaveLength(3);
+    expect(withChildren).toHaveLength(4);
     expect(withChildren.map((i) => i.label).sort()).toEqual(
-      ["About", "Ministries", "Worship"].sort(),
+      ["About", "Ministries", "Sacraments", "Worship"].sort(),
     );
   });
 
@@ -49,8 +49,19 @@ describe("nav", () => {
     ]);
   });
 
-  it("footerNav has 10 links", () => {
-    expect(footerNav).toHaveLength(10);
+  it("Sacraments children tos are hash-anchored correctly", () => {
+    const sacraments = primaryNav.find((n) => n.label === "Sacraments");
+    expect(sacraments).toBeDefined();
+    expect(sacraments!.children!.map((c) => c.to)).toEqual([
+      "/sacraments#infant-baptism",
+      "/sacraments#matrimony",
+      "/sacraments#reconciliation",
+      "/sacraments#anointing",
+    ]);
+  });
+
+  it("footerNav has 11 links", () => {
+    expect(footerNav).toHaveLength(11);
   });
 
   it("footerNav covers all major site areas", () => {

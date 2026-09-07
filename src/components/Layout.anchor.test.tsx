@@ -1,6 +1,5 @@
 import { describe, expect, it, vi, afterEach } from "vitest";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { act, render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 
@@ -50,13 +49,17 @@ afterEach(() => {
 
 describe("Layout stale anchor-scroll cleanup (audit L1)", () => {
   it("cancels the pending anchor scroll when the route changes inside 80ms", async () => {
-    const user = userEvent.setup();
     const scrollSpy = vi
       .spyOn(Element.prototype, "scrollIntoView")
       .mockImplementation(() => {});
     window.location.hash = "#/worship#mass";
     renderRouting();
-    await user.click(screen.getByRole("link", { name: "go-about" }));
+    // Use synchronous fireEvent so navigation happens within the 80ms window
+    // — userEvent's async hover/click can exceed the window and let the timer
+    // fire before the route changes (flake observed after Layout hash refactor).
+    act(() => {
+      fireEvent.click(screen.getByRole("link", { name: "go-about" }));
+    });
     await sleep(150);
     expect(scrollSpy).not.toHaveBeenCalled();
     expect(screen.getByText("about-page")).toBeTruthy();

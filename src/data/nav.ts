@@ -39,6 +39,16 @@ export const primaryNav: NavItem[] = [
       { label: "Pastoral Care", to: "/ministries#pastoral-care" },
     ],
   },
+  {
+    label: "Sacraments",
+    description: "Baptism to Anointing — grace for every season",
+    children: [
+      { label: "Infant Baptism", to: "/sacraments#infant-baptism" },
+      { label: "Holy Matrimony", to: "/sacraments#matrimony" },
+      { label: "Reconciliation", to: "/sacraments#reconciliation" },
+      { label: "Anointing of the Sick", to: "/sacraments#anointing" },
+    ],
+  },
   { label: "News & Events", to: "/news-events" },
   { label: "Serve", to: "/serve" },
 ];
@@ -49,6 +59,7 @@ export const footerNav: NavLink[] = [
   { label: "History", to: "/history" },
   { label: "Worship", to: "/worship" },
   { label: "Ministries", to: "/ministries" },
+  { label: "Sacraments", to: "/sacraments" },
   { label: "News & Events", to: "/news-events" },
   { label: "Serve", to: "/serve" },
   { label: "Give", to: "/give" },

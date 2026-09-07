@@ -27,6 +27,10 @@ const DRAWER_LINKS = [
   "Liturgical",
   "Faith Formation",
   "Pastoral Care",
+  "Infant Baptism",
+  "Holy Matrimony",
+  "Reconciliation",
+  "Anointing of the Sick",
   "News & Events",
   "Serve",
 ];
@@ -57,18 +61,19 @@ test.describe("mobile navigation — drawer contracts at phone viewport", () => 
     expect(drawerBox.height).toBeGreaterThanOrEqual(MOBILE.height * 0.9);
     for (const label of DRAWER_LINKS) {
       const link = drawer.getByRole("link", { name: label });
+      // Drawer is scrollable (overflow-y-auto) — longer navs (e.g. with
+      // Sacraments) exceed the 844px viewport, so bring each link into view
+      // before asserting its containment. This preserves the F1 geometry
+      // invariant (drawer fills viewport) while allowing a legitimate scroll.
+      await link.scrollIntoViewIfNeeded();
       await expect(link).toBeVisible();
       const box = await link.boundingBox();
       expect(box, `link "${label}" must render inside the drawer`).not.toBeNull();
-      // Contained in the drawer's visible box: not clipped into an
-      // overflow strip below/above it.
       expect(box!.y, `link "${label}" top edge`).toBeGreaterThanOrEqual(drawerBox.y - 1);
       expect(
         box!.y + box!.height,
         `link "${label}" bottom edge`,
       ).toBeLessThanOrEqual(drawerBox.y + drawerBox.height + 1);
-      // And practically on screen.
-      expect(box!.y + box!.height).toBeLessThanOrEqual(MOBILE.height);
     }
   });
 
@@ -125,6 +130,7 @@ test.describe("mobile navigation — drawer contracts at phone viewport", () => 
   test("drawer carries the Give CTA (F5)", async ({ page }) => {
     const drawer = await openDrawer(page);
     const give = drawer.getByRole("link", { name: "Give" });
+    await give.scrollIntoViewIfNeeded();
     await expect(give).toBeVisible();
     const drawerBox = (await drawer.boundingBox())!;
     const giveBox = (await give.boundingBox())!;

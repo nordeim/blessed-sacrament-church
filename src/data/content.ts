@@ -23,6 +23,14 @@ export interface Ministry {
   imageAlt: string;
 }
 
+export interface Sacrament {
+  id: string;
+  title: string;
+  summary: string;
+  description: string;
+  details: string[];
+}
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -217,6 +225,81 @@ export const ministries: Ministry[] = [
     image: "/images/community.jpg",
     imageFallback: "/images/hero-church.jpg",
     imageAlt: "Multicultural parish community gathering",
+  },
+];
+
+export const sacraments: Sacrament[] = [
+  {
+    id: "infant-baptism",
+    title: "Infant Baptism",
+    summary: "The doorway into the family of God for the youngest among us.",
+    description:
+      "Baptism is the first sacrament and the gate to all the others — the moment a child is claimed for Christ and welcomed into the parish household at the Tent of Meeting. Parents and godparents profess the faith on the child's behalf and take up the promise to raise them in the life of the Church.",
+    details: [
+      "Arrange preparation and booking through the Parish Office.",
+      "Parents are invited to prepare for the rite with the parish team.",
+      "Godparents should be confirmed, practising Catholics.",
+    ],
+  },
+  {
+    id: "matrimony",
+    title: "Holy Matrimony",
+    summary: "A covenant of faithful love, witnessed and blessed by the Church.",
+    description:
+      "Christian marriage is a covenant between a man and a woman, ordered to the good of the spouses and the raising of children — a living sign of Christ's love for his Church. Couples of Blessed Sacrament are invited to begin their preparation well in advance of the wedding date.",
+    details: [
+      "Contact the Parish Office at least six months before your intended date.",
+      "Preparation includes marriage preparation conversations with the priest.",
+      "Church bookings are coordinated via secretariat@bsc.org.sg.",
+    ],
+  },
+  {
+    id: "reconciliation",
+    title: "Reconciliation",
+    summary: "Mercy voiced aloud — sins forgiven, peace restored.",
+    description:
+      "The Sacrament of Reconciliation is offered before and after Mass at Blessed Sacrament, so that no one approaches the altar unprepared. It is the ordinary way the Church mediates God's mercy to the repentant sinner — honest, personal, and gentle, under the blue tent where our community has gathered since 1965.",
+    details: [
+      "Available after the 8:30 AM Mass and 15 minutes before the 12:30 PM and 6:30 PM Masses (Mon–Fri).",
+      "Saturdays after the 8:30 AM Mass and before the 5:45 PM Mass; Sundays before all Masses.",
+      "First Reconciliation is prepared alongside First Communion in catechism.",
+    ],
+  },
+  {
+    id: "eucharist",
+    title: "Holy Eucharist",
+    summary: "The Body and Blood of Christ — the source and summit of our life.",
+    description:
+      "In the Eucharist, the Church receives nothing less than Christ himself. Children of the parish prepare for their First Holy Communion through the catechism programme, and the whole community is nourished at every Mass — English, Mandarin, Tamil, Indonesian, and Tagalog under one tent.",
+    details: [
+      "First Communion preparation runs through the parish Catechism programme.",
+      "See Mass Times for the weekly schedule of all seven Sunday and weekday Masses.",
+      "Communion is brought to the sick and homebound by parish ministers.",
+    ],
+  },
+  {
+    id: "confirmation",
+    title: "Confirmation",
+    summary: "The seal of the Holy Spirit, strengthening the baptised for mission.",
+    description:
+      "Confirmation completes baptismal grace: the confirmed are bound more closely to the Church, enriched with the Spirit's special strength, and sent out as witnesses of Christ. Youth of the parish prepare through the catechism programme over several years.",
+    details: [
+      "Preparation is coordinated through the parish Catechism programme.",
+      "Adults seeking confirmation may journey through RCIA.",
+      "Register interest with the Parish Office at +65 6474 0582.",
+    ],
+  },
+  {
+    id: "anointing",
+    title: "Anointing of the Sick",
+    summary: "Grace in frailty — Christ's healing touch in time of illness.",
+    description:
+      "The Anointing of the Sick strengthens the faithful in serious illness, advanced age, or before surgery, uniting their suffering to the passion of Christ. The parish encourages families not to wait until the last moment to request this sacrament of healing.",
+    details: [
+      "Request the sacrament through the Parish Office at +65 6474 0582.",
+      "Communal anointing services are announced on the News & Events page.",
+      "For the dying, ask the priest for the sacrament without delay.",
+    ],
   },
 ];
 

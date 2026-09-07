@@ -62,9 +62,9 @@ describe("code invariants — design tokens (src/index.css)", () => {
 });
 
 describe("code invariants — routing", () => {
-  it("App.tsx keeps the 17-entry route table", () => {
+  it("App.tsx keeps the 19-entry route table", () => {
     const app = read("src/App.tsx");
-    expect((app.match(/path="/g) ?? []).length).toBe(17);
+    expect((app.match(/path="/g) ?? []).length).toBe(19);
     expect(app).toContain('path="*"');
   });
 });
@@ -75,7 +75,7 @@ describe("code invariants — package", () => {
       version: string;
       dependencies: Record<string, string>;
     };
-    expect(pkg.version).toBe("1.6.0");
+    expect(pkg.version).toBe("1.7.0");
     expect(pkg.dependencies["lucide-react"]).toBe("1.38.0");
   });
 });

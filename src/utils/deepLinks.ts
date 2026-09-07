@@ -8,6 +8,8 @@ export const knownRoutePaths = [
   "/visit",
   "/ministries",
   "/ministry",
+  "/sacraments",
+  "/all-sacraments",
   "/news-events",
   "/news-and-events",
   "/serve",

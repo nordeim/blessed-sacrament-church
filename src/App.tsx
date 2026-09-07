@@ -5,6 +5,7 @@ import { About } from "@/pages/About";
 import { History } from "@/pages/History";
 import { Worship } from "@/pages/Worship";
 import { Ministries } from "@/pages/Ministries";
+import { Sacraments } from "@/pages/Sacraments";
 import { NewsEvents } from "@/pages/NewsEvents";
 import { Serve } from "@/pages/Serve";
 import { Give } from "@/pages/Give";
@@ -25,6 +26,8 @@ export default function App() {
           <Route path="/visit" element={<Worship />} />
           <Route path="/ministries" element={<Ministries />} />
           <Route path="/ministry" element={<Ministries />} />
+          <Route path="/sacraments" element={<Sacraments />} />
+          <Route path="/all-sacraments" element={<Sacraments />} />
           <Route path="/news-events" element={<NewsEvents />} />
           <Route path="/news-and-events" element={<NewsEvents />} />
           <Route path="/serve" element={<Serve />} />

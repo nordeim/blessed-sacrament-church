@@ -11,10 +11,21 @@ export function Layout() {
 
   useEffect(() => {
     const resolveAnchor = () => {
-      // Handle both single-hash (#/path) and double-hash (#/path#anchor) forms
-      const raw = window.location.hash;
-      const parts = raw.split("#").filter(Boolean);
-      const anchor = parts.length > 1 ? parts[parts.length - 1] : null;
+      // Router hash is the canonical anchor (`#mass`) under HashRouter.
+      // The `window.location.hash` double-hash fallback (`#/path#anchor`)
+      // is only honoured when the router hash is empty *and* the window
+      // path matches the current pathname — otherwise a stale hash from a
+      // previous route (MemoryRouter in tests, or a rapid navigation) would
+      // resurrect an old anchor and defeat the 80ms cleanup.
+      let anchor: string | null = hash ? hash.slice(1) : null;
+      if (!anchor) {
+        const raw = window.location.hash;
+        const parts = raw.split("#").filter(Boolean);
+        if (parts.length > 1) {
+          const winPath = parts[0]!.startsWith("/") ? parts[0]! : `/${parts[0]!}`;
+          if (winPath === pathname) anchor = parts[parts.length - 1]!;
+        }
+      }
       if (anchor) {
         const el = document.getElementById(anchor);
         if (el) {
