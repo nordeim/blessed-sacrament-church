@@ -17,8 +17,16 @@ const html = readFileSync(resolve(root, "index.html"), "utf8");
 
 describe("round-19 social metadata (audit R2-F2)", () => {
   it("declares og:image pointing at the hero photograph", () => {
+    // Round-20 (audit R20-H4): the previous pin `https://bsc.org.sg/images/
+    // hero-church.jpg` 301-redirects to the bsc.org.sg HTML homepage, so
+    // social crawlers received no image at all. The og:image must resolve to
+    // an actual image — today that is the deployment host's own copy
+    // (verified 200 image/jpeg). When the parish domain ships this site,
+    // flip this pin back to the canonical origin.
     const m = html.match(/<meta property="og:image" content="([^"]+)"/);
-    expect(m?.[1]).toBe("https://bsc.org.sg/images/hero-church.jpg");
+    expect(m?.[1]).toBe(
+      "https://blessed-sacrament-church.jesspete.shop/images/hero-church.jpg",
+    );
   });
 
   it("declares og:image:alt naming the folded blue tent roof", () => {
