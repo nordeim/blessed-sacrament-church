@@ -87,6 +87,12 @@ test.describe("round-19 home voice & motion", () => {
 test.describe("round-19 accessibility & regression watch", () => {
   test("keyboard focus shows the global gold ring", async ({ page }) => {
     await gotoHash(page, "/");
+    // Round-20 (audit R20-M1): the Tab presses used to race React
+    // hydration — under parallel load the header could be unmounted when
+    // the first Tab fired, so focus landed elsewhere and the assertion
+    // failed (repro: 1 failure in a full-suite run; passes isolated).
+    // Wait for a deterministic anchor before keyboarding.
+    await expect(page.locator(".skip-link")).toBeVisible();
     await page.keyboard.press("Tab"); // skip link
     await page.keyboard.press("Tab"); // brand link
     const focused = page.locator(":focus");
