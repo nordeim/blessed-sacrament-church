@@ -94,3 +94,33 @@ describe("code invariants — footer social contract", () => {
     expect(icons).toContain("InstagramIcon");
   });
 });
+
+describe("code invariants — round-20 contract pins", () => {
+  it("exposes the sixth built-artifact gate (test:e2e:built)", () => {
+    const pkg = JSON.parse(read("package.json")) as { scripts: Record<string, string> };
+    expect(pkg.scripts["test:e2e:built"]).toBe(
+      "playwright test --config=playwright.built.config.ts",
+    );
+  });
+
+  it("keeps the Sacraments routes from the round-19 backport", () => {
+    const app = read("src/App.tsx");
+    expect(app).toContain('path="/sacraments"');
+    expect(app).toContain('path="/all-sacraments"');
+  });
+
+  it("scopes Tailwind content detection (round-20 H1)", () => {
+    expect(read("src/index.css")).toContain('@import "tailwindcss" source("./");');
+  });
+
+  it("deflaked the round-19 focus-ring spec (waits for the skip link)", () => {
+    const spec = read("e2e/enhancements-round19.spec.ts");
+    expect(spec).toContain('.skip-link');
+  });
+
+  it("pins og:image to the deployment host (round-20 H4)", () => {
+    expect(read("index.html")).toContain(
+      "https://blessed-sacrament-church.jesspete.shop/images/hero-church.jpg",
+    );
+  });
+});
