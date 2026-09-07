@@ -48,7 +48,7 @@ test.describe("navigation — desktop, keyboard, skip, footer", () => {
     try { const worshipLink = page.getByRole("link", { name: "Worship" }).first(); await worshipLink.focus({ timeout: 2000 }); } catch { /* ignore focus flake */}
   });
 
-  test("footer nav 10 links navigate correctly", async ({ page }) => {
+  test("footer nav 11 links navigate correctly", async ({ page }) => {
     await page.goto("/#/");
 
     await page.getByRole("navigation", { name: "Explore" }).getByRole("link", { name: "History" }).click();

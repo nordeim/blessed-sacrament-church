@@ -12,7 +12,7 @@ import base from "./playwright.config";
  * "run the suite against the built artifact" a first-class command:
  *
  *   pnpm test:e2e:built                                     # vs dist/ via vite preview
- *   E2E_BASE_URL=https://risen-christ.jesspete.shop pnpm test:e2e:built   # vs live
+ *   E2E_BASE_URL=https://blessed-sacrament-church.jesspete.shop pnpm test:e2e:built   # vs live
  *
  * Everything else (testDir, projects, expect timeout, trace/video policy,
  * reporter) is inherited from `playwright.config.ts`.
